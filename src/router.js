@@ -22,6 +22,11 @@ const routes = [
     meta: { loginRequired: true, roles: [UserRole.Admin, UserRole.Editor] },
     */
     children: [
+      {
+        path: "",
+        component: () =>
+          import(/* webpackChunkName: "blank-page" */ "./views/app/blank-page")
+      },
     ]
   },
   {

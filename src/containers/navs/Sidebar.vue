@@ -139,10 +139,10 @@ export default {
       const currentParentUrl = this.$route.path
         .split("/")
         .filter((x) => x !== "")[1];
-      if (currentParentUrl !== undefined || currentParentUrl !== null) {
+      if (currentParentUrl != undefined || currentParentUrl != null) {
         this.selectedParentMenu = currentParentUrl.toLowerCase();
       } else {
-        this.selectedParentMenu = "dashboards";
+        this.selectedParentMenu = "dashboard";
       }
       this.isCurrentMenuHasSubItem();
     },
@@ -328,7 +328,7 @@ export default {
         if (toParentUrl !== undefined || toParentUrl !== null) {
           this.selectedParentMenu = toParentUrl.toLowerCase();
         } else {
-          this.selectedParentMenu = "dashboards";
+          this.selectedParentMenu = "dashboard";
         }
         this.selectMenu();
         this.toggle();

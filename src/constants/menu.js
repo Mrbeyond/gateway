@@ -5,7 +5,7 @@ const data = [{
   id: "dashboards",
   icon: "iconsminds-shop-4",
   label: "menu.dashboards",
-  to: `${adminRoot}/dashboards`,
+  to: `${adminRoot}`,
   // roles: [UserRole.Admin, UserRole.Editor],
   // subs: [{
   //   icon: "simple-icon-briefcase",
@@ -444,20 +444,20 @@ const data = [{
     icon: "simple-icon-layers",
     label: "menu.business",
     to: `${adminRoot}/menu/levels`,
-    
+
   },
   {
     icon: "simple-icon-layers",
     label: "menu.payout-wallets",
     to: `${adminRoot}/menu/levels`,
 
-    
+
   },
   {
     icon: "simple-icon-layers",
     label: "menu.api-keys",
     to: `${adminRoot}/menu/levels`,
-    
+
   },
   ]
 },
