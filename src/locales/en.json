@@ -51,8 +51,24 @@
     "ecommerce": "Ecommerce",
     "content": "Content",    
     "pages": "Pages",
+
+
     "transaction": "Transaction",
     "customerss": "Customerss",
+    "business":"Business",
+    "createbusiness":"Create Business",
+    "get-all-businesses":"Get All Businesses",
+    "api-keys":"API Keys",
+    "get-api-keys":"All API keys",
+    "generate-new-api-keys":"Generate API Keys",
+    "payout-wallets":"Payout Wallets",
+    "add-payout-wallet-address":"Add Payout",
+    "get-all-payout-wallet-address":"All Payout Wallet",
+    "wallet":"Wallet",
+
+
+
+
     "data-list": "Data List",
     "thumb-list": "Thumb List",
     "image-list": "Image List",

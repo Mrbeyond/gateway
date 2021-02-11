@@ -94,20 +94,26 @@
                   </a>
                 </div>
 
-                <div class="col-12 col-xl-4 col-lg-5 col-md-6">
+                <div class="col-12 col-xl-6 col-lg-6 col-md-6">
                   <div class="home-text">
                     <div class="display-1">
-                      MAGIC IS IN
-                      <br />THE DETAILS
+                      Accept
+                      <br />Bitcoin
+                      <br/>within minutes.
                     </div>
                     <p class="white mb-5">
-                      Piaf is the combination of good design, quality code and attention for
-                      details.
+                     .  <strong>Fast —</strong> Go live in minutes, not days
                       <br />
-                      <br />We used same design language for components, layouts, apps
-                      and other parts of the template.
+                      .  <strong>Free —</strong>  No fees to accept crypto
                       <br />
-                      <br />Hope you enjoy it!
+                      .  <strong>Convert —</strong> Sell your crypto for cash or USD Coin
+                       <br />
+                      .  <strong>USD Coin & DAI —</strong>Accept price-stable cryptocurrency
+                       <br />
+                      .  <strong>Global —</strong> Tap into a global customer base
+                        <br />
+                      .  <strong>Irreversible — </strong> Chargebacks are a thing of the past
+
                     </p>
                     <a class="btn btn-light btn-xl mr-2 mb-2" :href="adminRoot" >
                       VIEW NOW
@@ -115,10 +121,8 @@
                     </a>
                   </div>
                 </div>
-                <div class="col-12 col-xl-7 offset-xl-1 col-lg-7 col-md-6 d-none d-md-block">
-                  <a :href="adminRoot" target="_blank">
-                    <img alt="hero" src="/assets/img/landing-page/home-hero.png" />
-                  </a>
+                <div class="col-12 col-xl-4 offset-xl-1 col-lg-6 col-md-6 d-none d-md-block">
+                    <img alt="hero" src="/assets/img/landing-page/home-hero.png" style="width: 100%;height:100%"/>
                 </div>
               </div>
 
@@ -397,21 +401,21 @@ const slideSettings = {
 const slideItems = [
   {
     icon: "iconsminds-mouse-3",
-    title: "Right Click Menu",
+    title: "Up and running in minutes",
     detail:
-      "Increases overall usability of the project by providing additional actions menu."
+      "We'll have you set up with hosted checkout pages, payment buttons, invoicing, and multiple ecommerce integrations"
   },
   {
     icon: "iconsminds-electric-guitar",
-    title: "Video Player",
+    title: "Free",
     detail:
-      "Carefully themed multimedia players powered by Video.js library with Youtube support."
+      "No fees to accept crypto"
   },
   {
     icon: "iconsminds-keyboard",
-    title: "Keyboard Shortcuts",
+    title: "Stay in control",
     detail:
-      "Easily configurable keyboard shortcuts plugin that highly improves user experience."
+      "We don't hold your crypto. You do. We give you all the benefits of a hosted platform while you maintain ownership."
   },
   {
     icon: "iconsminds-three-arrow-fork ",
