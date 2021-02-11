@@ -51,6 +51,8 @@
     "ecommerce": "Ecommerce",
     "content": "Content",    
     "pages": "Pages",
+    "transaction": "Transaction",
+    "customerss": "Customerss",
     "data-list": "Data List",
     "thumb-list": "Thumb List",
     "image-list": "Image List",
