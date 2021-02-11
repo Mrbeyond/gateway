@@ -432,43 +432,39 @@ const data = [{
 //     }
 //   ]
 // },
+
+
 {
-  id: "menu",
-  icon: "iconsminds-three-arrow-fork",
-  label: "menu.menu",
+  id: "business",
+  icon: "iconsminds-data-storage",
+  label: "menu.business",
   to: `${adminRoot}/menu`,
-  subs: [{
-    icon: "simple-icon-logout",
-    label: "menu.types",
-    to: `${adminRoot}/menu/types`
+  subs: [
+  {
+    icon: "simple-icon-layers",
+    label: "menu.business",
+    to: `${adminRoot}/menu/levels`,
+    
   },
   {
     icon: "simple-icon-layers",
-    label: "menu.levels",
+    label: "menu.payout-wallets",
     to: `${adminRoot}/menu/levels`,
-    subs: [{
-      icon: "simple-icon-arrow-right",
-      label: "menu.third-level-1",
-      to: `${adminRoot}/menu/levels/third-level-1`
-    },
-    {
-      icon: "simple-icon-arrow-right",
-      label: "menu.third-level-2",
-      to: `${adminRoot}/menu/levels/third-level-2`
-    },
-    {
-      icon: "simple-icon-arrow-right",
-      label: "menu.third-level-3",
-      to: `${adminRoot}/menu/levels/third-level-3`
-    }
-    ]
-  }
+
+    
+  },
+  {
+    icon: "simple-icon-layers",
+    label: "menu.api-keys",
+    to: `${adminRoot}/menu/levels`,
+    
+  },
   ]
 },
 {
   id: "blank-page",
-  icon: "iconsminds-bucket",
-  label: "menu.blank-page",
+  icon: "iconsminds-wallet",
+  label: "menu.wallet",
   to: `${adminRoot}/blank-page`
 },
 {
