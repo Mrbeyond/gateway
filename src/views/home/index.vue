@@ -7,19 +7,16 @@
         </a>
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a @click="scrollTo('#features')" href="javascript:;">FEATURES</a>
+            <a @click="scrollTo('#features')" href="/docs">Developers</a>
           </li>
           <li class="nav-item">
-            <a @click="scrollTo('#layouts')" href="javascript:;">LAYOUTS</a>
+            <a @click="scrollTo('#layouts')" href="#">Blog</a>
           </li>
           <li class="nav-item">
-            <a @click="scrollTo('#components')" href="javascript:;">COMPONENTS</a>
+            <a @click="scrollTo('#components')" href="/faqs">FAQ</a>
           </li>
           <li class="nav-item">
-            <a @click="scrollTo('#apps')" href="javascript:;">APPS</a>
-          </li>
-          <li class="nav-item">
-            <a @click="scrollTo('#themes')" href="javascript:;">THEMES</a>
+            <a @click="scrollTo('#apps')" href="/integrate">Integration</a>
           </li>
           <li class="nav-item">
             <div class="separator"></div>
@@ -46,19 +43,16 @@
                 </a>
                 <ul class="navbar-nav d-none d-lg-flex flex-row">
                   <li class="nav-item">
-                    <a @click="scrollTo('#features')" href="javascript:;">FEATURES</a>
+                    <a @click="scrollTo('#features')" href="/docs">Developers</a>
                   </li>
                   <li class="nav-item">
-                    <a @click="scrollTo('#layouts')" href="javascript:;">LAYOUTS</a>
+                    <a @click="scrollTo('#layouts')" href="#">Blog</a>
                   </li>
                   <li class="nav-item">
-                    <a @click="scrollTo('#components')" href="javascript:;">COMPONENTS</a>
+                    <a @click="scrollTo('#components')" href="/faqs">FAQ</a>
                   </li>
                   <li class="nav-item">
-                    <a @click="scrollTo('#apps')" href="javascript:;">APPS</a>
-                  </li>
-                  <li class="nav-item">
-                    <a @click="scrollTo('#themes')" href="javascript:;">THEMES</a>
+                    <a @click="scrollTo('#apps')" href="/integrate">Integration</a>
                   </li>
                   <li class="nav-item pl-4">
                     <i class="fas fa-user-plus"></i>
@@ -623,3 +617,9 @@ export default {
   }
 };
 </script>
+
+
+
+
+
+
