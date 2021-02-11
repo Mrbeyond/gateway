@@ -1,5 +1,6 @@
 <template>
   <div id="root">
+    <!--<div class="fixed-background"></div> -->
     <div class="fixed-background"></div>
     <main>
       <div class="container">
