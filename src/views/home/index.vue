@@ -2,8 +2,11 @@
   <home-layout>
     <div :class="{'landing-page': true,'show-mobile-menu': showMobileMenu}">
       <div class="mobile-menu" @click="$event.stopPropagation()">
-        <a  href="javascript:;" class="logo-mobile">
-          <span></span>
+        <a  href="/">
+
+          <img class="rounded" alt="null" src="./../../assets/payCoinPng.png"
+              width="100" height="100" />
+            <!-- <span><strong> Pay Coins</strong> </span> -->
         </a>
         <ul class="navbar-nav">
          <!-- <li class="nav-item">
@@ -280,24 +283,24 @@
 
           </div>
 
-          <div>
+          <div class="mt-5 container">
               <b-card>
-                <div class="d-column d-md-flex">
-                    <div class="d-none d-md-block flex-fill">
-                      <p> <i class="fas fa-check mr-3" />Invoicing</p>
-                      <p> <i class="fas fa-check mr-3" />Multi-currency</p>
-                      <p> <i class="fas fa-check mr-3" />No limits</p>
-                      <p> <i class="fas fa-check mr-3" />Conversions to fiat or stablecoin</p>
-                      <p> <i class="fas fa-check mr-3" />Robust API</p>
-                      <p> <i class="fas fa-check mr-3" />Webhooks for charges</p>
-                      <p> <i class="fas fa-check mr-3" />Customized payment buttons</p>
-                      <p> <i class="fas fa-check mr-3" />Hosted checkout pages</p>
-                      <p> <i class="fas fa-check mr-3" />Get Started</p>
-                      <p> <i class="fas fa-check mr-3" />The signup process will take ~4 minutes</p>
+                <div class="d-column d-md-flex mb-3">
+                    <div class="d-none border-right d-md-block flex-fill">
+                      <p class="mb-2"> <i class="fas fa-check mr-3" />Invoicing</p>
+                      <p class="mb-2"> <i class="fas fa-check mr-3" />Multi-currency</p>
+                      <p class="mb-2"> <i class="fas fa-check mr-3" />No limits</p>
+                      <p class="mb-2"> <i class="fas fa-check mr-3" />Conversions to fiat or stablecoin</p>
+                      <p class="mb-2"> <i class="fas fa-check mr-3" />Robust API</p>
+                      <p class="mb-2"> <i class="fas fa-check mr-3" />Webhooks for charges</p>
+                      <p class="mb-2"> <i class="fas fa-check mr-3" />Customized payment buttons</p>
+                      <p class="mb-2"> <i class="fas fa-check mr-3" />Hosted checkout pages</p>
+                      <p class="mb-2"> <i class="fas fa-check mr-3" />Get Started</p>
+                      <p class="mb-2"> <i class="fas fa-check mr-3" />The signup process will take ~4 minutes</p>
                     </div>
-                    <div class="flex-fill align-self-center">
+                    <div class="ml-md-2 flex-fill align-self-center">
                       <h2><strong>Get Started</strong></h2>
-                      The signup process will take ~4 minutes
+                      <p>The signup process will take ~4 minutes</p>
                       <b-form>
                             <b-input-group class="shadow" size="lg">
                               <b-input placeholder="Your email" size="lg" class="py-4" />
@@ -326,7 +329,10 @@
                 </div>
                 <div class="col-12 text-center footer-content">
                   <a  href="javascript:;">
-                    <img class="footer-logo" alt="footer logo" src="/assets/logos/white-full.svg" />
+
+                    <img class="rounded" alt="footer logo" src="./../../assets/payCoinPng.png"
+                       width="40" height="40" />
+                      <span><strong> Pay Coins</strong> </span>
                   </a>
                 </div>
               </div>
