@@ -53,7 +53,7 @@
                 <b-form-invalid-feedback :force-show="phoneTouched && isPhoneInvalid" >
                   A valid phone number is required
                 </b-form-invalid-feedback>
-              </b-form-group>
+              </b-form-group> 
 
               <div class="text-center">
                 <b-spinner v-if="submitting" label="Spinning"></b-spinner>
