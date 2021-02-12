@@ -78,7 +78,7 @@ export default {
       //   );
 
 
-        Axios.post(`${PROXY}payer/login`, payload)
+        Axios.post(`${PROXY}user/login`, payload)
         .then(res=>{
             if(!res.data.error){
               // const {authorization} = ;
