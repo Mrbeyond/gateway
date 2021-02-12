@@ -139,6 +139,17 @@
                 </div>
               </div>
 
+              <div>
+                <div class="d-flex justify-content-center">
+                    <h1>Integrated With</h1>
+                </div>
+                <div class="d-column d-md-flex">
+                  <div>IMG 1</div>
+                  <div>IMG 2</div>
+
+                </div>
+              </div>
+
 
             </div>
           </div>
