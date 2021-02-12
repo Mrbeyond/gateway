@@ -114,9 +114,9 @@
 
                         </div>
                         <div>
-                          <b-form>
+                          <b-form @submit.prevent="gotoSignUp">
                             <b-input-group class="shadow" size="lg">
-                              <b-input placeholder="Your email" size="lg" class="py-4" />
+                              <b-input type="email" required  placeholder="Your email" size="lg" class="py-4" />
                               <b-button type="submit" squared>Get Started</b-button>
                             </b-input-group>
                           </b-form>
@@ -301,9 +301,9 @@
                     <div class="ml-md-2 flex-fill align-self-center">
                       <h2><strong>Get Started</strong></h2>
                       <p>The signup process will take ~4 minutes</p>
-                      <b-form>
+                      <b-form @submit.prevent="gotoSignUp">
                             <b-input-group class="shadow" size="lg">
-                              <b-input placeholder="Your email" size="lg" class="py-4" />
+                              <b-input type="email" required  placeholder="Your email" size="lg" class="py-4" />
                               <b-button type="submit" squared>Get Started</b-button>
                             </b-input-group>
                           </b-form>
@@ -395,10 +395,15 @@ export default {
       slideSettings,
       coinColor: "white",
       currentHover:"",
+      email:""
 
     };
   },
   methods: {
+    gotoSignUp(){
+      
+
+    },
     shover(e){
       if( e.target.id){
         this.currentHover = e.target.id;
