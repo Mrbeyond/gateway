@@ -6,7 +6,7 @@ import { setCurrentUser, getCurrentUser } from '../../utils';
 
 export default {
   state: {
-    currentUser: isAuthGuardActive ? getCurrentUser() : currentUser,
+    currentUser:   getCurrentUser(),//isAuthGuardActive ? getCurrentUser() : currentUser,
     loginError: null,
     processing: false,
     forgotMailSuccess: null,
@@ -59,23 +59,23 @@ export default {
     login({ commit }, payload) {
       commit('clearError')
       commit('setProcessing', true)
-      firebase
-        .auth()
-        .signInWithEmailAndPassword(payload.email, payload.password)
-        .then(
-          user => {
-            const item = { uid: user.user.uid, ...currentUser }
-            setCurrentUser(item)
-            commit('setUser', item)
-          },
-          err => {
-            setCurrentUser(null);
-            commit('setError', err.message)
-            setTimeout(() => {
-              commit('clearError')
-            }, 3000)
-          }
-        );
+      // firebase
+      //   .auth()
+      //   .signInWithEmailAndPassword(payload.email, payload.password)
+      //   .then(
+      //     user => {
+      //       const item = { uid: user.user.uid, ...currentUser }
+      //       setCurrentUser(item)
+      //       commit('setUser', item)
+      //     },
+      //     err => {
+      //       setCurrentUser(null);
+      //       commit('setError', err.message)
+      //       setTimeout(() => {
+      //         commit('clearError')
+      //       }, 3000)
+      //     }
+      //   );
 
 
         Axios.post(`${PROXY}payer/login`, payload)
