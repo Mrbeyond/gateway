@@ -261,7 +261,7 @@ const data = [{
   id: "applications",
   icon: "simple-icon-people",
   label: "menu.customerss",
-  to: `${adminRoot}/applications`,
+  to: `${adminRoot}/customers`,
   // subs: [{
   //   icon: "simple-icon-check",
   //   label: "menu.todo",

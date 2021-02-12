@@ -35,6 +35,10 @@ const routes = [
       import(/* webpackChunkName: "blank-page" */ "./views/app/blank-page")
   },
   {
+    path: "/customers",
+    component: () => import(/* webpackChunkName: "error" */ "./views/user/Login")
+  },
+  {
     path: "/error",
     component: () => import(/* webpackChunkName: "error" */ "./views/Error")
   },
