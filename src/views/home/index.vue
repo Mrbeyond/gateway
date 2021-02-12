@@ -322,13 +322,13 @@
                   <a
                     class="btn btn-circle btn-outline-semi-light footer-circle-button"
 
-                    href="javascript:;"
+                    href="#home"
                   >
                     <i class="simple-icon-arrow-up"></i>
                   </a>
                 </div>
                 <div class="col-12 text-center footer-content">
-                  <a  href="javascript:;">
+                  <a  href="/">
 
                     <img class="rounded" alt="footer logo" src="./../../assets/payCoinPng.png"
                        width="40" height="40" />
