@@ -261,7 +261,7 @@ const data = [{
   id: "applications",
   icon: "simple-icon-people",
   label: "menu.customerss",
-  to: `${adminRoot}/applications`,
+  to: `${adminRoot}/customers`,
   // subs: [{
   //   icon: "simple-icon-check",
   //   label: "menu.todo",
@@ -438,12 +438,12 @@ const data = [{
   id: "business",
   icon: "iconsminds-data-storage",
   label: "menu.business",
-  to: `${adminRoot}/menu`,
+  // to: `${adminRoot}/businesses`,
   subs: [
   {
     icon: "simple-icon-layers",
     label: "menu.business",
-    to: `${adminRoot}/menu/levels`,
+    to: `${adminRoot}/businesses`,
 
   },
   {

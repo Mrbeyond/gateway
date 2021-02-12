@@ -127,7 +127,7 @@
               <i class="simple-icon-bell" />
               <span class="count">3</span>
             </template>
-            <vue-perfect-scrollbar :settings="{ suppressScrollX: true, wheelPropagation: false }">
+            <vue-perfect-scrollbar v-if="notifications" :settings="{ suppressScrollX: true, wheelPropagation: false }">
               <div
                 class="d-flex flex-row mb-3 pb-3 border-bottom"
                 v-for="(n,index) in notifications"
@@ -169,7 +169,7 @@
           menu-class="mt-3"
           no-caret
         >
-          <template slot="button-content">
+          <template slot="button-content" v-if="currentUser">
             <span class="name mr-1">{{currentUser.title}}</span>
             <span>
               <img :alt="currentUser.title" :src="currentUser.img" />
