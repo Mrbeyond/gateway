@@ -438,12 +438,12 @@ const data = [{
   id: "business",
   icon: "iconsminds-data-storage",
   label: "menu.business",
-  to: `${adminRoot}/menu`,
+  // to: `${adminRoot}/businesses`,
   subs: [
   {
     icon: "simple-icon-layers",
     label: "menu.business",
-    to: `${adminRoot}/menu/levels`,
+    to: `${adminRoot}/businesses`,
 
   },
   {

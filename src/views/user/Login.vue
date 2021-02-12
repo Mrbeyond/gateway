@@ -94,8 +94,8 @@ export default {
           form: {
               // email: "test@coloredstrategies.com",
               // password: "xxxxxx"
-            email: "",
-            password: ""
+            email: "adesinasamueloluwaseun@gmail.com",
+            password: "12345678"
           },
       };
   },

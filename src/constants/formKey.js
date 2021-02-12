@@ -14,8 +14,8 @@ export const ADD_AGENT_TYPE = "add_agent_type";
 
 
 export const ADMINS = "ADMINS";
-export const AGENTS = "AGENTS";
-export const CARDS = "CARDS";
+export const CUSTOMERS = "CUSTOMERS";
+export const BUSINESSES = "BUSINESSES";
 export const TERMINALS = "TERMINALS";
 export const TAGS = "TAGS";
 export const RES_KEY = "RES_KEY";
@@ -113,7 +113,7 @@ export const toMoney = (val)=>{
 
 export const enroute=(route)=>{
   // console.log(route);
-  let arr = ["agents","payers", "ports", "lgs", "admins","terminals", "cards", 'tags', 'garages' ];
+  let arr = ["customers","payers", "ports", "lgs", "admins","terminals", "cards", 'tags', 'garages' ];
   let formSets= [ADD_AGENT, ADD_PAYER, ADD_PORT, ADD_LG, ADD_ADMIN, ADD_TERMINAL, ADD_CARD, ADD_TAG, ADD_GARAGE];
   if(route.split('/').length === 3){
     let curr = arr.find(data=>data.toString().toLowerCase() === route.split('/')[2].toString().toLowerCase());
