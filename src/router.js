@@ -26,17 +26,21 @@ const routes = [
         path: "",
         component: () =>
           import(/* webpackChunkName: "blank-page" */ "./views/app/blank-page")
-      },
+        },
+        {
+          path: "customers",
+          component: () => import(/* webpackChunkName: "error" */ "./views/app/dashboards/Customer/Customers")
+        },
+        {
+          path: "businesses",
+          component: () => import(/* webpackChunkName: "error" */ "./views/app/dashboards/Business/Businesses")
+        },
     ]
   },
   {
     path: "blank-page",
     component: () =>
       import(/* webpackChunkName: "blank-page" */ "./views/app/blank-page")
-  },
-  {
-    path: "/customers",
-    component: () => import(/* webpackChunkName: "error" */ "./views/user/Login")
   },
   {
     path: "/error",
@@ -60,6 +64,11 @@ const routes = [
         path: "register",
         component: () =>
           import(/* webpackChunkName: "user" */ "./views/user/Register")
+      },
+      {
+        path: "update",
+        component: () =>
+          import(/* webpackChunkName: "user" */ "./views/user/Update")
       },
       {
         path: "forgot-password",

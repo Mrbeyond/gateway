@@ -227,7 +227,7 @@ export default {
         }
       }
       if(this.countryNameTouched){
-        if(!/^[a-zA-Z0-9]$/.test(this.country_id)){
+        if(!/^[0-9]$/.test(this.country_id)){
           this.isCountryNameInvalid = true;
           isFormValid = false;
         }else{

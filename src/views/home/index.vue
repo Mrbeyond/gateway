@@ -75,47 +75,38 @@
         </div>
 
         <div class="content-container" id="home">
+
           <div class="section home" id="sectionHome">
             <div class="container">
 
               <div class="row home-row" id="homeRow">
-                <!--<div class="col-12 d-block d-md-none">
-                  <a :href="adminRoot" target="_blank">
-                    <img
-                      alt="mobile hero"
-                      class="mobile-hero"
-                       src="/assets/img/landing-page/home-hero-mobile.png"
-                    />
-                  </a>
-                </div>-->
-
                 <div class="col-12 col-md-6 mb-5">
                   <div class="home-text">
                    <div class="d-flex justify-content-center d-md-block">
                       <div>
                         <div class="">
-                            <h1 class="d-block py-0 my-0 text-white"><strong> Accept </strong></h1>
-                            <h1 class="d-block py-0 my-0"><strong> Bitcoin </strong></h1>
-                            <h1 class="d-block py-0 my-0 text-white"><strong> within minutes. </strong></h1>
+                          <h1 class="d-block py-0 my-0 text-white"><strong> Accept </strong></h1>
+                          <h1 class="d-block py-0 my-0"><strong> Bitcoin </strong></h1>
+                          <h1 class="d-block py-0 my-0 text-white"><strong> within minutes. </strong></h1>
                         </div>
                         <div class="white mt-5 mb-5">
-                          <p> <i class="fas fa-check"></i> <strong>Fast — </strong>Go live in minutes, not  days</p>
+                          <p> <i class="fas fa-check mr-2"></i> <strong>Fast — </strong>Go live in minutes, not  days</p>
 
-                          <p> <i class="fas fa-check" /> <strong>Free — </strong>  No fees to accept crypto</p>
+                          <p> <i class="fas fa-check mr-2" /> <strong>Free — </strong>  No fees to accept crypto</p>
 
-                          <p> <i class="fas fa-check" /> <strong>Convert — </strong> Sell your crypto for cash or USD Coin</p>
+                          <p> <i class="fas fa-check mr-2" /> <strong>Convert — </strong> Sell your crypto for cash or USD Coin</p>
 
-                          <p> <i class="fas fa-check" /> <strong>USD Coin & DAI — </strong>Accept price-stable cryptocurrency</p>
+                          <p> <i class="fas fa-check mr-2" /> <strong>USD Coin & DAI — </strong>Accept price-stable cryptocurrency</p>
 
-                          <p> <i class="fas fa-check" /> <strong>Global — </strong> Tap into a global customer base</p>
+                          <p> <i class="fas fa-check mr-2" /> <strong>Global — </strong> Tap into a global customer base</p>
 
-                          <p> <i class="fas fa-check" /> <strong>Irreversible — </strong> Chargebacks are a thing of the past</p>
+                          <p> <i class="fas fa-check mr-2" /> <strong>Irreversible — </strong> Chargebacks are a thing of the past</p>
 
                         </div>
                         <div>
                           <b-form>
                             <b-input-group class="shadow" size="lg">
-                              <b-input placeholder="Your Email" size="lg" class="py-4" />
+                              <b-input placeholder="Your email" size="lg" class="py-4" />
                               <b-button type="submit" squared>Get Started</b-button>
                             </b-input-group>
                           </b-form>
@@ -133,26 +124,56 @@
                         <img class="shadow-sm" style="border-radius: 12px" width="280"  alt="payment-anination" src="./../../assets/anipay.gif"/>
                       </div>
                     </div>
-                    <!--<div class="col-2"></div> -->
-
                  </div>
                 </div>
               </div>
+            </div>
+          </div>
 
-              <div>
-                <div class="d-flex justify-content-center">
-                    <h1>Integrated With</h1>
+          <div class="container mb-5" style="margin-top: 100px">
+            <div class="mb-5">
+              <div class="d-flex justify-content-center">
+                  <h1> <strong>Integrated With</strong></h1>
+              </div>
+              <div class="d-column d-md-flex">
+                <div class="flex-fill d-flex justify-content-center mb-4 mb-md-0">
+                  <img  src="./../../assets/commerce.svg" />
                 </div>
-                <div class="d-column d-md-flex">
-                  <div>IMG 1</div>
-                  <div>IMG 2</div>
+                <div class="flex-fill d-flex justify-content-center">
+                  <img src="./../../assets/shop.svg" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
+          <div class="container bg-danger  mt-5" >
+            <div class="row">
+              <div class="col-12 col-md-2 col-lg-3"></div>
+
+              <div class="col-12 col-md-8 col-lg-6">
+                <div class="d-flex justify-content-center">
+                  <!-- First image part -->
+                  <div>
+                    <div class="d-flex justify-content-center">
+                      <img class="d-none d-md-block"  src="./../../assets/sit.svg" />
+                      <img class="d-block d-md-none" width="250" src="./../../assets/sit.svg" />
+                    </div>
+                     <div class="mt-5">
+                        <h2 class="text-center"><strong>Up and running in minutes</strong></h2>
+                        <p class="text-center">
+                        We'll have you set up with hosted checkout pages, payment buttons, invoicing, and multiple ecommerce integrations
+                        </p>
+                      </div>
+                  </div>
                 </div>
               </div>
 
-
+              <div class="col-12 col-md-2 col-lg-3">
+              </div>
             </div>
           </div>
+
 
 
           <div class="section footer mb-0" id="sectionFooter">
@@ -184,7 +205,6 @@
             </div>
           </div>
 
-        </div>
       </div>
     </div>
   </home-layout>
