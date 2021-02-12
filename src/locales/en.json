@@ -23,9 +23,12 @@
     "fullname": "Full Name",
     "login-button": "LOGIN",
     "register-button": "REGISTER",
+    "update-button": "UPDATE",
     "reset-password-button": "RESET",
     "buy": "BUY",
-    "username": "Username"
+    "username": "Username",
+    "date-of-birth":"Date of birth",
+    "gender":"Gender"
   },
   "menu": {
     "home": "Home",

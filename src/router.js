@@ -66,6 +66,11 @@ const routes = [
           import(/* webpackChunkName: "user" */ "./views/user/Register")
       },
       {
+        path: "update",
+        component: () =>
+          import(/* webpackChunkName: "user" */ "./views/user/Update")
+      },
+      {
         path: "forgot-password",
         component: () =>
           import(/* webpackChunkName: "user" */ "./views/user/ForgotPassword")
