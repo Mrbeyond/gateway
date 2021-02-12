@@ -42,7 +42,6 @@
               </b-form-group>
 
               <b-form-group>
-                  gender
                 <label class="has-float-label">
                   <input id="Phone" type="text"
                       class="form-control" v-model="phone"
