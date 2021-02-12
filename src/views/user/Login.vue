@@ -134,12 +134,12 @@ export default {
     },
   watch: {
     currentUser(val) {
-      if (val && val.uid && val.uid.length > 0) {
-        setTimeout(() => {
-          this.$router.push(adminRoot);
-        }, 200);
+      if (val){
+        // console.log(val);
+        this.$router.push(adminRoot);
       }
     },
+
 
     loginError(val) {
       if (val != null) {
