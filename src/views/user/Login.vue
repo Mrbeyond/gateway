@@ -1,14 +1,14 @@
 <template>
 <b-row class="h-100">
     <b-colxx xxs="12" md="10" class="mx-auto my-auto">
-        <b-card class="auth-card" no-body>
+        <b-card class="auth-card mt-4 mt-md-0 my-md-2" no-body>
             <div class="position-relative image-side">
-                <p class="text-white h2">{{ $t('dashboards.magic-is-in-the-details') }}</p>
-                <p class="white mb-0">
-                    Please use your credentials to login.
-                    <br />If you are not a member, please
+                <div class="text-center white mb-0">
+                    <p class="h5 mt-md-4"><strong>Please use your credentials to login.</strong></p>
+                    <p class="mb-2 mb-md-4">If you are not a member, please
                     <router-link tag="a" to="/user/register" class="white">register</router-link>.
-                </p>
+                    </p>
+                </div>
             </div>
             <div class="form-side">
                 <router-link tag="a" to="/">
@@ -46,11 +46,14 @@
                         </b-form-invalid-feedback>
                     </b-form-group>
                     <div class="d-flex justify-content-between align-items-center">
-                        <router-link tag="a" to="/user/forgot-password">{{ $t('user.forgot-password-question')}}</router-link>
-                        <b-button type="submit" variant="primary" size="lg" :disabled="processing" :class="{'btn-multiple-state btn-shadow': true,
-                    'show-spinner': processing,
-                    'show-success': !processing && loginError===false,
-                    'show-fail': !processing && loginError }">
+                      <router-link tag="a" to="/user/forgot-password">{{ $t('user.forgot-password-question')}}</router-link>
+                       <b-button type="submit" variant="primary" size="lg"
+                          :disabled="processingAuth"
+                          :class="{'btn-multiple-state btn-shadow': true,
+                          'show-spinner': processingAuth,
+                          'show-success': isLoggedIn && authError === false,
+                          'show-fail': !processingAuth && authError }"
+                        >
                             <span class="spinner d-inline-block">
                                 <span class="bounce1"></span>
                                 <span class="bounce2"></span>
@@ -74,13 +77,13 @@
 
 <script>
 import {
-    mapGetters,
-    mapActions
+    mapGetters
 } from "vuex";
 import {
     validationMixin
 } from "vuelidate";
 import { adminRoot } from '../../constants/config';
+import { LOGIN } from '../../constants/formKey';
 const {
     required,
     maxLength,
@@ -115,25 +118,25 @@ export default {
     }
   },
     computed: {
-      ...mapGetters(["currentUser", "processing", "loginError"])
+      ...mapGetters(['user', "processingAuth", "authError", "isLoggedIn"]),
     },
     methods: {
-      ...mapActions(["login"]),
       formSubmit() {
         this.$v.$touch();
         // this.form.email = "piaf-vue@coloredstrategies.com";
         // this.form.password = "piaf123";
         this.$v.form.$touch();
         // if (!this.$v.form.$anyError) {
-        this.login({
+        this.$store.dispatch(LOGIN, {
           email: this.form.email,
           password: this.form.password
         });
         //}
       }
     },
+
   watch: {
-    currentUser(val) {
+    user(val) {
       if (val){
         // console.log(val);
         this.$router.push(adminRoot);
@@ -141,7 +144,7 @@ export default {
     },
 
 
-    loginError(val) {
+    authError(val) {
       if (val != null) {
         this.$notify("error", "Login Error", val, {
           duration: 3000,

@@ -13,6 +13,17 @@ export const ADD_GARAGE = "add_garage";
 export const ADD_AGENT_TYPE = "add_agent_type";
 
 
+/** Auths */
+export const LOGIN = "login";
+export const USER = "USER";
+export const LOGIN_ATTEMPTED = "login_attempted";
+export const IS_LOGGED_IN = "is_logged_in";
+export const PROCESSING_AUTH = "processing_auth";
+export const AUTH_ERROR = "auth_error";
+export const TEMP_MAIL = "temp_mail";
+export const ERR_MESS = "err_mess";
+
+
 export const ADMINS = "ADMINS";
 export const CUSTOMERS = "CUSTOMERS";
 export const BUSINESSES = "BUSINESSES";
@@ -36,11 +47,18 @@ export const REFRESHING = "REFRESHING";
 
 export const hToken=()=>{
   try {
-     let ls = localStorage.authToken? localStorage.authToken: "";
+     let ls = localStorage.authToken? localStorage.authToken: null;
+     if(!ls) return "";
+     ls = JSON.parse(window.atob(window.atob(ls)));
      return { authorization: `Bearer ${ls}`}
   } catch (e) {
-
+      return "";
   }
+}
+
+export const keepToken = (token)=>{
+  if(!token) return;
+  localStorage.authToken = window.btoa(window.btoa(JSON.stringify(token)));
 }
 
 export const resCoder=(status)=>{

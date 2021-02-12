@@ -156,7 +156,7 @@ body {
 }
 
 .fixed-background {
-  background: url("/assets/img/login/balloon-lg.jpg") no-repeat center center fixed;
+  background: url("/assets/img/login/cryptbg.jpg") no-repeat center center fixed;
   background-size: cover;
   width: 100%;
   height: 100%;
@@ -378,12 +378,23 @@ hr {
 }
 
 .logo-single {
-  width: 110px;
-  height: 35px;
-  background: url($logo-path) no-repeat;
+  width: 50px;
+  height: 50px;
+  background: url("/assets/img/login/PC.png") no-repeat; /*$logo-path I changed the url path, width and height */
   background-position: center center;
+  border-radius: 5px;
   display: inline-block;
-  margin-bottom: 60px;
+  margin-bottom: 40px;
+}
+
+/* I created this part*/
+.logo-single:after {
+  content: "Pay Coins";
+  display: inline-block;
+  margin-left: 60px;
+  font-weight: bolder;
+  margin-top: 8px;
+  // margin-bottom: 60px;
 }
 
 .list-item-heading {
@@ -5085,7 +5096,7 @@ input:-webkit-autofill {
 
   .image-side {
     width: 40%;
-    background: url("/assets/img/login/balloon.jpg") no-repeat center top;
+    background: url("/assets/img/login/cptbg.png") no-repeat center top;
     background-size: cover;
     padding: 80px 40px;
 

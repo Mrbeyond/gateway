@@ -31,6 +31,21 @@ export const firebaseConfig = {
 export const PROXY = "https://africa-crypto.herokuapp.com/";
 
 
+export const authUser =()=> {
+  let auths = localStorage.AU? JSON.parse(window.atob(window.atob(localStorage.AU))): null;
+  return auths && auths.id && auths.email? auths : null;
+
+}
+
+export const keepUser = (user)=>{
+  if(!user) return;
+  localStorage.AU = window.btoa(window.btoa(JSON.stringify(user)));
+
+}
+
+
+
+
 
 export const currentUser = {
   id: 1,
@@ -43,5 +58,5 @@ export const currentUser = {
 export const isAuthGuardActive = false
 export const themeRadiusStorageKey = 'theme_radius'
 export const themeSelectedColorStorageKey = 'theme_selected_color'
-export const defaultColor = 'light.blueolympic'
+export const defaultColor =  'light.blueolympic'// 'light.purplemonster'
 export const colors = ['bluenavy', 'blueyale', 'blueolympic', 'greenmoss', 'greenlime', 'purplemonster', 'orangecarrot', 'redruby', 'yellowgranola', 'greysteel']
