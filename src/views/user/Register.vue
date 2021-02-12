@@ -16,7 +16,7 @@
               <b-form-group >
                 <label class="form-group has-float-label mb-4">
                   <input id="firstName" type="text"
-                    class="form-control" v-model="first_name"
+                    class="form-control" v-model="firstname"
                     @blur="validateFirstName"
                     @keyup="validateTouch"
                     >
@@ -30,7 +30,7 @@
               <b-form-group >
                 <label class="form-group has-float-label mb-4">
                   <input id="lastName" type="text"
-                    class="form-control" v-model="last_name"
+                    class="form-control" v-model="lastname"
                     @blur="validateLastName"
                     @keyup="validateTouch"
                   >
@@ -72,29 +72,20 @@
 
               <b-form-group >
                 <label class="form-group has-float-label mb-4">
-                  <input id="BusinessName" type="text" class="form-control"
-                    v-model="business_name"
-                    @blur="validateBusinessName"
-                    @keyup="validateTouch"
-                    >
-                  <span>{{ $t('user.business-name') }}</span>
+                  
+                   <b-form-select
+                    v-model="country_id"
+                    :options="countries"
+                    value-field="id"
+                    text-field="countryName"
+                     @blur="validateCountryName"
+                     @change="validateTouch"
+                  ></b-form-select>
+                      <!-- <b-form-select v-model="country_id" :options="country"></b-form-select> -->
+                  <span>{{ $t('user.country-name') }}</span>
                 </label>
-                <b-form-invalid-feedback :force-show="businessNameTouched && isBusinessNameInvalid" >
-                  Use a valid name with minimum of 3 characters
-                </b-form-invalid-feedback>
-              </b-form-group>
-
-              <b-form-group >
-                <label class="form-group has-float-label mb-4">
-                  <input id="playerId" type="text"
-                    class="form-control" v-model="player_id"
-                    @blur="validatePlayerId"
-                    @keyup="validateTouch"
-                  >
-                  <span>{{ $t('user.player-id') }}</span>
-                </label>
-                <b-form-invalid-feedback :force-show="playerIdTouched && isPlayerIdInvalid" >
-                  A valid number is required
+                <b-form-invalid-feedback :force-show="countryNameTouched && isCountryNameInvalid" >
+                  Please select your country
                 </b-form-invalid-feedback>
               </b-form-group>
 
@@ -147,11 +138,11 @@ export default {
 
       formIsValid: false,
 
-      first_name: '',
+      firstname: '',
       firstNameTouched: false,
       isFirstNameInvalid: false,
 
-      last_name: '',
+      lastname: '',
       isLastNameInvalid: false,
       lastNameTouched: false,
 
@@ -159,13 +150,9 @@ export default {
       isPhoneInvalid: false,
       phoneTouched: false,
 
-      business_name:'',
-      businessNameTouched: false,
-      isBusinessNameInvalid: false,
-
-      player_id:'',
-      playerIdTouched: false,
-      isPlayerIdInvalid: false,
+      country_id:'',
+      countryNameTouched: false,
+      countryNameInvalid: false,
 
       email: '',
       emailTouched: false,
@@ -174,9 +161,16 @@ export default {
       password: '',
       passwordTouched: false,
       isPasswordInvalid: false,
+      countries: [
+          { id: 1, countryName: 'Nigeria' },
+          { id: 2, countryName: 'USA' },
+          { id: 3, countryName: 'London' },
+          { id: 4, countryName: 'Gana' }
+        ],
 
     }
   },
+      
   methods: {
 
     validatePhone(){
@@ -191,12 +185,8 @@ export default {
       this.lastNameTouched = true;
       this.validateTouch();
     },
-    validateBusinessName(){
-      this.businessNameTouched = true;
-      this.validateTouch();
-    },
-    validatePlayerId(){
-      this.playerIdTouched = true;
+    validateCountryName(){
+      this.countryNameTouched = true;
       this.validateTouch();
     },
     validatePassword(){
@@ -219,7 +209,7 @@ export default {
         }
       }
       if(this.firstNameTouched){
-        if(!/^[a-zA-Z]{3,}$/.test(this.first_name)){
+        if(!/^[a-zA-Z]{3,}$/.test(this.firstname)){
           this.isFirstNameInvalid = true;
           isFormValid = false;
         }else{
@@ -228,7 +218,7 @@ export default {
         }
       }
       if(this.lastNameTouched){
-        if(!/^[a-zA-Z]{3,}$/.test(this.last_name)){
+        if(!/^[a-zA-Z]{3,}$/.test(this.lastname)){
           this.isLastNameInvalid = true;
           isFormValid = false;
         }else{
@@ -236,12 +226,12 @@ export default {
           isFormValid = true;
         }
       }
-      if(this.businessNameTouched){
-        if(!/^[a-zA-Z0-9]{3,}$/.test(this.business_name)){
-          this.isBusinessNameInvalid = true;
+      if(this.countryNameTouched){
+        if(!/^[a-zA-Z0-9]$/.test(this.country_id)){
+          this.isCountryNameInvalid = true;
           isFormValid = false;
         }else{
-          this.isBusinessNameInvalid = false;
+          this.isCountryNameInvalid = false;
           isFormValid = true;
         }
       }
@@ -251,15 +241,6 @@ export default {
           isFormValid = false;
         }else{
           this.isPasswordInvalid = false;
-          isFormValid = true;
-        }
-      }
-      if(this.playerIdTouched){
-        if(!/^[0-9]{11,}$/.test(this.phone)){
-          this.isPlayerIdInvalid = true;
-          isFormValid = false;
-        }else{
-          this.isPlayerIdInvalid = false;
           isFormValid = true;
         }
       }
@@ -277,13 +258,12 @@ export default {
 
     formSubmit () {
       if(this.submitting) return;
-
       // this.$router.push(adminRoot)
       this.phoneTouched = true;
       this.firstNameTouched = true;
       this.emailTouched = true;
       this.passwordTouched = true;
-      this.businessNameTouched = true;
+      this.countryNameTouched = true;
       this.playerIdTouched = true;
       this.lastNameTouched = true;
       this.validateTouch();
@@ -293,16 +273,15 @@ export default {
      let formData = {
       phone:this.phone,
       password:this.password,
-      business_name:this.business_name,
-      first_name:this.first_name,
-      last_name:this.last_name,
+      country_id:this.country_id,
+      firstname:this.firstname,
+      lastname:this.lastname,
       email:this.email,
-      player_id:this.player_id
       }
 
-      console.log(formData);
-      this.submitting = true;
-      axios.post(`${PROXY}payer/register'`, formData)
+      console.log(this.formIsValid);
+        this.submitting = true;
+      axios.post(`${PROXY}user/register'`, formData)
       .then(res=>{
         if(!res.data.error){
           localStorage.authToken = res.data.data.authorization
@@ -320,13 +299,11 @@ export default {
       .catch(err=>{
         console.log(err);
         if(err && err.response){
-          alert(err.response.status)
         }
 
         this.$bvToast.show("example-toast");
         this.submitting = false;
       })
-
     }
   }
 }
