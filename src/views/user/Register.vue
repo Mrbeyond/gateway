@@ -1,11 +1,11 @@
 <template>
   <b-row class="h-100">
     <b-colxx xxs="12" md=10  class="mx-auto my-auto">
-      <b-card class="auth-card" no-body>
-          <div class="position-relative image-side ">
-            <p class=" text-white h2">{{ $t('dashboards.magic-is-in-the-details') }}</p>
-              <p class="white mb-0">  Please use this form to register. <br />If you are a member, please
-                <router-link tag="a" to="/user/login" class="white">login</router-link>.
+      <b-card class="auth-card my-3" no-body>
+          <div class="position-relative text-center white image-side ">
+              <p class="mt-md-4 h5">  Please use this form to register. </p>
+              <p class="mb-2 mb-md-4">If you are a member, please
+                <router-link tag="a" to="/user/login" class="white" >login</router-link>.
               </p>
           </div>
           <div class="form-side">
@@ -72,7 +72,7 @@
 
               <b-form-group >
                 <label class="form-group has-float-label mb-4">
-                  
+
                    <b-form-select
                     v-model="country_id"
                     :options="countries"
@@ -170,7 +170,7 @@ export default {
 
     }
   },
-      
+
   methods: {
 
     validatePhone(){

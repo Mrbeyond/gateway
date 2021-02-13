@@ -1,14 +1,14 @@
 <template>
 <b-row class="h-100">
     <b-colxx xxs="12" md="10" class="mx-auto my-auto">
-        <b-card class="auth-card" no-body>
+        <b-card class="auth-card mt-4 mt-md-0 my-md-2" no-body>
             <div class="position-relative image-side">
-                <p class="text-white h2">{{ $t('dashboards.magic-is-in-the-details') }}</p>
-                <p class="white mb-0">
-                    Please use your credentials to login.
-                    <br />If you are not a member, please
+                <div class="text-center white mb-0">
+                    <p class="h5 mt-md-4"><strong>Please use your credentials to login.</strong></p>
+                    <p class="mb-2 mb-md-4">If you are not a member, please
                     <router-link tag="a" to="/user/register" class="white">register</router-link>.
-                </p>
+                    </p>
+                </div>
             </div>
             <div class="form-side">
                 <router-link tag="a" to="/">

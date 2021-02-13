@@ -116,7 +116,7 @@
                         <div>
                           <b-form @submit.prevent="gotoSignUp">
                             <b-input-group class="shadow" size="lg">
-                              <b-input type="email" required  placeholder="Your email" size="lg" class="py-4" />
+                              <b-input v-model="email" type="email" required  placeholder="Your email" size="lg" class="py-4" />
                               <b-button type="submit" squared>Get Started</b-button>
                             </b-input-group>
                           </b-form>
@@ -303,7 +303,7 @@
                       <p>The signup process will take ~4 minutes</p>
                       <b-form @submit.prevent="gotoSignUp">
                             <b-input-group class="shadow" size="lg">
-                              <b-input type="email" required  placeholder="Your email" size="lg" class="py-4" />
+                              <b-input v-model="email" type="email" required  placeholder="Your email" size="lg" class="py-4" />
                               <b-button type="submit" squared>Get Started</b-button>
                             </b-input-group>
                           </b-form>
@@ -401,7 +401,9 @@ export default {
   },
   methods: {
     gotoSignUp(){
-      
+      if(!/^\w+\.*\w+@\w+\.\w+$/.test(this.email)) return;
+      console.log(this.email);
+
 
     },
     shover(e){
