@@ -314,34 +314,35 @@
           </div>
 
 
+          <!-- section footer mb-0 -->
+          <div class="mb-0" id="sectionFooter">
+            <div class="tester bg-primary">
+              <div class="container">
+                <div class="row footer-row">
+                  <div class="col-12 text-right">
+                    <div
+                      class="mt-2 btn btn-circle btn-outline-semi-light "
+                      @click="toTop"
+                    >
+                      <i  class=" simple-icon-arrow-up"></i>
+                    </div>
+                  </div>
+                  <div class="col-12 text-center footer-content">
+                    <a  href="/">
 
-          <div class="section footer mb-0" id="sectionFooter">
-            <div class="container">
-              <div class="row footer-row">
-                <div class="col-12 text-right">
-                  <a
-                    class="btn btn-circle btn-outline-semi-light footer-circle-button"
-
-                    href="#home"
-                  >
-                    <i class="simple-icon-arrow-up"></i>
-                  </a>
-                </div>
-                <div class="col-12 text-center footer-content">
-                  <a  href="/">
-
-                    <img class="rounded" alt="footer logo" src="./../../assets/payCoinPng.png"
-                       width="40" height="40" />
+                      <img class="rounded" alt="footer logo" src="./../../assets/payCoinPng.png"
+                        width="40" height="40" />
                       <span><strong> Pay Coins</strong> </span>
-                  </a>
+                    </a>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="container copyright pt-5 pb-5">
-              <div class="row">
-                <div class="col-12"></div>
-                <div class="col-12 text-center">
-                  <p class="mb-0">{{ new Date().getFullYear() }} © Pay Coins </p>
+              <div class="container  copyright pt-5 pb-5">
+                <div class="row">
+                  <div class="col-12"></div>
+                  <div class="col-12 text-center">
+                    <p class="mb-0">{{ new Date().getFullYear() }} © Pay Coins </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -400,6 +401,10 @@ export default {
     };
   },
   methods: {
+    toTop(){
+      // alert()
+      document.getElementById('home').scrollIntoView();
+    },
     gotoSignUp(){
       if(!/^\w+\.*\w+@\w+\.\w+$/.test(this.email)) return;
       console.log(this.email);
@@ -433,10 +438,10 @@ export default {
         .getBoundingClientRect();
       const homeSection = document.getElementById("sectionHome");
       homeSection.style.backgroundPositionX = homeRect.x - 580 + "px";
-      this.BLOCKY();
-      const footerSection = document.getElementById("sectionFooter");
-      footerSection.style.backgroundPositionX =
-        event.target.innerWidth - homeRect.x - 2000 + "px";
+      // this.BLOCKY();
+      // const footerSection = document.getElementById("sectionFooter");
+      // footerSection.style.backgroundPositionX =
+        // event.target.innerWidth - homeRect.x - 500 + "px";
 
       if (event.target.innerWidth >= 992) {
         this.showMobileMenu = false;
@@ -459,6 +464,7 @@ export default {
     window.addEventListener("scroll", this.onWindowScroll);
     window.addEventListener("resize", this.onWindowResize);
     window.addEventListener("click", this.onWindowClick);
+    // this.onWindowResize();
   },
   beforeDestroy() {
     document.body.classList.remove("no-footer");
@@ -468,7 +474,19 @@ export default {
   },
 
   created(){
-    this.BLOCKY();
+    // this.BLOCKY();
   }
 };
 </script>
+
+<style lang="scss" >
+ .tester{
+   margin-top: 6em;
+   padding-top: 6em;
+   width: 100%;
+   border-top-right-radius: 6em;
+   box-shadow: 0px 0px 8px rgb(116, 112, 112);
+   clip-path: polygon(0 50%, 95% 0, 100% 10%, 100% 100%, 0 100%);
+ }
+
+</style>
