@@ -116,7 +116,10 @@
                         <div>
                           <b-form @submit.prevent="gotoSignUp">
                             <b-input-group class="shadow" size="lg">
-                              <b-input v-model="email" type="email" required  placeholder="Your email" size="lg" class="py-4" />
+                              <b-input v-model="email" required  placeholder="Your email" size="lg" class="py-4" />
+                              <b-form-invalid-feedback :force-show="isInvalid" >
+                                Enter a valid email
+                              </b-form-invalid-feedback>
                               <b-button type="submit" squared>Get Started</b-button>
                             </b-input-group>
                           </b-form>
@@ -303,7 +306,10 @@
                       <p>The signup process will take ~4 minutes</p>
                       <b-form @submit.prevent="gotoSignUp">
                             <b-input-group class="shadow" size="lg">
-                              <b-input v-model="email" type="email" required  placeholder="Your email" size="lg" class="py-4" />
+                              <b-input v-model="email" required  placeholder="Your email" size="lg" class="py-4" />
+                              <b-form-invalid-feedback :force-show="isInvalid" >
+                                Enter a valid email
+                              </b-form-invalid-feedback>
                               <b-button type="submit" squared>Get Started</b-button>
                             </b-input-group>
                           </b-form>
@@ -341,7 +347,7 @@
                 <div class="row">
                   <div class="col-12"></div>
                   <div class="col-12 text-center">
-                    <p class="mb-0">{{ new Date().getFullYear() }} © Pay Coins </p>
+                    <p class="mb-0">{{ fullYear }} © Pay Coins </p>
                   </div>
                 </div>
               </div>
@@ -359,6 +365,7 @@ import VueScrollTo from "vue-scrollto";
 import HomeLayout from "../../layouts/HomeLayout";
 import GlideComponent from "../../components/Carousel/GlideComponent";
 import { adminRoot, buyUrl } from "../../constants/config";
+import { TEMP_MAIL } from '../../constants/formKey';
 const slideSettings = {
   type: "carousel",
   gap: 30,
@@ -396,7 +403,8 @@ export default {
       slideSettings,
       coinColor: "white",
       currentHover:"",
-      email:""
+      email:"",
+      isInvalid: false,
 
     };
   },
@@ -405,12 +413,18 @@ export default {
       // alert()
       document.getElementById('home').scrollIntoView();
     },
+
     gotoSignUp(){
-      if(!/^\w+\.*\w+@\w+\.\w+$/.test(this.email)) return;
-      console.log(this.email);
+      this.isInvalid = false;
+      if(!/^\w+\.*\w+@\w+\.\w+$/.test(this.email)){
+        this.isInvalid = true;
+        return
+      }
 
-
+      this.$store.commit(TEMP_MAIL, this.email);
+      this.$router.push("/user/register");
     },
+
     shover(e){
       if( e.target.id){
         this.currentHover = e.target.id;
@@ -475,6 +489,13 @@ export default {
 
   created(){
     // this.BLOCKY();
+  },
+
+  computed:{
+    fullYear(){
+      let date = new Date();
+      return date.getFullYear();
+    }
   }
 };
 </script>

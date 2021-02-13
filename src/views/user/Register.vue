@@ -305,6 +305,21 @@ export default {
         this.submitting = false;
       })
     }
+  },
+
+  computed:{
+    tempMail(){
+      let mail = this.$store.getters.tempMail;
+      this.email = mail;
+      return mail;
+    }
+  },
+
+  watch: {
+    tempMail(val){
+      this.email = val;
+    }
   }
+
 }
 </script>
