@@ -6,7 +6,7 @@
 
           <img class="rounded" alt="null" src="./../../assets/payCoinPng.png"
               width="100" height="100" />
-            <!-- <span><strong> Pay Coins</strong> </span> -->
+            <!-- <span><strong> Paycoins</strong> </span> -->
         </a>
         <ul class="navbar-nav">
          <!-- <li class="nav-item">
@@ -42,7 +42,7 @@
               <div class="container d-flex align-items-center justify-content-between">
                 <a class="text-primary pull-left text-bold"  href="/">
 
-                  <img src="./../../assets/payCoinPng.png" class="rounded" width="40" height="40" /> Pay Coins
+                  <img src="./../../assets/payCoinPng.png" class="rounded" width="40" height="40" /> Paycoins
                   <!--
                   <span class="white"></span>
                   <span class="dark"></span>
@@ -88,7 +88,7 @@
             <div class="container">
 
               <div class="row home-row" id="homeRow">
-                <div class="col-12 col-md-6 mb-5">
+                <div class="col-12 col-md-7 mb-5">
                   <div class="home-text">
                    <div class="d-flex justify-content-center d-md-block">
                       <div>
@@ -129,21 +129,88 @@
                   </div>
                 </div>
 
-                <div class="col-12 col-md-6 mt-5">
-                 <div class="row">
-                    <div class="col-2 col-md-3"></div>
-                    <div class="col-8 col-md-9">
-                      <div class="d-flex justify-content-center">
-                        <img class="shadow-sm" style="border-radius: 12px" width="280"  alt="payment-anination" src="./../../assets/anipay.gif"/>
-                      </div>
+                <div class="col-12 col-md-5 mt-5">
+                    <div class="row mb-5">
+                        <div class="col-4 d-flex">
+                          <p style="font-size: 1.2em" class="white flex-fill align-self-center mr-2">
+                            Business and Transactions with crypto accross africa is coined by Paycoins
+                          </p>
+                        </div>
+                        <div class="col-8 d-flex">
+                          <div class="w-100 flex-fill">
+                            <img class="w-100" src="./../../assets/afri2.svg" />
+                          </div>
+                        </div>
                     </div>
-                 </div>
+                    <div class="row" >
+                      <div class="col-12 col-md-3"></div>
+                      <div class="col-12 col-md-9 d-block d-md-flex justify-content-center">
+                        <b-card class="shadow-lg">
+                          <div class="w-100 d-flex mb-2 justify-content-center">
+                            <img class="w-70" src="./../../assets/globe1.png" style="border-radius: 10px" />
+                          </div>
+                          <h2  class="text-center mb-2">Crypto is global</h2>
+                          <p>Your are made global with Paycoins</p>
+                        </b-card>
+                      </div>
+
+                      <!--<div class="d-flex justify-content-center">
+                        <img class="shadow-sm" style="border-radius: 12px" width="280"  alt="payment-anination" src="./../../assets/anipay.gif"/>
+                      </div> -->
+                    </div>
                 </div>
               </div>
             </div>
           </div>
 
           <div class="container mb-5" style="margin-top: 100px">
+            <div class="row">
+
+              <div class="col-12 col-md-7 col-lg-4">
+                <h2 class="mb-2">The world is moving fast</h2>
+                <p>Paycoins carries you along, anywhere, anytime, with the ease of transaction with
+                  crypto currency. Buying and selling using crypto is unlimited and a single click connects
+                  the bridge between you and your customers .
+                </p>
+              </div>
+              <div class="col-12 col-md-12 col-lg-8">
+                <div class="row">
+                  <div class="col-12 col-md-4 mb-5 d-flex">
+                    <b-card class="shadow flex-fill">
+                      <div class="w-100 d-flex mb-2 justify-content-center">
+                        <img class="w-100" src="./../../assets/btc.png" style="border-radius: 10px" />
+                      </div>
+                      <h2  class="text-center mb-2">  Bitcoin <i class="fas fa-check" style="font-size: 0.5em" ></i></h2>
+                      <p>Make and receive payment using Bitcoin. A business has an Bitcoin wallet created for you out of box </p>
+
+                    </b-card>
+                  </div>
+                  <div class="col-12 col-md-4 mb-5 d-flex">
+                    <b-card class="shadow flex-fill">
+                      <div class="w-100 d-flex mb-2 justify-content-center">
+                        <img class="w-100" src="./../../assets/ethe.png" style="border-radius: 10px" />
+                      </div>
+                      <h2  class="text-center mb-2">Etherium <i class="fas fa-check" style="font-size: 0.5em" ></i></h2>
+                      <p>Make and receive payment using Etherium. A business has an Etherium wallet created for you out of box </p>
+                    </b-card>
+                  </div>
+                  <div class="col-12 col-md-4 mb-5 d-flex">
+                    <b-card class="shadow flex-fill">
+                      <div class="w-100 d-flex mb-2 justify-content-center">
+                        <img class="w-100" src="./../../assets/crypto2.jpeg" style="border-radius: 10px" />
+                      </div>
+                      <h2  class="text-center mb-2">Buy and sell</h2>
+                      <p>Set up your business real fast and quick and transact with crypto.
+                       Speed is guanrateed together with user friendly interface </p>
+                    </b-card>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="container mb-5" >
             <div class="mb-5">
               <div class="d-flex justify-content-center">
                   <h1> <strong>Integrated With</strong></h1>
@@ -287,36 +354,41 @@
           </div>
 
           <div class="mt-5 container">
-              <b-card>
-                <div class="d-column d-md-flex mb-3">
-                    <div class="d-none border-right d-md-block flex-fill">
-                      <p class="mb-2"> <i class="fas fa-check mr-3" />Invoicing</p>
-                      <p class="mb-2"> <i class="fas fa-check mr-3" />Multi-currency</p>
-                      <p class="mb-2"> <i class="fas fa-check mr-3" />No limits</p>
-                      <p class="mb-2"> <i class="fas fa-check mr-3" />Conversions to fiat or stablecoin</p>
-                      <p class="mb-2"> <i class="fas fa-check mr-3" />Robust API</p>
-                      <p class="mb-2"> <i class="fas fa-check mr-3" />Webhooks for charges</p>
-                      <p class="mb-2"> <i class="fas fa-check mr-3" />Customized payment buttons</p>
-                      <p class="mb-2"> <i class="fas fa-check mr-3" />Hosted checkout pages</p>
-                      <p class="mb-2"> <i class="fas fa-check mr-3" />Get Started</p>
-                      <p class="mb-2"> <i class="fas fa-check mr-3" />The signup process will take ~4 minutes</p>
-                    </div>
-                    <div class="ml-md-2 flex-fill align-self-center">
-                      <h2><strong>Get Started</strong></h2>
-                      <p>The signup process will take ~4 minutes</p>
-                      <b-form @submit.prevent="gotoSignUp">
-                            <b-input-group class="shadow" size="lg">
-                              <b-input v-model="email" required  placeholder="Your email" size="lg" class="py-4" />
-                              <b-form-invalid-feedback :force-show="isInvalid" >
-                                Enter a valid email
-                              </b-form-invalid-feedback>
-                              <b-button type="submit" squared>Get Started</b-button>
-                            </b-input-group>
-                          </b-form>
-                    </div>
-                </div>
+            <div class="row">
+              <div class="col-12 col-md-1 col-lg-2"></div>
+                <b-card>
+                  <div class="d-column d-md-flex mb-3">
+                      <div class="d-none border-right d-md-block flex-fill">
+                        <p class="mb-2"> <i class="fas fa-check mr-3" />No limits</p>
+                        <p class="mb-2"> <i class="fas fa-check mr-3" />Invoicing</p>
+                        <p class="mb-2"> <i class="fas fa-check mr-3" />Detailed transation history</p>
+                        <p class="mb-2"> <i class="fas fa-check mr-3" />Multi-currency</p>
+                        <p class="mb-2"> <i class="fas fa-check mr-3" />Fast and secured</p>
+                        <p class="mb-2"> <i class="fas fa-check mr-3" />Webhooks for charges</p>
+                        <p class="mb-2"> <i class="fas fa-check mr-3" />Customized payment buttons</p>
+                        <p class="mb-2"> <i class="fas fa-check mr-3" />Easy setup</p>
+                        <p class="mb-2"> <i class="fas fa-check mr-3" />Get Started</p>
+                        <p class="mb-2"> <i class="fas fa-check mr-3" />The signup process will take ~4 minutes</p>
+                      </div>
+                      <div class="ml-md-2 flex-fill align-self-center">
+                        <h2><strong>Get Started</strong></h2>
+                        <p>The signup process will take ~4 minutes</p>
+                        <b-form @submit.prevent="gotoSignUp">
+                              <b-input-group class="shadow" size="lg">
+                                <b-input v-model="email" required  placeholder="Your email" size="lg" class="py-4" />
+                                <b-form-invalid-feedback :force-show="isInvalid" >
+                                  Enter a valid email
+                                </b-form-invalid-feedback>
+                                <b-button type="submit" squared>Get Started</b-button>
+                              </b-input-group>
+                            </b-form>
+                      </div>
+                  </div>
 
-              </b-card>
+                </b-card>
+              <div class="col-12 col-md-10 col-lg-8">
+              </div>
+            </div>
           </div>
 
 
@@ -338,7 +410,7 @@
 
                       <img class="rounded" alt="footer logo" src="./../../assets/payCoinPng.png"
                         width="40" height="40" />
-                      <span><strong> Pay Coins</strong> </span>
+                      <span><strong> Paycoins</strong> </span>
                     </a>
                   </div>
                 </div>
@@ -347,7 +419,7 @@
                 <div class="row">
                   <div class="col-12"></div>
                   <div class="col-12 text-center">
-                    <p class="mb-0">{{ fullYear }} © Pay Coins </p>
+                    <p class="mb-0">{{ fullYear }} © Paycoins </p>
                   </div>
                 </div>
               </div>
@@ -508,6 +580,12 @@ export default {
    border-top-right-radius: 6em;
    box-shadow: 0px 0px 8px rgb(116, 112, 112);
    clip-path: polygon(0 50%, 95% 0, 100% 10%, 100% 100%, 0 100%);
+ }
+
+ .afric{
+   background-image: url('./../../assets/crypto2.jpeg');
+  /*  background-position: cover;*/
+   background-size: cover;
  }
 
 </style>
