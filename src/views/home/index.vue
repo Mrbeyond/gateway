@@ -145,10 +145,15 @@
                     <div class="row" >
                       <div class="col-12 col-md-2 col-lg-1"></div>
                       <div class="col-12 col-md-10 col-lg-9 d-block d-md-flex justify-content-center">
-                        <b-card class="shadow-lg flex-fill">
-                          <div class="w-100 d-flex mb-2 justify-content-center">
+                        <b-card
+                          img-alt="Card image"
+                          img-top
+                          :img-src="require('./../../assets/globe1.png')"
+                          class="w-100"
+                        >
+                          <!-- <div class="w-100 d-flex mb-2 justify-content-center">
                             <img class="w-90" src="./../../assets/globe1.png" style="border-radius: 10px" />
-                          </div>
+                          </div> -->
                           <h2  class="text-center mb-2">Crypto is global</h2>
                           <p>Your are made global with Paycoins</p>
                         </b-card>
