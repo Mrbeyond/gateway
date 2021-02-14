@@ -9,6 +9,7 @@ import todo from './modules/todo'
 import survey from './modules/survey'
 import db from './modules/db'
 import auth from './modules/auth'
+import generic from './modules/generic'
 
 import { setCurrentLanguage } from '../utils'
 
@@ -35,6 +36,7 @@ export default new Vuex.Store({
     todo,
     survey,
     db,
-    auth
+    auth,
+    generic
   }
 })

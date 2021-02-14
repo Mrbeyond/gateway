@@ -88,10 +88,10 @@ export default{
           commit(PROCESSING_AUTH, false);
       })
       .catch(err=>{
-        console.log(err);
+        // console.log(err);
           if(err && err.response && err.response.status === 401){
             keepUser(null);
-            commit(AUTH_ERROR, err.message);
+            commit(ERR_MESS, err.message);
             commit(PROCESSING_AUTH, false);
             commit(AUTH_ERROR, true);
           }

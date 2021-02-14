@@ -75,9 +75,7 @@
 
                    <b-form-select
                     v-model="country_id"
-                    :options="countries"
-                    value-field="id"
-                    text-field="countryName"
+                    :options="busiParams"
                      @blur="validateCountryName"
                      @change="validateTouch"
                   ></b-form-select>
@@ -128,6 +126,7 @@
 import axios from 'axios';
 import { adminRoot, PROXY } from '../../constants/config'
 import { setCurrentUser } from '../../utils';
+import { BUSI_PARAM } from '../../constants/formKey';
 export default {
   data () {
     return {
@@ -304,7 +303,11 @@ export default {
         this.$bvToast.show("example-toast");
         this.submitting = false;
       })
-    }
+    },
+
+    fetchCountries(){
+      this.$store.dispatch(BUSI_PARAM)
+    },
   },
 
   computed:{
@@ -312,6 +315,14 @@ export default {
       let mail = this.$store.getters.tempMail;
       this.email = mail;
       return mail;
+    },
+
+    busiParams(){
+      let val = this.$store.getters.busiParams;
+      if(val){
+        val = val.countries.map(data=>({value:data.id, text: data.name}))
+      }
+      return null;
     }
   },
 
@@ -319,6 +330,10 @@ export default {
     tempMail(val){
       this.email = val;
     }
+  },
+
+  created(){
+      this.fetchCountries();
   }
 
 }
