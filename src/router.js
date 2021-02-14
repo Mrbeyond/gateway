@@ -25,7 +25,7 @@ const routes = [
       {
         path: "",
         component: () =>
-          import(/* webpackChunkName: "blank-page" */ "./views/app/blank-page")
+          import(/* webpackChunkName: "blank-page" */ "./views/app/Dashboard")
         },
         {
           path: "customers",
