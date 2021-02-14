@@ -319,10 +319,11 @@ export default {
 
     busiParams(){
       let val = this.$store.getters.busiParams;
+      console.log(val);
       if(val){
         val = val.countries.map(data=>({value:data.id, text: data.name}))
       }
-      return null;
+      return val;
     }
   },
 
