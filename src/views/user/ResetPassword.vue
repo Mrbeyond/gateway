@@ -54,8 +54,8 @@
                 :disabled="processing"
                 :class="{'btn-multiple-state btn-shadow': true,
                     'show-spinner': processing,
-                    'show-success': !processing && loginError===false,
-                    'show-fail': !processing && loginError }"
+                    'show-success': !processing && successful,
+                    'show-fail': !processing && successful === false }"
               >
                 <span class="spinner d-inline-block">
                   <span class="bounce1"></span>
@@ -79,7 +79,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import Axios from 'axios';
 import { validationMixin } from "vuelidate";
 const {
   required,
@@ -92,9 +92,11 @@ const {
 export default {
   data() {
     return {
+      processing: false,
+      successful: null,
       form: {
         password: "",
-        passwordAgain: ""
+        passwordAgain: "",
       }
     };
   },
@@ -109,26 +111,44 @@ export default {
       passwordAgain: {
         required,
         sameAsPassword: sameAs("password")
-      }
+      },
     }
   },
   computed: {
-    ...mapGetters([
-      "currentUser",
-      "processing",
-      "loginError",
-      "resetPasswordSuccess"
-    ])
   },
   methods: {
-    ...mapActions(["resetPassword"]),
     formSubmit() {
       this.$v.form.$touch();
       if (!this.$v.form.$anyError) {
-        this.resetPassword({
-          newPassword: this.form.password,
-          resetPasswordCode: this.$route.query.oobCode || ""
-        });
+        let formData = {
+          password: this.password,
+          token: 'token from then link',
+        }
+         this.processing = true;
+        this.successful = false
+        Axios.post(`${PROXY}user/reset-password`, formData)
+        .then(res=>{
+          if(!res.data.error){
+            console.log(res.data.message);
+
+            this.successful = true
+          }else{
+            this.$notify("error", "Reset Password Error",
+             " Something went wrong, please try again",
+             {
+              duration: 3000,
+              permanent: false
+            });
+          }
+          this.processing = false;
+        })
+        .catch(err=>{
+          if(err.response && err.response){
+            console.log( err.response);
+          }
+          this.processing = false;
+        })
+
       }
     }
   },
@@ -141,19 +161,7 @@ export default {
         });
       }
     },
-    resetPasswordSuccess(val) {
-      if (val) {
-        this.$notify(
-          "success",
-          "Reset Password Success",
-          "Reset password success",
-          {
-            duration: 3000,
-            permanent: false
-          }
-        );
-      }
-    }
+
   }
 };
 </script>
