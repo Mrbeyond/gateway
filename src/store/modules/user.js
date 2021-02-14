@@ -56,51 +56,51 @@ export default {
     }
   },
   actions: {
-    login({ commit }, payload) {
-      commit('clearError')
-      commit('setProcessing', true)
-      // firebase
-      //   .auth()
-      //   .signInWithEmailAndPassword(payload.email, payload.password)
-      //   .then(
-      //     user => {
-      //       const item = { uid: user.user.uid, ...currentUser }
-      //       setCurrentUser(item)
-      //       commit('setUser', item)
-      //     },
-      //     err => {
-      //       setCurrentUser(null);
-      //       commit('setError', err.message)
-      //       setTimeout(() => {
-      //         commit('clearError')
-      //       }, 3000)
-      //     }
-      //   );
+    // login({ commit }, payload) {
+    //   commit('clearError')
+    //   commit('setProcessing', true)
+    //   // firebase
+    //   //   .auth()
+    //   //   .signInWithEmailAndPassword(payload.email, payload.password)
+    //   //   .then(
+    //   //     user => {
+    //   //       const item = { uid: user.user.uid, ...currentUser }
+    //   //       setCurrentUser(item)
+    //   //       commit('setUser', item)
+    //   //     },
+    //   //     err => {
+    //   //       setCurrentUser(null);
+    //   //       commit('setError', err.message)
+    //   //       setTimeout(() => {
+    //   //         commit('clearError')
+    //   //       }, 3000)
+    //   //     }
+    //   //   );
 
 
-        Axios.post(`${PROXY}user/login`, payload)
-        .then(res=>{
-            if(!res.data.error){
-              // const {authorization} = ;
-              localStorage.authToken = res.data.data.authorization
-              delete res.data.data.authorization;
-              const authUser = res.data.data;
-              setCurrentUser(authUser);
-              commit('setUser', authUser);
-            }else{
-              setCurrentUser(null);
-              commit('setError', "Something went wrong");
-            }
+    //     Axios.post(`${PROXY}user/login`, payload)
+    //     .then(res=>{
+    //         if(!res.data.error){
+    //           // const {authorization} = ;
+    //           localStorage.authToken = res.data.data.authorization
+    //           delete res.data.data.authorization;
+    //           const authUser = res.data.data;
+    //           setCurrentUser(authUser);
+    //           commit('setUser', authUser);
+    //         }else{
+    //           setCurrentUser(null);
+    //           commit('setError', "Something went wrong");
+    //         }
 
-        })
-        .catch(err=>{
-            if(err && err.response && err.response.status === 401){
-              setCurrentUser(null);
-              commit('setError', err.message)
-            }
-        })
+    //     })
+    //     .catch(err=>{
+    //         if(err && err.response && err.response.status === 401){
+    //           setCurrentUser(null);
+    //           commit('setError', err.message)
+    //         }
+    //     })
 
-    },
+    // },
     forgotPassword({ commit }, payload) {
       commit('clearError')
       commit('setProcessing', true)

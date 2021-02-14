@@ -1,7 +1,7 @@
 <template>
 <b-row class="h-100">
     <b-colxx xxs="12" md="10" class="mx-auto my-auto">
-        <b-card class="auth-card mt-4 mt-md-0 my-md-2" no-body>
+        <b-card class="auth-card shadow mt-4 mt-md-0 my-md-2" no-body>
             <div class="position-relative image-side">
                 <div class="text-center white mb-0">
                     <p class="h5 mt-md-4"><strong>Please use your credentials to login.</strong></p>

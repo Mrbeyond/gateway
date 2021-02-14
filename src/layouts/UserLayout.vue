@@ -1,7 +1,7 @@
 <template>
   <div id="root">
     <!--<div class="fixed-background"></div> -->
-    <div class="fixed-background"></div>
+    <div ></div>
     <main>
       <div class="container">
         <slot></slot>

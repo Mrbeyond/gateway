@@ -1,6 +1,7 @@
 <template>
-  <div id="root">
-    <div class="fixed-background">
+  <div id="root mt-5" >
+<!-- <div class="fixed-background"> -->
+    <div class="" >
       <main>
         <div class="container">
           <b-row class="h-100">

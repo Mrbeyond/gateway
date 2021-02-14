@@ -1,7 +1,7 @@
 <template>
   <b-row class="h-100">
     <b-colxx xxs="12" md=10  class="mx-auto my-auto">
-      <b-card class="auth-card my-3" no-body>
+      <b-card class="auth-card shadow my-3" no-body>
           <div class="position-relative text-center white image-side ">
               <p class="mt-md-4 h5">  Please use this form to register. </p>
               <p class="mb-2 mb-md-4">If you are a member, please
@@ -75,9 +75,7 @@
 
                    <b-form-select
                     v-model="country_id"
-                    :options="countries"
-                    value-field="id"
-                    text-field="countryName"
+                    :options="busiParams"
                      @blur="validateCountryName"
                      @change="validateTouch"
                   ></b-form-select>
@@ -128,6 +126,7 @@
 import axios from 'axios';
 import { adminRoot, PROXY } from '../../constants/config'
 import { setCurrentUser } from '../../utils';
+import { BUSI_PARAM } from '../../constants/formKey';
 export default {
   data () {
     return {
@@ -152,7 +151,7 @@ export default {
 
       country_id:'',
       countryNameTouched: false,
-      countryNameInvalid: false,
+      isCountryNameInvalid: false,
 
       email: '',
       emailTouched: false,
@@ -198,62 +197,74 @@ export default {
       this.validateTouch();
     },
     validateTouch(){
-      let isFormValid = false;
-      if(this.phoneTouched){
-        if(!/^[0-9]{11,}$/.test(this.phone)){
-          this.isPhoneInvalid = true;
-          isFormValid = false;
-        }else{
-          this.isPhoneInvalid = false;
-          isFormValid = true;
-        }
+      let isFormValid ={
+        fN: false,
+        lN: false,
+        em: false,
+        ph: false,
+        co: false,
+        pa: false,
       }
+
       if(this.firstNameTouched){
         if(!/^[a-zA-Z]{3,}$/.test(this.firstname)){
           this.isFirstNameInvalid = true;
-          isFormValid = false;
+          isFormValid.fN = false;
         }else{
           this.isFirstNameInvalid = false;
-          isFormValid = true;
+          isFormValid.fN = true;
         }
       }
       if(this.lastNameTouched){
         if(!/^[a-zA-Z]{3,}$/.test(this.lastname)){
           this.isLastNameInvalid = true;
-          isFormValid = false;
+          isFormValid.lN = false;
         }else{
           this.isLastNameInvalid = false;
-          isFormValid = true;
-        }
-      }
-      if(this.countryNameTouched){
-        if(!/^[0-9]$/.test(this.country_id)){
-          this.isCountryNameInvalid = true;
-          isFormValid = false;
-        }else{
-          this.isCountryNameInvalid = false;
-          isFormValid = true;
-        }
-      }
-      if(this.passwordTouched){
-        if(!/^[_a-zA-Z0-9]{8,}$/.test(this.password)){
-          this.isPasswordInvalid = true;
-          isFormValid = false;
-        }else{
-          this.isPasswordInvalid = false;
-          isFormValid = true;
+          isFormValid.lN = true;
         }
       }
       if(this.emailTouched){
         if(!/^\w+\.*\w+@\w+\.\w+$/.test(this.email)){
           this.isEmailInvalid = true;
-          isFormValid = false;
+          isFormValid.em = false;
+
         }else{
           this.isEmailInvalid = false;
-          isFormValid = true;
+          isFormValid.em = true;
         }
       }
-      this.formIsValid = isFormValid;
+      if(this.phoneTouched){
+        if(!/^[0-9]{11,}$/.test(this.phone)){
+          this.isPhoneInvalid = true;
+          isFormValid.ph = false;
+        }else{
+          this.isPhoneInvalid = false;
+          isFormValid.ph = true;
+        }
+      }
+
+      if(this.countryNameTouched){
+        if(!/^[0-9]{1,}$/.test(this.country_id)){
+          this.isCountryNameInvalid = true;
+          isFormValid.co = false;
+        }else{
+          this.isCountryNameInvalid = false;
+          isFormValid.co = true;
+        }
+      }
+      if(this.passwordTouched){
+        if(!/^[_a-zA-Z0-9]{8,}$/.test(this.password)){
+          this.isPasswordInvalid = true;
+          isFormValid.pa = false;
+        }else{
+          this.isPasswordInvalid = false;
+          isFormValid.pa = true;
+        }
+      }
+
+      let checker = Object.values(isFormValid).findIndex(data=>data == false);
+      this.formIsValid = checker > -1? false: true;
     },
 
     formSubmit () {
@@ -270,18 +281,19 @@ export default {
       if(!this.formIsValid){
         return;
       }
-     let formData = {
-      phone:this.phone,
-      password:this.password,
-      country_id:this.country_id,
-      firstname:this.firstname,
-      lastname:this.lastname,
-      email:this.email,
+
+      let formData = {
+        firstname: this.firstname,
+        lastname: this.lastname,
+        email: this.email,
+        phone: this.phone,
+        country_id: this.country_id,
+        password: this.password,
       }
 
-      console.log(this.formIsValid);
-        this.submitting = true;
-      axios.post(`${PROXY}user/register'`, formData)
+      console.log(formData);
+      this.submitting = true;
+      axios.post(`${PROXY}user/register`, formData)
       .then(res=>{
         if(!res.data.error){
           localStorage.authToken = res.data.data.authorization
@@ -304,7 +316,11 @@ export default {
         this.$bvToast.show("example-toast");
         this.submitting = false;
       })
-    }
+    },
+
+    fetchCountries(){
+      this.$store.dispatch(BUSI_PARAM)
+    },
   },
 
   computed:{
@@ -312,6 +328,15 @@ export default {
       let mail = this.$store.getters.tempMail;
       this.email = mail;
       return mail;
+    },
+
+    busiParams(){
+      let val = this.$store.getters.busiParams;
+      console.log(val);
+      if(val){
+        val = val.countries.map(data=>({value:data.id, text: data.name}))
+      }
+      return val;
     }
   },
 
@@ -319,6 +344,10 @@ export default {
     tempMail(val){
       this.email = val;
     }
+  },
+
+  created(){
+      this.fetchCountries();
   }
 
 }
