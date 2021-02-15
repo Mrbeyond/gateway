@@ -467,12 +467,12 @@ const data = [{
   label: "menu.wallet",
   to: `${adminRoot}/blank-page`
 },
-{
-  id: "docs",
-  icon: "iconsminds-library",
-  label: "menu.docs",
-  to: "https://piaf-vue-docs.coloredstrategies.com/",
-  newWindow: true
-}
+// {
+//   id: "docs",
+//   icon: "iconsminds-library",
+//   label: "menu.docs",
+//   to: "https://piaf-vue-docs.coloredstrategies.com/",
+//   newWindow: true
+// }
 ];
 export default data;
