@@ -40,19 +40,6 @@ export const authUser =()=> {
 export const keepUser = (user)=>{
   if(!user) return;
   localStorage.AU = window.btoa(window.btoa(JSON.stringify(user)));
-
-}
-
-
-
-
-
-export const currentUser = {
-  id: 1,
-  title: 'Sarah Kortney',
-  img: '/assets/img/profiles/l-1.jpg',
-  date: 'Last seen today 15:24',
-  role: UserRole.Admin
 }
 
 export const isAuthGuardActive = false
