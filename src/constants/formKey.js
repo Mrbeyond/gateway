@@ -17,8 +17,12 @@ export const BUSI_PARAM = "BUSI_PARAM";
 export const EXCHANGE_RATES = "EXCHANGE_RATES";
 export const GENERROR = "GENERROR";
 
+export const SHOW = "SHOW";
+export const MOBILE = "MOBILE";
+
 
 export const BUSINESSES = "BUSINESSES";
+export const CUSTOMERS = "CUSTOMERS";
 export const RES_KEY = "RES_KEY";
 export const FETCHING = "FETCHING";
 export const AUTO_FETCHING = "AUTO_FETCHING";

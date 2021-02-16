@@ -79,7 +79,7 @@ export default{
             keepToken(res.data.data.authorization)
             delete res.data.data.authorization;
             keepUser(res.data.data);
-            commit(USER, authUser);
+            commit(USER, res.data.data);
             commit(IS_LOGGED_IN, true);
           }else{
             keepUser(null);

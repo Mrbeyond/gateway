@@ -10,6 +10,7 @@ import survey from './modules/survey'
 import db from './modules/db'
 import auth from './modules/auth'
 import generic from './modules/generic'
+import side from './modules/side'
 
 import { setCurrentLanguage } from '../utils'
 
@@ -37,6 +38,7 @@ export default new Vuex.Store({
     survey,
     db,
     auth,
-    generic
+    generic,
+    side,
   }
 })

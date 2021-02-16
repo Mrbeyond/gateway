@@ -438,8 +438,8 @@ const data = [{
   id: "business",
   icon: "iconsminds-data-storage",
   label: "menu.business",
-  // to: `${adminRoot}/businesses`,
-  subs: [
+  to: `${adminRoot}/business`,
+ /* subs: [
   {
     icon: "simple-icon-layers",
     label: "menu.business",
@@ -459,7 +459,7 @@ const data = [{
     to: `${adminRoot}/menu/levels`,
 
   },
-  ]
+  ]*/
 },
 {
   id: "blank-page",
