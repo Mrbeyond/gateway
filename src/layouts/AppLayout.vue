@@ -6,7 +6,7 @@
       id="sideBar" ref="sideBar"
       v-show="show"
       :style="`position: fixed; top:0, left:0; z-index: 50000; width: ${show?200:0}px`"
-      class="bg-danger h-100"
+      class="bg-primary h-100"
     >
       <manual-side-vue />
     </div>
