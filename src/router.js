@@ -12,31 +12,31 @@ const routes = [
     path: "/",
     component: () => import(/* webpackChunkName: "home" */ "./views/home"),
   },
-  {
-    path: adminRoot,
-    component: () => import(/* webpackChunkName: "app" */ "./views/app"),
-    redirect: `${adminRoot}`,
-    meta: { loginRequired: true },
-    /*
-    define with Authorization :
-    meta: { loginRequired: true, roles: [UserRole.Admin, UserRole.Editor] },
-    */
-    children: [
-      {
-        path: "",
-        component: () =>
-          import(/* webpackChunkName: "blank-page" */ "./views/app/dashboards/DashBoard/DBCover.vue")
-        },
-        {
-          path: "customers",
-          component: () => import(/* webpackChunkName: "error" */ "./views/app/dashboards/Customer/Customers")
-        },
-        {
-          path: "businesses",
-          component: () => import(/* webpackChunkName: "error" */ "./views/app/dashboards/Business/Businesses")
-        },
-    ]
-  },
+  // {
+  //   path: adminRoot,
+  //   component: () => import(/* webpackChunkName: "app" */ "./views/app"),
+  //   redirect: `${adminRoot}`,
+  //   meta: { loginRequired: true },
+  //   /*
+  //   define with Authorization :
+  //   meta: { loginRequired: true, roles: [UserRole.Admin, UserRole.Editor] },
+  //   */
+  //   children: [
+  //     {
+  //       path: "",
+  //       component: () =>
+  //         import(/* webpackChunkName: "blank-page" */ "./views/app/dashboards/DashBoard/DBCover.vue")
+  //       },
+  //       {
+  //         path: "customers",
+  //         component: () => import(/* webpackChunkName: "error" */ "./views/app/dashboards/Customer/Customers")
+  //       },
+  //       {
+  //         path: "businesses",
+  //         component: () => import(/* webpackChunkName: "error" */ "./views/app/dashboards/Business/Businesses")
+  //       },
+  //   ]
+  // },
   {
     path: "blank-page",
     component: () =>

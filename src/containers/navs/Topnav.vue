@@ -12,11 +12,6 @@
         @click="toggleSide"
         class="menu-button-mobile d-xs-block d-sm-block d-md-none"
       >
-<<<<<<< HEAD
-        <mobile-menu-icon />
-      </a>
-      <div class="d-inline-block d-flex">
-=======
         <mobile-menu-icon  />
       </span>
       <!-- <div
@@ -35,7 +30,6 @@
         </span>
       </div> -->
       <div class="d-inline-block">
->>>>>>> ab760859334e180e7a29cb424a4933b7738be9a0
         <b-dropdown
           id="langddm"
           class="ml-2"
@@ -70,19 +64,7 @@
           >{{l.name}}</b-dropdown-item>
         </b-dropdown>
       </div>
-<<<<<<< HEAD
-      </div>
-      
-      <div class="position-relative d-none d-none d-lg-inline-block">
-        <a
-          class="btn btn-outline-primary btn-sm ml-2"
-          target="_top"
-          :href="buyUrl"
-        >{{$t('user.buy')}}</a>
-      </div>
-=======
     </div>
->>>>>>> ab760859334e180e7a29cb424a4933b7738be9a0
     <router-link class="navbar-logo" tag="a" :to="adminRoot">
       logo
     </router-link>
@@ -206,11 +188,8 @@ import {
   adminRoot
 } from "../../constants/config";
 import { getDirection, setDirection, getThemeColor, setThemeColor } from "../../utils";
-<<<<<<< HEAD
 import {BUSINESSDETAILS} from "../../constants/formKey"
-=======
 import { MOBILE } from '../../constants/formKey';
->>>>>>> ab760859334e180e7a29cb424a4933b7738be9a0
 export default {
   components: {
     "menu-icon": MenuIcon,
@@ -335,15 +314,10 @@ export default {
       currentUser: "currentUser",
       menuType: "getMenuType",
       menuClickCount: "getMenuClickCount",
-<<<<<<< HEAD
-      selectedMenuHasSubItems: "getSelectedMenuHasSubItems"
-    }),
-=======
       selectedMenuHasSubItems: "getSelectedMenuHasSubItems",
       mobile : "mobile",
       show:"show",
     })
->>>>>>> ab760859334e180e7a29cb424a4933b7738be9a0
   },
   beforeDestroy() {
     document.removeEventListener("click", this.handleDocumentforMobileSearch);
