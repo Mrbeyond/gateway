@@ -58,7 +58,7 @@
 
 
     "transaction": "Transaction",
-    "customerss": "Customerss",
+    "customerss": "Customers",
     "business":"Business",
     "createbusiness":"Create Business",
     "get-all-businesses":"Get All Businesses",

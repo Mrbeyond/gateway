@@ -32,7 +32,7 @@ const routes = [
           component: () => import(/* webpackChunkName: "error" */ "./views/app/dashboards/Customers/CustomersCover")
         },
         {
-          path: "businesses",
+          path: "business",
           component: () => import(/* webpackChunkName: "error" */ "./views/app/dashboards/Business/Businesses")
         },
     ]
