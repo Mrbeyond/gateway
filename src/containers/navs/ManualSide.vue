@@ -1,5 +1,28 @@
 <template>
   <div class="main-menu">
+
+    <div class="px-1">
+      <b-dropdown
+        id="langddm"
+        variant="light"
+        size="sm"
+        toggle-class="language-button"
+        block
+        class="border-0 w-100"
+      >
+        <template slot="button-content">
+          <span class="name">hghghg{{currentBusiness}}</span>
+        </template>
+
+        <b-dropdown-item class="w-100"
+          v-for="(l,index) in businesses.businesses"
+          :key="index"
+          @click="changeBusiness(l.id, l.name)"
+        >{{l.name}}</b-dropdown-item>
+      </b-dropdown>
+    </div>
+
+
       <vue-perfect-scrollbar
         class="scroll"
         :settings="{ suppressScrollX: true, wheelPropagation: false }"
@@ -46,8 +69,31 @@ import menuItems from "../../constants/menu";
 export default {
 
   data: ()=>({
-    menuItems: menuItems
+    menuItems: menuItems,
+    currentBusiness:"",
+    currentBusinessDetails:"",
+
   }),
+
+  computed:{
+    businesses(){
+      console.log(this.$store.getters.user);
+      return this.$store.getters.user;
+    },
+
+  },
+
+  methods:{
+
+    changeBusiness(id, name) {
+     this.currentBusiness = name
+    //  })
+     this.$store.dispatch(BUSINESSDETAILS,id);
+
+     console.log(this.currentBusinessDetails);
+    },
+
+  },
 
 }
 </script>

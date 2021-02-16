@@ -1,10 +1,4 @@
 <template>
-<<<<<<< HEAD
-  <div id="app-container" :class="getMenuType">
-    <sidebar />
-    <topnav />
-    <main>
-=======
   <div id="app-container" >
 
     <!-- Desktop static sidebar -->
@@ -14,13 +8,13 @@
       :style="`position: fixed; top:0, left:0; z-index: 50000; width: ${show?200:0}px`"
       class="bg-primary h-100"
     >
-      <manual-side-vue />
+      <manual-side />
     </div>
 
     <!-- Mobile modal sidebar -->
     <b-modal v-model="mobily" :hide-header="true"
       :hide-footer="true" modal-class="modal-left ">
-      <manual-side-vue />
+      <manual-side />
     </b-modal>
 
     <!-- Top navbar -->
@@ -28,7 +22,6 @@
 
     <!-- Main Container -->
     <div :style="`margin-left:  ${show?200:0}px`">
->>>>>>> ab760859334e180e7a29cb424a4933b7738be9a0
       <div class="container-fluid">
         <slot></slot>
       </div>
@@ -48,10 +41,10 @@
 </template>
 
 <script>
-import Sidebar from "../containers/navs/Sidebar";
+// import Sidebar from "../containers/navs/Sidebar";
 import Topnav from "../containers/navs/Topnav";
 import Footer from "../containers/navs/Footer";
-import ManualSideVue from '../containers/navs/ManualSide.vue';
+import ManualSide from '../containers/navs/ManualSide.vue';
 
 import { mapGetters } from "vuex";
 import { MOBILE, SHOW } from '../constants/formKey';
@@ -59,9 +52,9 @@ import { MOBILE, SHOW } from '../constants/formKey';
 export default {
   components: {
     topnav: Topnav,
-    sidebar: Sidebar,
+    // sidebar: Sidebar,
     "footer-component": Footer,
-    ManualSideVue,
+    ManualSide,
   },
   data() {
     return {

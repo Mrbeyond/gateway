@@ -29,7 +29,7 @@ const routes = [
         },
         {
           path: "customers",
-          component: () => import(/* webpackChunkName: "error" */ "./views/app/dashboards/Customer/Customers")
+          component: () => import(/* webpackChunkName: "error" */ "./views/app/dashboards/Customers/CustomersCover")
         },
         {
           path: "businesses",

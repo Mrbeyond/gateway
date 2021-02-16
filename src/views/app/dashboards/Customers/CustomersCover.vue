@@ -1,9 +1,3 @@
-
-
-
-
-
-
 <template>
   <div>
     <!-- <div v-if="isLoading && !isFetched" class="row justify-content-center">
@@ -27,12 +21,11 @@ import Vuetable from "vuetable-2/src/components/Vuetable.vue";
 import VuetablePaginationBootstrap from "../../../../components/Common/VuetablePaginationBootstrap.vue";
 import { apiUrl, PROXY } from "../../../../constants/config";
 import { hToken, loadash, LUX_ZONE, statusA,toMoney } from "../../../../constants/formKey";
-import {LGS} from '../../../../constants/formKey';
+// import {LGS} from '../../../../constants/formKey';
 // import {ADD_CARD,VEHICLE_TYPES } from '../../../../constants/formKey';
 
 
 export default {
-  LGS,
   props: ["title"],
   components: {
     vuetable: Vuetable,
