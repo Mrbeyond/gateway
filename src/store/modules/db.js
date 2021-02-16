@@ -42,10 +42,6 @@ export default {
       state.businessDetails = payload;
     },
 
-    [TERMINALS](state, payload){
-      state.terminals = payload;
-    },
-
     [RES_KEY](state, payload){
       // console.log(payload.owner);
       state.resKey = payload;
