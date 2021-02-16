@@ -1,12 +1,13 @@
 import Axios from 'axios';
 import { PROXY } from '../../constants/config';
-import {CUSTOMERS,BUSINESSES, RES_KEY,hToken, REFRESHER, BUSINESSDETAILS,REFRESHING
+import {CUSTOMERS,BUSINESSES, RES_KEY,hToken, REFRESHER,GETPAYOUTS, BUSINESSDETAILS,REFRESHING
 } from '../../constants/formKey';
 
 export default {
   state: {
     customers: null,
     businesses: null,
+    payouts: null,
     businessDetails: null,
     resKey: {status:false, owner:''},
     refresher: {status:false, owner:''},
@@ -16,6 +17,8 @@ export default {
 
   /** This is manually included */
   getters: {
+    payouts: state=> state.payouts,
+
     businessDetails: state=> state.businessDetails,
 
     businesses: state=> state.businesses,
@@ -30,6 +33,10 @@ export default {
   },
 
   mutations: {
+
+    [GETPAYOUTS](state, payload){
+      state.payouts = payload;
+    },
 
     [CUSTOMERS](state, payload){
       state.customers = payload;
@@ -62,6 +69,34 @@ export default {
 
 
   actions: {
+    
+    [GETPAYOUTS]({commit},id){
+      
+      commit(REFRESHER, GETPAYOUTS);
+      Axios.get(`${PROXY}business/${id}`, {headers: hToken()})
+      .then(res=>{
+        if(!res.data.error){
+          console.log(res);
+          let payload;
+          try {
+            payload = res.data.data
+            commit(GETPAYOUTS, payload);
+            commit(RES_KEY, {status:0, owner: GETPAYOUTS});
+          } catch (e) {
+            commit(RES_KEY, {status:1, owner: GETPAYOUTS});
+          }
+        }else{
+          commit(RES_KEY, {status:1, owner: GETPAYOUTS});
+        }
+        commit(REFRESHER, GETPAYOUTS);
+      })
+      .catch(err => {
+        if(err.response){
+          commit(RES_KEY, {status:2, owner: GETPAYOUTS});
+          commit(REFRESHER, GETPAYOUTS);
+        }
+      })
+    },
     [BUSINESSDETAILS]({commit},id){
       
       commit(REFRESHER, BUSINESSDETAILS);

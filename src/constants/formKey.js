@@ -29,6 +29,8 @@ export const FETCHING = "FETCHING";
 export const AUTO_FETCHING = "AUTO_FETCHING";
 export const REFRESHER = "REFRESHER";
 export const REFRESHING = "REFRESHING";
+export const GETPAYOUTS = "GETPAYOUTS";
+
 
 export const hToken=()=>{
   try {

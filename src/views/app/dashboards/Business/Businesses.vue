@@ -148,7 +148,6 @@ import {BUSINESSES } from '../../../../constants/formKey';
 
 
 export default {
-  LGS,
   props: ["title"],
   components: {
     vuetable: Vuetable,
