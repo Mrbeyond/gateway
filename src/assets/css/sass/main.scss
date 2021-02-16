@@ -8,3 +8,52 @@ html {
     background-color: $theme-color-1 !important;
 }
 */ 
+
+.modal-left.modal {
+    padding-left: 0 !important;
+}
+
+.modal-left {   
+    padding-left: 0 !important;
+  
+    .modal-dialog {
+      margin: 0 auto;
+      margin-left: 0;
+      margin-top: 0;
+      margin-bottom: 0;
+      height: 100%;
+      max-width: 200px;
+    }
+  
+    .modal-content {
+      min-height: 100%;
+    }
+  
+    .modal-header {
+      height: $navbar-height;
+  
+      @include respond-below(xl) {
+        height: $navbar-height-lg;
+      }
+  
+      @include respond-below(lg) {
+        height: $navbar-height-md;
+      }
+  
+      @include respond-below(sm) {
+        height: $navbar-height-xs;
+      }
+    }
+  
+    .modal-footer {
+      justify-content: center;
+    }
+  
+    &.modal.fade .modal-dialog {
+      transform: translate(25%, 0) !important;
+    }
+  
+    &.modal.show .modal-dialog {
+      transform: translate(0, 0) !important;
+    }
+  }

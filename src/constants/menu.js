@@ -438,8 +438,8 @@ const data = [{
   id: "business",
   icon: "iconsminds-data-storage",
   label: "menu.business",
-  // to: `${adminRoot}/businesses`,
-  subs: [
+  to: `${adminRoot}/business`,
+ /* subs: [
   {
     icon: "simple-icon-layers",
     label: "menu.business",
@@ -459,7 +459,7 @@ const data = [{
     to: `${adminRoot}/menu/levels`,
 
   },
-  ]
+  ]*/
 },
 {
   id: "blank-page",
@@ -467,12 +467,12 @@ const data = [{
   label: "menu.wallet",
   to: `${adminRoot}/blank-page`
 },
-{
-  id: "docs",
-  icon: "iconsminds-library",
-  label: "menu.docs",
-  to: "https://piaf-vue-docs.coloredstrategies.com/",
-  newWindow: true
-}
+// {
+//   id: "docs",
+//   icon: "iconsminds-library",
+//   label: "menu.docs",
+//   to: "https://piaf-vue-docs.coloredstrategies.com/",
+//   newWindow: true
+// }
 ];
 export default data;

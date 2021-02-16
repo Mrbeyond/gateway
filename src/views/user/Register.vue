@@ -114,7 +114,10 @@
 
 
               <b-toast variant="danger" id="example-toast" title="Something went wrong" >
-                Please try again, there was error processing your regristration
+                 {{ errType == 2?
+                  'Please try again, there was error processing your regristration':
+                  'User already exists!'
+                 }}
               </b-toast>
           </b-form>
         </div>
@@ -160,12 +163,8 @@ export default {
       password: '',
       passwordTouched: false,
       isPasswordInvalid: false,
-      countries: [
-          { id: 1, countryName: 'Nigeria' },
-          { id: 2, countryName: 'USA' },
-          { id: 3, countryName: 'London' },
-          { id: 4, countryName: 'Gana' }
-        ],
+
+      errType: 1,
 
     }
   },
@@ -309,8 +308,14 @@ export default {
         this.submitting = false;
       })
       .catch(err=>{
-        console.log(err);
-        if(err && err.response){
+        // console.log(err);
+        if(err && err.response && err.response.code){
+          let code = err.response.code;
+          if(code === 403){
+            this.errType = 2;
+          }else{
+            this.errType = 1;
+          }
         }
 
         this.$bvToast.show("example-toast");

@@ -1,16 +1,5 @@
-export const ADD_ADMIN = "add_admin";
-export const ADD_AGENT = "add_agent";
-export const ADD_CARD = "add_card";
-export const ADD_TAG = "add_tag";
-export const ADD_PAYER = "add_payer";
-export const ADD_CV = "add_commercial";
-export const ADD_IV = "add_imported";
-export const ADD_WALLET= "add_wallet";
-export const ADD_TERMINAL = "add_terminal";
-export const ADD_LG = "add_lg";
-export const ADD_PORT = "add_port";
-export const ADD_GARAGE = "add_garage";
-export const ADD_AGENT_TYPE = "add_agent_type";
+
+export const ADD_BUSINESS = "add_business";
 
 
 /** Auths */
@@ -28,25 +17,20 @@ export const BUSI_PARAM = "BUSI_PARAM";
 export const EXCHANGE_RATES = "EXCHANGE_RATES";
 export const GENERROR = "GENERROR";
 
+export const SHOW = "SHOW";
+export const MOBILE = "MOBILE";
 
-export const ADMINS = "ADMINS";
-export const CUSTOMERS = "CUSTOMERS";
+
 export const BUSINESSES = "BUSINESSES";
+<<<<<<< HEAD
 export const TERMINALS = "TERMINALS";
 export const BUSINESSDETAILS = "BUSINESSDETAILS";
+=======
+export const CUSTOMERS = "CUSTOMERS";
+>>>>>>> ab760859334e180e7a29cb424a4933b7738be9a0
 export const RES_KEY = "RES_KEY";
-export const VEHICLES = "VEHICLES";
-export const PORTS = "PORTS";
-export const LGS = "LGS";
-export const GARAGES = "GARAGES";
-export const AGENTTYPES = "AGENTTYPES";
-export const ADMINTYPES = "ADMINTYPES";
-export const PAYERS = "PAYERS";
 export const FETCHING = "FETCHING";
 export const AUTO_FETCHING = "AUTO_FETCHING";
-export const GETTINGTYPES = "GETTINGTYPES";
-export const ALL_GARAGES = "ALL_GARAGES";
-export const VEHICLE_TYPES = "VEHICLE_TYPES";
 export const REFRESHER = "REFRESHER";
 export const REFRESHING = "REFRESHING";
 

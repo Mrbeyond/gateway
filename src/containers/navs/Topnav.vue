@@ -1,21 +1,41 @@
 <template>
-  <nav class="navbar fixed-top">
+  <nav class="navbar fixed-top" :style="`padding-left: ${show?200:0}px`">
     <div class="d-flex align-items-center navbar-left">
-      <a
+
+      <!--<a
         href="#"
         class="menu-button d-none d-md-block"
-        @click.prevent.stop="changeSideMenuStatus({step :menuClickCount+1,classNames:menuType,selectedMenuHasSubItems})"
       >
         <menu-icon />
-      </a>
-      <a
-        href="#"
+      </a> -->
+      <span
+        @click="toggleSide"
         class="menu-button-mobile d-xs-block d-sm-block d-md-none"
-        @click.prevent.stop="changeSideMenuForMobile(menuType)"
       >
+<<<<<<< HEAD
         <mobile-menu-icon />
       </a>
       <div class="d-inline-block d-flex">
+=======
+        <mobile-menu-icon  />
+      </span>
+      <!-- <div
+        :class="{'search':true, 'mobile-view':isMobileSearch}"
+        ref="searchContainer"
+        @mouseenter="isSearchOver=true"
+        @mouseleave="isSearchOver=false"
+      >
+        <b-input
+          :placeholder="$t('menu.search')"
+          @keypress.native.enter="search"
+          v-model="searchKeyword"
+        />
+        <span class="search-icon" @click="searchClick">
+          <i class="simple-icon-magnifier"></i>
+        </span>
+      </div> -->
+      <div class="d-inline-block">
+>>>>>>> ab760859334e180e7a29cb424a4933b7738be9a0
         <b-dropdown
           id="langddm"
           class="ml-2"
@@ -50,6 +70,7 @@
           >{{l.name}}</b-dropdown-item>
         </b-dropdown>
       </div>
+<<<<<<< HEAD
       </div>
       
       <div class="position-relative d-none d-none d-lg-inline-block">
@@ -59,9 +80,11 @@
           :href="buyUrl"
         >{{$t('user.buy')}}</a>
       </div>
+=======
+    </div>
+>>>>>>> ab760859334e180e7a29cb424a4933b7738be9a0
     <router-link class="navbar-logo" tag="a" :to="adminRoot">
-      <span class="logo d-none d-xs-block"></span>
-      <span class="logo-mobile d-block d-xs-none"></span>
+      logo
     </router-link>
 
     <div class="navbar-right">
@@ -92,26 +115,6 @@
               <router-link tag="a" :to="`${adminRoot}/dashboards/default`" class="icon-menu-item">
                 <i class="iconsminds-shop-4 d-block" />
                 {{$t('menu.dashboards')}}
-              </router-link>
-              <router-link tag="a" :to="`${adminRoot}/ui`" class="icon-menu-item">
-                <i class="iconsminds-pantone d-block" />
-                {{$t('menu.ui')}}
-              </router-link>
-              <router-link tag="a" :to="`${adminRoot}/ui/components/charts`" class="icon-menu-item">
-                <i class="iconsminds-bar-chart-4 d-block" />
-                {{$t('menu.charts')}}
-              </router-link>
-              <router-link tag="a" :to="`${adminRoot}/applications/chat`" class="icon-menu-item">
-                <i class="iconsminds-speach-bubble d-block" />
-                {{$t('menu.chat')}}
-              </router-link>
-              <router-link tag="a" :to="`${adminRoot}/applications/survey`" class="icon-menu-item">
-                <i class="iconsminds-formula d-block" />
-                {{$t('menu.survey')}}
-              </router-link>
-              <router-link tag="a" :to="`${adminRoot}/applications/todo`" class="icon-menu-item">
-                <i class="iconsminds-check d-block" />
-                {{$t('menu.todo')}}
               </router-link>
             </div>
           </b-dropdown>
@@ -146,7 +149,7 @@
                 <div class="pl-3 pr-2">
                   <router-link tag="a" :to="`${adminRoot}/pages/product/details`">
                     <p class="font-weight-medium mb-1">{{n.title}}</p>
-                    <p class="text-muted mb-0 text-small">{{n.date}}</p>
+                    <p class="text-muted mb-0 text-small">{{n.date}}</p>kjhjhjj
                   </router-link>
                 </div>
               </div>
@@ -163,6 +166,8 @@
           </div>
         </div>
       </div>
+
+      <!--Profile -->
       <div class="user d-inline-block">
         <b-dropdown
           class="dropdown-menu-right"
@@ -172,18 +177,15 @@
           menu-class="mt-3"
           no-caret
         >
-          <template slot="button-content" v-if="currentUser">
-            <span class="name mr-1">{{currentUser.title}}</span>
-            <span>
-              <img :alt="currentUser.title" :src="currentUser.img" />
-            </span>
+
+           <template slot="button-content">
+           <i class="fa fa-user-circle" />
           </template>
-          <b-dropdown-item>Account</b-dropdown-item>
-          <b-dropdown-item>Features</b-dropdown-item>
-          <b-dropdown-item>History</b-dropdown-item>
-          <b-dropdown-item>Support</b-dropdown-item>
+          <!--
+          -->
+          <b-dropdown-item>Profile</b-dropdown-item>
           <b-dropdown-divider />
-          <b-dropdown-item @click="logout">Sign out</b-dropdown-item>
+          <b-dropdown-item @click="logout"> <i class="fa fa-sign-out-alt" />Sign out</b-dropdown-item>
         </b-dropdown>
       </div>
     </div>
@@ -204,7 +206,11 @@ import {
   adminRoot
 } from "../../constants/config";
 import { getDirection, setDirection, getThemeColor, setThemeColor } from "../../utils";
+<<<<<<< HEAD
 import {BUSINESSDETAILS} from "../../constants/formKey"
+=======
+import { MOBILE } from '../../constants/formKey';
+>>>>>>> ab760859334e180e7a29cb424a4933b7738be9a0
 export default {
   components: {
     "menu-icon": MenuIcon,
@@ -231,6 +237,11 @@ export default {
   methods: {
     ...mapMutations(["changeSideMenuStatus", "changeSideMenuForMobile"]),
     ...mapActions(["setLang", "signOut"]),
+
+    toggleSide(){
+      this.$store.commit(MOBILE, !this.mobile)
+    },
+
     search() {
       this.$router.push(`${this.searchPath}?search=${this.searchKeyword}`);
       this.searchKeyword = "";
@@ -324,8 +335,15 @@ export default {
       currentUser: "currentUser",
       menuType: "getMenuType",
       menuClickCount: "getMenuClickCount",
+<<<<<<< HEAD
       selectedMenuHasSubItems: "getSelectedMenuHasSubItems"
     }),
+=======
+      selectedMenuHasSubItems: "getSelectedMenuHasSubItems",
+      mobile : "mobile",
+      show:"show",
+    })
+>>>>>>> ab760859334e180e7a29cb424a4933b7738be9a0
   },
   beforeDestroy() {
     document.removeEventListener("click", this.handleDocumentforMobileSearch);

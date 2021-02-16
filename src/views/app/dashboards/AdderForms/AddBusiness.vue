@@ -3,18 +3,18 @@
     <b-colxx xxs="12">
         <b-card class="mb-4">
             <b-form ref="form" @submit.prevent="onValitadeFormSubmit" class="av-tooltip tooltip-label-right">
-                <b-form-group label="First name">
-                  <b-form-input type="text" v-model="$v.first_name.$model" :state="!$v.first_name.$error" />
-                  <b-form-invalid-feedback v-if="!$v.first_name.required">Please enter your first name</b-form-invalid-feedback>
-                  <b-form-invalid-feedback v-else-if="!$v.first_name.minLength">Name must at least 3 characters</b-form-invalid-feedback>
-                  <b-form-invalid-feedback v-else-if="!$v.first_name.alpha">Your name must be composed only with letters</b-form-invalid-feedback>
+                <b-form-group label="Business name">
+                  <b-form-input type="text" v-model="$v.name.$model" :state="!$v.name.$error" />
+                  <b-form-invalid-feedback v-if="!$v.name.required">Please enter your first name</b-form-invalid-feedback>
+                  <b-form-invalid-feedback v-else-if="!$v.name.minLength">Name must at least 3 characters</b-form-invalid-feedback>
+                  <b-form-invalid-feedback v-else-if="!$v.name.alpha">Your name must be composed only with letters</b-form-invalid-feedback>
                 </b-form-group>
 
-                <b-form-group label="Last name" class="error-l-100">
-                  <b-form-input type="text" v-model="$v.last_name.$model" :state="!$v.last_name.$error" />
-                  <b-form-invalid-feedback v-if="!$v.last_name.required">Please enter your last name</b-form-invalid-feedback>
-                  <b-form-invalid-feedback v-else-if="!$v.last_name.minLength">Name must at least 3 characters</b-form-invalid-feedback>
-                  <b-form-invalid-feedback v-else-if="!$v.last_name.alpha">Your name must be composed only with letters</b-form-invalid-feedback>
+                <b-form-group label="Description" class="error-l-100">
+                  <b-form-input type="text" v-model="$v.business_description.$model" :state="!$v.business_description.$error" />
+                  <b-form-invalid-feedback v-if="!$v.business_description.required">Please enter your last name</b-form-invalid-feedback>
+                  <b-form-invalid-feedback v-else-if="!$v.business_description.minLength">Name must at least 3 characters</b-form-invalid-feedback>
+                  <b-form-invalid-feedback v-else-if="!$v.business_description.alpha">Your name must be composed only with letters</b-form-invalid-feedback>
                 </b-form-group>
 
                 <b-form-group label="Email">
@@ -35,70 +35,39 @@
                   <b-form-invalid-feedback v-if="!$v.address.required">Address is required</b-form-invalid-feedback>
                 </b-form-group>
 
-                <b-form-group label="Payer ID" class="error-l-100">
-                  <b-form-input type="text" v-model="$v.payer_id.$model" :state="!$v.payer_id.$error" />
-                  <b-form-invalid-feedback v-if="!$v.payer_id.required">Please enter payer id</b-form-invalid-feedback>
+                <b-form-group label="Industry category" class="error-l-100">
+                  <b-select type="text" v-model="$v.industry_category_id.$model" :state="!$v.industry_category_id.$error" />
+                  <b-form-invalid-feedback v-if="!$v.industry_category_id.required">Industry category is required</b-form-invalid-feedback>
                 </b-form-group>
 
-                <b-form-group label="Agent type">
-                  <b-input-group>
-                    <b-input-group-prepend>
-                       <b-button :disabled="agentTypes.length > 0" @click="regetAgentTypes">
-                        <i class="simple-icon-reload"
-                          v-if="!gettingTypes"
-                        />
-                        <b-spinner v-if="gettingTypes" small />
-
-                        </b-button>
-                    </b-input-group-prepend>
-                    <b-form-select variant="primary"
-                      :options="agentTypes"
-                     v-model="$v.agent_type.$model"
-                      :state="!$v.agent_type.$error"
-                      @change="monitorType"
-                    />
-                    <b-form-invalid-feedback v-if="!$v.agent_type.required">Please choose type</b-form-invalid-feedback>
-                  </b-input-group>
+                <b-form-group label="Business type" class="error-l-100">
+                  <b-select type="text" v-model="$v.business_type_id.$model" :state="!$v.business_type_id.$error" />
+                  <b-form-invalid-feedback v-if="!$v.business_type_id.required">Business type category is required</b-form-invalid-feedback>
                 </b-form-group>
 
-                <b-form-group v-if="agent_type">
+                <b-form-group label="Staff size" class="error-l-100">
+                  <b-select type="text" v-model="$v.staff_size_id.$model" :state="!$v.staff_size_id.$error" />
+                  <b-form-invalid-feedback v-if="!$v.staff_size_id.required">Staff size is required</b-form-invalid-feedback>
+                </b-form-group>
 
-                  <template v-if="agent_type == 'import'">
-                    <b-form-group label="Ports" v-if="agent_type == 'import'" class="mb-3">
-                      <b-form-select
-                        :options="ports"
-                        v-model="selectedPort"
-                      />
-                    <b-form-invalid-feedback :force-show="!Boolean(selectedPort)" >
-                      Select port
-                    </b-form-invalid-feedback>
-                    </b-form-group >
-                  </template>
-
-                  <template v-if="agent_type != 'import'">
-                    <b-form-group label="LGs">
-                        <b-form-select variant="primary"
-                          @change="processSelectedLG"
-                          :options="lgs"
-                          v-model="selectedLG"
-                        />
-                    </b-form-group>
-                    <b-form-group v-if="selectedLG" label="Garage">
-                      <!-- Show spinner while loading garages -->
-                      <div v-if="autoFetching">
-                        <b-spinner small  variant="primary" />
-                      </div>
-
-                      <b-form-select v-if="garages"
-                        :options="garages"
-                        v-model="selectedGarage" variant="primary"
-                      />
-                      <b-form-invalid-feedback :force-show="!Boolean(selectedGarage)" >
-                        Select Garage
-                      </b-form-invalid-feedback>
+                <b-input-group >
+                  <template>
+                    <b-form-group label="State" class="error-l-100">
+                      <b-select type="text" v-model="$v.industry_category_id.$model" :state="!$v.industry_category_id.$error" />
+                      <b-form-invalid-feedback v-if="!$v.industry_category_id.required">Industry category is required</b-form-invalid-feedback>
                     </b-form-group>
                   </template>
+                  <template>
+                    <b-form-group label="State" class="error-l-100">
+                      <b-select type="text" v-model="$v.industry_category_id.$model" :state="!$v.industry_category_id.$error" />
+                      <b-form-invalid-feedback v-if="!$v.industry_category_id.required">Industry category is required</b-form-invalid-feedback>
+                    </b-form-group>
+                  </template>
+                </b-input-group>
 
+                <b-form-group label="City" class="error-l-100">
+                  <b-form-input type="text" v-model="$v.city.$model" :state="!$v.city.$error" />
+                  <b-form-invalid-feedback v-if="!$v.city.required">City is required</b-form-invalid-feedback>
                 </b-form-group>
 
                 <div class="text-center">
@@ -126,7 +95,7 @@ import {
     validationMixin
 } from "vuelidate";
 import { PROXY } from '../../../../constants/config';
-import { AGENTS, AGENTTYPES, AUTO_FETCHING, GARAGES, genRand, hToken } from '../../../../constants/formKey';
+import { BUSINESSES, AGENTTYPES, AUTO_FETCHING, GARAGES, genRand, hToken } from '../../../../constants/formKey';
 const {
     required,
     minLength,
@@ -139,53 +108,57 @@ const {
 export default {
   data() {
     return {
-      first_name: "",
-      last_name: "",
+      name: "",
+      business_description: "",
       email: "",
       phone: "",
-      agent_type: "",
-      garage_id: "",
-      payer_id: genRand(),
       address: '',
+      industry_category_id: "",
+      business_type_id:"",
+      staff_size_id:'',
+      state_id: "",
+      city:"",
+
+      resMessage: "",
       submitting: false,
       variant: "success",
-      resMessage: "",
-      selectedPort:"",
-      selectedLG:'',
-      selectedGarage:'',
-
-      typeColl: [],
 
     };
   },
   mixins: [validationMixin],
   validations: {
-    first_name: {
-        required,
-        minLength: minLength(3),
-        alpha
+    name: {
+      required,
     },
     email: {
-        required,
-        email
+      required,
+      email
     },
-    agent_type: {
-        required,
-    },
-    last_name: {
-        required,
-        alpha,
-        minLength: minLength(3)
+    business_description: {
+      required,
+      minLength: minLength(3)
     },
     phone: {
-        required,
-        numeric,
-        minLength: minLength(11)
+      required,
+      numeric,
+      minLength: minLength(11)
     },
     address: {
         required,
     },
-    payer_id: {
+    industry_category_id: {
+        required,
+    },
+    staff_size_id: {
+        required,
+    },
+    state_id: {
+        required,
+    },
+    city: {
+        required,
+    },
+    business_type_id: {
         required,
     },
 
@@ -275,8 +248,8 @@ export default {
     },
 
     monitorType(){
-      // console.log(this.agent_type);
-      this.selectedPort = "";
+      // console.log(this.industry_category_id);
+      this.business_type_id = "";
       this.selectedGarage = "";
     },
 
@@ -287,8 +260,8 @@ export default {
     onValitadeFormSubmit() {
       this.$v.$touch();
       if(this.$v.$invalid) return;
-      let service = this.agent_type.toString().trim();
-      if(!this.selectedGarage && !this.selectedPort){
+      let service = this.industry_category_id.toString().trim();
+      if(!this.selectedGarage && !this.business_type_id){
         if(service == "commercial"){
           this.resMessage = "Choose a garage";
         }else{
@@ -299,15 +272,15 @@ export default {
         return;
       }
 
-      let id= service == "import"? this.selectedPort : this.selectedGarage;
+      let id= service == "import"? this.business_type_id : this.selectedGarage;
 
       if(this.submitting) return;
       let formData = {
         phone:this.phone,
-        first_name:this.first_name,
-        last_name:this.last_name,
+        name:this.name,
+        business_description:this.business_description,
         email:this.email,
-        agent_type: service,
+        industry_category_id: service,
         garage_id: id,
         address: this.address,
         payer_id:this.payer_id,
@@ -317,15 +290,14 @@ export default {
       // return console.log(formData);
       // console.log(hToken());
       this.submitting = true;
-      Axios.post(`${PROXY}admin/register/agent`, formData, {headers: hToken()})
+      Axios.post(`${PROXY}business`, formData, {headers: hToken()})
       .then(res=>{
         if(!res.data.error){
 
           this.variant = "success";
           this.resMessage = res.data.message;
           this.$refs.form.reset();
-          this.selectedGarage = this.selectedPort = "";
-          this.$store.dispatch(AGENTS);
+          this.$store.dispatch(BUSINESSES);
         }else{
           this.variant = "danger";
           this.resMessage = "Something went wrong, please retry"

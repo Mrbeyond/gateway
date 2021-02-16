@@ -28,7 +28,7 @@ import VuetablePaginationBootstrap from "../../../../components/Common/VuetableP
 import { apiUrl, PROXY } from "../../../../constants/config";
 import { hToken, loadash, LUX_ZONE, statusA,toMoney } from "../../../../constants/formKey";
 import {LGS} from '../../../../constants/formKey';
-import {ADD_CARD,VEHICLE_TYPES } from '../../../../constants/formKey';
+// import {ADD_CARD,VEHICLE_TYPES } from '../../../../constants/formKey';
 
 
 export default {
@@ -41,7 +41,7 @@ export default {
   },
   data() {
     return {
-      ADD_CARD,
+      // ADD_CARD,
       head: {headers: hToken()},
       isLoading: true,
       isFetched: false,
@@ -83,6 +83,15 @@ export default {
             return LUX_ZONE(value);
             },
         },
+        //   {
+        //     name: "account_vehicles",
+        //     sortField: "account",
+        //     title: "No of vehicles",
+        //     titleClass: "",
+        //     dataClass: "",
+        //     width: "10%",
+
+        // },
         {
           key: "status",
           label: "Status",

@@ -56,7 +56,7 @@
         <!-- <template v-else>
         <div class="loading"></div>
       </template> -->
-<!-- 
+<!--
        <b-colxx xxs="12">
           <b-modal v-if="RightmodalData" id="modalbasic" ref="modalright" :title="Details" modal-class="modal-right">
                  <b-card v-if="RightmodalData.account !=null" class="text-center shadow-sm mb-3 pt-3" style="border-radius:20px">
@@ -144,8 +144,7 @@ import Vuetable from "vuetable-2/src/components/Vuetable.vue";
 import VuetablePaginationBootstrap from "../../../../components/Common/VuetablePaginationBootstrap.vue";
 import { apiUrl, PROXY } from "../../../../constants/config";
 import { hToken, loadash, LUX_ZONE, statusA } from "../../../../constants/formKey";
-import {LGS} from '../../../../constants/formKey';
-import {ADD_CARD,BUSINESSES } from '../../../../constants/formKey';
+import {BUSINESSES } from '../../../../constants/formKey';
 
 
 export default {
@@ -158,7 +157,7 @@ export default {
   },
   data() {
     return {
-      ADD_CARD,
+      // ADD_CARD,
       head: {headers: hToken()},
       isLoading: true,
       isFetched: false,
