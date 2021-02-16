@@ -3,7 +3,7 @@
 
     <div v-if="businesses" class="px-2" style="padding-top:0.5em">
 
-      <div class="d-flex bg-dark px-1 py-2 justify-content-between">
+      <div class="d-flex bg-dark px-2 py-2 justify-content-between">
         <div>
           <p class="my-0">{{currentBusiness.name}}</p>
           <p class="my-1 text-center text-small test-muted"> {{ currentBusiness.id }}</p>
@@ -17,19 +17,24 @@
       </div>
       <div style="position: relative">
         <div v-if="bizShow && othersClone.length >0"
-          class="w-100 bizs px-1 py-2 bg-primary"
+          class="w-100 bizs px-2 py-2 bg-dark"
+          style="border-radius: 5px"
         >
-          <p class="mb-2 ">OTHER BUSINESSES - {{ othersClone.length }}</p>
+          <p class="mb-2 text-small">OTHER BUSINESSES - {{ othersClone.length }}</p>
 
           <b-form class="mb-2">
             <b-form-input size="sm" class="py-1" type="search" placeholder="Search">
             </b-form-input>
           </b-form>
           <p v-for="(biz, index) in othersClone" :key="index"
-            class="text-small mb-2"
+            class="text-small mb-2  ptr text-semi-muted"
           >
             {{ biz.name }}
           </p>
+          <hr class="mb-2" />
+          <p class="mb-2 ptr text-small text-semi-muted ">Add Business</p>
+          <hr class="my-2" />
+          <p class="mb-2 ptr text-small text-semi-muted">Signout</p>
         </div>
       </div>
     </div>
@@ -46,10 +51,12 @@
               v-for="(item,index) in menuItems"
               :key="`parent_${index}`"
               :data-flag="item.id"
+              class="my-2 "
 
             >
 
-              <i :class=" item.icon"/> {{ item.label }}
+              <i :class="`${item.icon} mr-2 medCon`"/>
+              <span class="">{{ item.label }}</span>
               <!--<a v-if="item.newWindow" :href="item.to" rel="noopener noreferrer" target="_blank">
                 <i :class="item.icon" />
                 {{ $t(item.label) }}
@@ -132,6 +139,10 @@ export default {
     //  console.log(this.currentBusinessDetails);
     },
 
+    shortener(val){
+      return !val? " " :val.length > 15? val.slice(0,18)+"...": val
+    }
+
   },
 
 }
@@ -145,5 +156,20 @@ export default {
 	transition-property: all;
 	transition-duration: 2s;
 	transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+}
+
+.ptr{
+  cursor: pointer;
+  &:hover {
+    color:white !important;
+  }
+}
+
+.medCon{
+  font-size: 1.2em;
+}
+
+.medExt{
+  font-size: 1.2em !important;
 }
 </style>
