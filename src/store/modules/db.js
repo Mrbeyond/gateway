@@ -1,6 +1,6 @@
 import Axios from 'axios';
 import { PROXY } from '../../constants/config';
-import {CUSTOMERS,BUSINESSES, RES_KEY, REFRESHER, BUSINESSDETAILS,REFRESHING
+import {CUSTOMERS,BUSINESSES, RES_KEY,hToken, REFRESHER, BUSINESSDETAILS,REFRESHING
 } from '../../constants/formKey';
 
 export default {
@@ -63,10 +63,12 @@ export default {
 
   actions: {
     [BUSINESSDETAILS]({commit},id){
+      
       commit(REFRESHER, BUSINESSDETAILS);
       Axios.get(`${PROXY}business/${id}`, {headers: hToken()})
       .then(res=>{
         if(!res.data.error){
+          console.log(res);
           let payload;
           try {
             payload = res.data.data
