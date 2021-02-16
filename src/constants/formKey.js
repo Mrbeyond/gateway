@@ -22,12 +22,8 @@ export const MOBILE = "MOBILE";
 
 
 export const BUSINESSES = "BUSINESSES";
-<<<<<<< HEAD
-export const TERMINALS = "TERMINALS";
 export const BUSINESSDETAILS = "BUSINESSDETAILS";
-=======
 export const CUSTOMERS = "CUSTOMERS";
->>>>>>> ab760859334e180e7a29cb424a4933b7738be9a0
 export const RES_KEY = "RES_KEY";
 export const FETCHING = "FETCHING";
 export const AUTO_FETCHING = "AUTO_FETCHING";
