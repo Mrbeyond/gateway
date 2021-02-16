@@ -14,8 +14,7 @@ html {
 }
 
 .modal-left {   
-    padding-left: 0 !important;
-  
+    padding-left: 0 !important;  
     .modal-dialog {
       margin: 0 auto;
       margin-left: 0;
@@ -50,7 +49,7 @@ html {
     }
   
     &.modal.fade .modal-dialog {
-      transform: translate(25%, 0) !important;
+      transform: translate(-25%, 0) !important;
     }
   
     &.modal.show .modal-dialog {

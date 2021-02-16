@@ -12,7 +12,8 @@
     </div>
 
     <!-- Mobile modal sidebar -->
-    <b-modal v-model="mobily" :hide-header="true" :hide-footer="true" modal-class="modal-left">
+    <b-modal v-model="mobily" :hide-header="true"
+      :hide-footer="true" modal-class="modal-left ">
       <manual-side-vue />
     </b-modal>
 
