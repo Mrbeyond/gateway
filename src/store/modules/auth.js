@@ -1,8 +1,8 @@
 import Axios from "axios";
-import { authUser, keepUser, PROXY } from "../../constants/config";
+import { authUser, keepBiz, keepUser, lastBiz, PROXY } from "../../constants/config";
 import {
   USER, LOGIN, IS_LOGGED_IN, LOGIN_ATTEMPTED, PROCESSING_AUTH,
-  AUTH_ERROR, TEMP_MAIL, keepToken, ERR_MESS
+  AUTH_ERROR, TEMP_MAIL, keepToken, ERR_MESS, CURRENT_BIZ
 } from "../../constants/formKey";
 
 
@@ -15,6 +15,7 @@ export default{
     authError: false,
     tempMail: "",
     errMess: "",
+    currentBiz: lastBiz(),
 
   },
 
@@ -33,12 +34,18 @@ export default{
 
     errMess: state => state.errMess,
 
+    currentBiz: state => state.currentBiz,
+
   },
 
   mutations :{
 
     [USER](state, payload){
       state.user = payload;
+    },
+
+    [CURRENT_BIZ](state, payload){
+      state.currentBiz = payload;
     },
 
     [IS_LOGGED_IN](state, payload){
@@ -78,8 +85,15 @@ export default{
             // const {authorization} = ;
             keepToken(res.data.data.authorization)
             delete res.data.data.authorization;
-            keepUser(res.data.data);
-            commit(USER, res.data.data);
+            let RESP = res.data.data;
+            keepUser(RESP);
+            if(RESP.businesses &&RESP.businesses.length > 0){
+              let id = lastBiz()? lastBiz(): RESP.businesses[0].id;
+              keepBiz(id);
+              commit(CURRENT_BIZ, id)
+            }
+
+            commit(USER, RESP);
             commit(IS_LOGGED_IN, true);
           }else{
             keepUser(null);

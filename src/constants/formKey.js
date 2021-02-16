@@ -10,6 +10,7 @@ export const IS_LOGGED_IN = "is_logged_in";
 export const PROCESSING_AUTH = "processing_auth";
 export const AUTH_ERROR = "auth_error";
 export const TEMP_MAIL = "temp_mail";
+export const CURRENT_BIZ = " CURRENT_BIZ"
 
 export const ERR_MESS = "err_mess";
 

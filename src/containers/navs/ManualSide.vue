@@ -1,64 +1,79 @@
 <template>
   <div class="main-menu">
 
-    <div class="px-1">
-      <b-dropdown
-        id="langddm"
-        variant="light"
-        size="sm"
-        toggle-class="language-button"
-        block
-        class="border-0 w-100"
-      >
-        <template slot="button-content">
-          <span class="name">hghghg{{currentBusiness}}</span>
-        </template>
+    <div v-if="businesses" class="px-2" style="padding-top:0.5em">
 
-        <b-dropdown-item class="w-100"
-          v-for="(l,index) in businesses.businesses"
-          :key="index"
-          @click="changeBusiness(l.id, l.name)"
-        >{{l.name}}</b-dropdown-item>
-      </b-dropdown>
+      <div class="d-flex bg-dark px-1 py-2 justify-content-between">
+        <div>
+          <p class="my-0">{{currentBusiness.name}}</p>
+          <p class="my-1 text-center text-small test-muted"> {{ currentBusiness.id }}</p>
+        </div>
+        <div @click="bizShow = !bizShow" class="align-self-center" >
+          <strong>
+            <i v-if="!bizShow" style="font-size: 1.5em" class="simple-icon-arrow-down" />
+            <i v-else style="font-size: 1.5em"  class="simple-icon-arrow-up" />
+          </strong>
+        </div>
+      </div>
+      <div style="position: relative">
+        <div v-if="bizShow && othersClone.length >0"
+          class="w-100 bizs px-1 py-2 bg-primary"
+        >
+          <p class="mb-2 ">OTHER BUSINESSES - {{ othersClone.length }}</p>
+
+          <b-form class="mb-2">
+            <b-form-input size="sm" class="py-1" type="search" placeholder="Search">
+            </b-form-input>
+          </b-form>
+          <p v-for="(biz, index) in othersClone" :key="index"
+            class="text-small mb-2"
+          >
+            {{ biz.name }}
+          </p>
+        </div>
+      </div>
     </div>
 
+      <div class="mt-5 px-2">
 
-      <vue-perfect-scrollbar
-        class="scroll"
-        :settings="{ suppressScrollX: true, wheelPropagation: false }"
-      >
-        <ul class="list-unstyled">
-            <!-- :class="{ 'active' : (selectedParentMenu === item.id && viewingParentMenu === '') || viewingParentMenu === item.id }" -->
-          <li
-            v-for="(item,index) in menuItems"
-            :key="`parent_${index}`"
-            :data-flag="item.id"
-          >
+        <vue-perfect-scrollbar
+          class="scroll"
+          :settings="{ suppressScrollX: true, wheelPropagation: false }"
+        >
+          <ul class="list-unstyled">
+              <!-- :class="{ 'active' : (selectedParentMenu === item.id && viewingParentMenu === '') || viewingParentMenu === item.id }" -->
+            <li
+              v-for="(item,index) in menuItems"
+              :key="`parent_${index}`"
+              :data-flag="item.id"
 
-            {{ item.label }}
-            <!--<a v-if="item.newWindow" :href="item.to" rel="noopener noreferrer" target="_blank">
-              <i :class="item.icon" />
-              {{ $t(item.label) }}
-            </a>
-            <a
-              v-else-if="item.subs && item.subs.length>0"
-              @click.prevent="openSubMenu($event,item)"
-              :href="`#${item.to}`"
             >
-              <i :class="item.icon" />
-              {{ $t(item.label) }}
-            </a>
-             <router-link
-              v-else
-              @click.native="changeSelectedParentHasNoSubmenu(item.id)"
-              :to="item.to"
-            >
-              <i :class="item.icon" />
-              {{ $t(item.label) }}
-            </router-link> -->
-          </li>
-        </ul>
-      </vue-perfect-scrollbar>
+
+              <i :class=" item.icon"/> {{ item.label }}
+              <!--<a v-if="item.newWindow" :href="item.to" rel="noopener noreferrer" target="_blank">
+                <i :class="item.icon" />
+                {{ $t(item.label) }}
+              </a>
+              <a
+                v-else-if="item.subs && item.subs.length>0"
+                @click.prevent="openSubMenu($event,item)"
+                :href="`#${item.to}`"
+              >
+                <i :class="item.icon" />
+                {{ $t(item.label) }}
+              </a>
+              <router-link
+                v-else
+                @click.native="changeSelectedParentHasNoSubmenu(item.id)"
+                :to="item.to"
+              >
+                <i :class="item.icon" />
+                {{ $t(item.label) }}
+              </router-link> -->
+            </li>
+          </ul>
+        </vue-perfect-scrollbar>
+       </div>
     </div>
 
 </template>
@@ -70,15 +85,39 @@ export default {
 
   data: ()=>({
     menuItems: menuItems,
-    currentBusiness:"",
+    currentBusiness:null,
     currentBusinessDetails:"",
+    otherBusinesses: null,
+    othersClone: null,
+    noBiz: false,
+    bizShow: false,
 
   }),
 
   computed:{
+    lb(){
+      return this.$store.getters.currentBiz;
+
+    },
     businesses(){
-      console.log(this.$store.getters.user);
-      return this.$store.getters.user;
+      let user = this.$store.getters.user;
+      if(user && user.businesses && user.businesses.length > 0){
+        let CB;
+        if(this.lb){
+          this.currentBusiness = user.businesses.find(d=> d.id == this.lb)?
+          user.businesses.find(d=> d.id == this.lb):
+          user.businesses[0];
+          this.otherBusinesses = user.businesses.filter(d=>d.id != this.currentBusiness.id);
+
+        }else{
+          this.currentBusiness= user.businesses[0];
+          this.otherBusinesses = user.businesses.filter(d=>d.id != this.currentBusiness.id);
+          this.othersClone = [...this.otherBusinesses];
+        }
+      }else{
+        this.noBiz = true;
+      }
+      return true;
     },
 
   },
@@ -90,10 +129,21 @@ export default {
     //  })
      this.$store.dispatch(BUSINESSDETAILS,id);
 
-     console.log(this.currentBusinessDetails);
+    //  console.log(this.currentBusinessDetails);
     },
 
   },
 
 }
 </script>
+
+<style lang="scss" scoped>
+.bizs{
+  top: 100;
+  position: absolute;
+  z-index: 60000;
+	transition-property: all;
+	transition-duration: 2s;
+	transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+}
+</style>

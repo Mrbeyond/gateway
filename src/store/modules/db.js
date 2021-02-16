@@ -1,6 +1,6 @@
 import Axios from 'axios';
-import { PROXY } from '../../constants/config';
-import {CUSTOMERS,BUSINESSES, RES_KEY, REFRESHER, BUSINESSDETAILS,REFRESHING
+import { keepBiz, PROXY } from '../../constants/config';
+import {CUSTOMERS,BUSINESSES, RES_KEY,hToken, REFRESHER, BUSINESSDETAILS,REFRESHING
 } from '../../constants/formKey';
 
 export default {
@@ -63,14 +63,17 @@ export default {
 
   actions: {
     [BUSINESSDETAILS]({commit},id){
+
       commit(REFRESHER, BUSINESSDETAILS);
       Axios.get(`${PROXY}business/${id}`, {headers: hToken()})
       .then(res=>{
         if(!res.data.error){
+          // console.log(res);
           let payload;
           try {
             payload = res.data.data
             commit(BUSINESSDETAILS, payload);
+            keepBiz(id);
             commit(RES_KEY, {status:0, owner: BUSINESSDETAILS});
           } catch (e) {
             commit(RES_KEY, {status:1, owner: BUSINESSDETAILS});
@@ -87,7 +90,7 @@ export default {
         }
       })
     },
-   
+
     [BUSINESSES]({commit}){
       commit(REFRESHER, BUSINESSES);
       Axios.get(`${PROXY}business`, {headers: hToken()})

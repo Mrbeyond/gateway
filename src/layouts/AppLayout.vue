@@ -13,7 +13,8 @@
 
     <!-- Mobile modal sidebar -->
     <b-modal v-model="mobily" :hide-header="true"
-      :hide-footer="true" modal-class="modal-left ">
+      style="padding:0"
+      :hide-footer="true" body-class="p-0" modal-class="modal-left ">
       <manual-side />
     </b-modal>
 

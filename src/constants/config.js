@@ -42,6 +42,16 @@ export const keepUser = (user)=>{
   localStorage.AU = window.btoa(window.btoa(JSON.stringify(user)));
 }
 
+export const lastBiz=()=>{
+  let biz = localStorage.LB? JSON.parse(window.atob(window.atob(localStorage.LB))): null;
+  return biz;
+}
+
+export const keepBiz=(biz)=>{
+  if(!biz) return;
+  localStorage.LB = window.btoa(window.btoa(JSON.stringify(biz)));
+}
+
 export const isAuthGuardActive = false
 export const themeRadiusStorageKey = 'theme_radius'
 export const themeSelectedColorStorageKey = 'theme_selected_color'
