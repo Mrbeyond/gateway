@@ -1,12 +1,13 @@
 import Axios from 'axios';
 import { PROXY } from '../../constants/config';
-import {CUSTOMERS,BUSINESSES, RES_KEY, REFRESHER, REFRESHING
+import {CUSTOMERS,BUSINESSES, RES_KEY, REFRESHER, BUSINESSDETAILS,REFRESHING
 } from '../../constants/formKey';
 
 export default {
   state: {
     customers: null,
     businesses: null,
+    businessDetails: null,
     resKey: {status:false, owner:''},
     refresher: {status:false, owner:''},
     refreshing: false,
@@ -15,6 +16,7 @@ export default {
 
   /** This is manually included */
   getters: {
+    businessDetails: state=> state.businessDetails,
 
     businesses: state=> state.businesses,
 
@@ -34,6 +36,10 @@ export default {
     },
     [BUSINESSES](state, payload){
       state.businesses = payload;
+    },
+
+    [BUSINESSDETAILS](state, payload){
+      state.businessDetails = payload;
     },
 
     [RES_KEY](state, payload){
@@ -56,7 +62,32 @@ export default {
 
 
   actions: {
-
+    [BUSINESSDETAILS]({commit},id){
+      commit(REFRESHER, BUSINESSDETAILS);
+      Axios.get(`${PROXY}business/${id}`, {headers: hToken()})
+      .then(res=>{
+        if(!res.data.error){
+          let payload;
+          try {
+            payload = res.data.data
+            commit(BUSINESSDETAILS, payload);
+            commit(RES_KEY, {status:0, owner: BUSINESSDETAILS});
+          } catch (e) {
+            commit(RES_KEY, {status:1, owner: BUSINESSDETAILS});
+          }
+        }else{
+          commit(RES_KEY, {status:1, owner: BUSINESSDETAILS});
+        }
+        commit(REFRESHER, BUSINESSDETAILS);
+      })
+      .catch(err => {
+        if(err.response){
+          commit(RES_KEY, {status:2, owner: BUSINESSDETAILS});
+          commit(REFRESHER, BUSINESSDETAILS);
+        }
+      })
+    },
+   
     [BUSINESSES]({commit}){
       commit(REFRESHER, BUSINESSES);
       Axios.get(`${PROXY}business`, {headers: hToken()})

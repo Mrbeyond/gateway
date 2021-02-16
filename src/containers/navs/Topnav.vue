@@ -46,6 +46,23 @@
             @click="changeLocale(l.id, l.direction)"
           >{{l.name}}</b-dropdown-item>
         </b-dropdown>
+
+        <b-dropdown
+          id="langddm"
+          class="ml-2"
+          variant="light"
+          size="sm"
+          toggle-class="language-button"
+        >
+          <template slot="button-content">
+            <span class="name">{{currentBusiness}}</span>
+          </template>
+          <b-dropdown-item
+            v-for="(l,index) in businesses.businesses"
+            :key="index"
+            @click="changeBusiness(l.id, l.name)"
+          >{{l.name}}</b-dropdown-item>
+        </b-dropdown>
       </div>
     </div>
     <router-link class="navbar-logo" tag="a" :to="adminRoot">
@@ -171,6 +188,7 @@ import {
   adminRoot
 } from "../../constants/config";
 import { getDirection, setDirection, getThemeColor, setThemeColor } from "../../utils";
+import {BUSINESSDETAILS} from "../../constants/formKey"
 import { MOBILE } from '../../constants/formKey';
 export default {
   components: {
@@ -190,7 +208,9 @@ export default {
       localeOptions,
       buyUrl,
       notifications,
-      isDarkActive: false
+      isDarkActive: false,
+      currentBusiness:"",
+      currentBusinessDetails:"",
     };
   },
   methods: {
@@ -231,6 +251,15 @@ export default {
       }
 
       this.setLang(locale);
+    },
+    changeBusiness(id, name) {
+     this.currentBusiness = name
+    //  this.currentBusinessDetails =this.businesses.businesses.find(e=>{
+    //          return e.id == id
+    //  })
+     this.$store.dispatch(BUSINESSDETAILS,id);
+     
+     console.log(this.currentBusinessDetails);
     },
     logout() {
       this.signOut().then(() => {
@@ -277,6 +306,10 @@ export default {
     }
   },
   computed: {
+        businesses(){
+          console.log(this.$store.getters.user);
+      return this.$store.getters.user;
+    },
     ...mapGetters({
       currentUser: "currentUser",
       menuType: "getMenuType",
@@ -326,6 +359,6 @@ export default {
         );
       }
     }
-  }
+  },
 };
 </script>

@@ -22,6 +22,7 @@ export const MOBILE = "MOBILE";
 
 
 export const BUSINESSES = "BUSINESSES";
+export const BUSINESSDETAILS = "BUSINESSDETAILS";
 export const CUSTOMERS = "CUSTOMERS";
 export const RES_KEY = "RES_KEY";
 export const FETCHING = "FETCHING";

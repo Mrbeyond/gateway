@@ -230,7 +230,6 @@ export default {
     };
   },
   methods: {
-
      getBusinesses(){
       this.$store.dispatch(BUSINESSES);
     },

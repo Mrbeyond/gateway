@@ -1,4 +1,10 @@
 <template>
+<<<<<<< HEAD
+  <div id="app-container" :class="getMenuType">
+    <sidebar />
+    <topnav />
+    <main>
+=======
   <div id="app-container" >
 
     <!-- Desktop static sidebar -->
@@ -22,6 +28,7 @@
 
     <!-- Main Container -->
     <div :style="`margin-left:  ${show?200:0}px`">
+>>>>>>> ab760859334e180e7a29cb424a4933b7738be9a0
       <div class="container-fluid">
         <slot></slot>
       </div>
