@@ -15,22 +15,7 @@
       >
         <mobile-menu-icon />
       </a>
-      <div
-        :class="{'search':true, 'mobile-view':isMobileSearch}"
-        ref="searchContainer"
-        @mouseenter="isSearchOver=true"
-        @mouseleave="isSearchOver=false"
-      >
-        <b-input
-          :placeholder="$t('menu.search')"
-          @keypress.native.enter="search"
-          v-model="searchKeyword"
-        />
-        <span class="search-icon" @click="searchClick">
-          <i class="simple-icon-magnifier"></i>
-        </span>
-      </div>
-      <div class="d-inline-block">
+      <div class="d-inline-block d-flex">
         <b-dropdown
           id="langddm"
           class="ml-2"
@@ -47,7 +32,26 @@
             @click="changeLocale(l.id, l.direction)"
           >{{l.name}}</b-dropdown-item>
         </b-dropdown>
+
+        <b-dropdown
+          id="langddm"
+          class="ml-2"
+          variant="light"
+          size="sm"
+          toggle-class="language-button"
+        >
+          <template slot="button-content">
+            <span class="name">{{currentBusiness}}</span>
+          </template>
+          <b-dropdown-item
+            v-for="(l,index) in businesses.businesses"
+            :key="index"
+            @click="changeBusiness(l.id, l.name)"
+          >{{l.name}}</b-dropdown-item>
+        </b-dropdown>
       </div>
+      </div>
+      
       <div class="position-relative d-none d-none d-lg-inline-block">
         <a
           class="btn btn-outline-primary btn-sm ml-2"
@@ -55,7 +59,6 @@
           :href="buyUrl"
         >{{$t('user.buy')}}</a>
       </div>
-    </div>
     <router-link class="navbar-logo" tag="a" :to="adminRoot">
       <span class="logo d-none d-xs-block"></span>
       <span class="logo-mobile d-block d-xs-none"></span>
@@ -201,6 +204,7 @@ import {
   adminRoot
 } from "../../constants/config";
 import { getDirection, setDirection, getThemeColor, setThemeColor } from "../../utils";
+import {BUSINESSDETAILS} from "../../constants/formKey"
 export default {
   components: {
     "menu-icon": MenuIcon,
@@ -219,7 +223,9 @@ export default {
       localeOptions,
       buyUrl,
       notifications,
-      isDarkActive: false
+      isDarkActive: false,
+      currentBusiness:"",
+      currentBusinessDetails:"",
     };
   },
   methods: {
@@ -255,6 +261,15 @@ export default {
       }
 
       this.setLang(locale);
+    },
+    changeBusiness(id, name) {
+     this.currentBusiness = name
+    //  this.currentBusinessDetails =this.businesses.businesses.find(e=>{
+    //          return e.id == id
+    //  })
+     this.$store.dispatch(BUSINESSDETAILS,id);
+     
+     console.log(this.currentBusinessDetails);
     },
     logout() {
       this.signOut().then(() => {
@@ -301,12 +316,16 @@ export default {
     }
   },
   computed: {
+        businesses(){
+          console.log(this.$store.getters.user);
+      return this.$store.getters.user;
+    },
     ...mapGetters({
       currentUser: "currentUser",
       menuType: "getMenuType",
       menuClickCount: "getMenuClickCount",
       selectedMenuHasSubItems: "getSelectedMenuHasSubItems"
-    })
+    }),
   },
   beforeDestroy() {
     document.removeEventListener("click", this.handleDocumentforMobileSearch);
@@ -348,6 +367,6 @@ export default {
         );
       }
     }
-  }
+  },
 };
 </script>

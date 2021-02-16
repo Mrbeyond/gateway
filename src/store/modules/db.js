@@ -1,6 +1,6 @@
 import Axios from 'axios';
 import { PROXY } from '../../constants/config';
-import { ADMINS, CUSTOMERS,BUSINESSES, RES_KEY, hToken, TAGS, TERMINALS, GARAGES,
+import { ADMINS, CUSTOMERS,BUSINESSES, RES_KEY, hToken, BUSINESSDETAILS, TERMINALS, GARAGES,
   PORTS, LGS, AGENTTYPES, ADMINTYPES, PAYERS, FETCHING, AUTO_FETCHING,
   GETTINGTYPES, VEHICLES, ALL_GARAGES, VEHICLE_TYPES, REFRESHER, REFRESHING
 } from '../../constants/formKey';
@@ -12,7 +12,7 @@ export default {
     payers: null,
     businesses: null,
     terminals: null,
-    tags: null,
+    businessDetails: null,
     resKey: {status:false, owner:''},
     intendedPage: '',
     ports:null,
@@ -35,7 +35,7 @@ export default {
   getters: {
     admins: state=> state.admins,
 
-    tags: state=> state.tags,
+    businessDetails: state=> state.businessDetails,
 
     businesses: state=> state.businesses,
 
@@ -94,8 +94,8 @@ export default {
       state.businesses = payload;
     },
 
-    [TAGS](state, payload){
-      state.tags = payload;
+    [BUSINESSDETAILS](state, payload){
+      state.businessDetails = payload;
     },
 
     [TERMINALS](state, payload){
@@ -176,32 +176,32 @@ export default {
 
 
   actions: {
-    [TAGS]({commit}){
-      commit(REFRESHER, TAGS);
-      Axios.get(`${PROXY}admin/vehicle_tags`, {headers: hToken()})
+    [BUSINESSDETAILS]({commit},id){
+      commit(REFRESHER, BUSINESSDETAILS);
+      Axios.get(`${PROXY}business/${id}`, {headers: hToken()})
       .then(res=>{
         if(!res.data.error){
           let payload;
           try {
             payload = res.data.data
-            commit(TAGS, payload);
-            commit(RES_KEY, {status:0, owner: TAGS});
+            commit(BUSINESSDETAILS, payload);
+            commit(RES_KEY, {status:0, owner: BUSINESSDETAILS});
           } catch (e) {
-            commit(RES_KEY, {status:1, owner: TAGS});
+            commit(RES_KEY, {status:1, owner: BUSINESSDETAILS});
           }
         }else{
-          commit(RES_KEY, {status:1, owner: TAGS});
+          commit(RES_KEY, {status:1, owner: BUSINESSDETAILS});
         }
-        commit(REFRESHER, TAGS);
+        commit(REFRESHER, BUSINESSDETAILS);
       })
       .catch(err => {
         if(err.response){
-          commit(RES_KEY, {status:2, owner: TAGS});
-          commit(REFRESHER, TAGS);
+          commit(RES_KEY, {status:2, owner: BUSINESSDETAILS});
+          commit(REFRESHER, BUSINESSDETAILS);
         }
       })
     },
-
+   
     [BUSINESSES]({commit}){
       commit(REFRESHER, BUSINESSES);
       Axios.get(`${PROXY}business`, {headers: hToken()})

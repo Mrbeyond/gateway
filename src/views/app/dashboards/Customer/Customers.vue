@@ -14,131 +14,14 @@
     </div> -->
     <b-row>
       <b-colxx xxs="12">
-        <h2 class="text-center mb-5">LIST OF VEHICLE TYPES</h2>
-
-        <vuetable
-          ref="vuetable"
-          class="table-divided order-with-arrow"
-          :query-params="makeQueryParams"
-          :per-page="perPage"
-          :http-options="head"
-          :api-mode="false"
-          :data="datas"
-          :reactive-api-url="false"
-          :fields="fields"
-          pagination-path
-          :row-class="onRowClass"
-          @vuetable:pagination-data="onPaginationData"
-          @vuetable:cell-rightclicked="rightClicked"
-          @vuetable:cell-clicked="cellClicked"
-        >
-          <!-- <template  slot="garages" slot-scope="props" >
-            <div v-if="props">
-            <router-link :to="`/dashboard/garages/${props.rowData.id}`" v-if="props.rowData.garages.length>=1">
-            <b-btn  title="View Vehicles" badge-variant="dark" v-if="props"  v-b-modal.modalbasic
-            >
-              View <b-badge variant="primary" rounded-conner>{{props.rowData.garages.length}}</b-badge>
-            </b-btn>
-            </router-link>
-            <b-btn v-else :disabled="props.rowData.garages.length==0"  title="View Vehicles" badge-variant="dark"  v-b-modal.modalbasic
-            >
-              View <b-badge variant="primary" rounded-conner>{{props.rowData.garages.length}}</b-badge>
-            </b-btn>
-            </div>
-          </template> -->
-        </vuetable>
-        <vuetable-pagination-bootstrap
-          class="mt-4"
-          ref="pagination"
-          @vuetable-pagination:change-page="onChangePage"
-        />
+        <b-card class="mb-4" title="BUSINESS">
+                <b-table responsive :items="datas" :fields="fields"/>
+            </b-card>
       </b-colxx>
-        <!-- <template v-else>
-        <div class="loading"></div>
-      </template> -->
-
-       <!-- <b-colxx xxs="12">
-          <b-modal v-if="RightmodalData" id="modalbasic" ref="modalright" :title="Details" modal-class="modal-right">
-                 <b-card v-if="RightmodalData.account !=null" class="text-center shadow-sm mb-3 pt-3" style="border-radius:20px">
-                <h1>Account</h1>
-                <div >
-                <p class="text-muted">First name</p>
-                <p >{{RightmodalData.account.first_name}}</p>
-                </div>
-                <div>
-                <p class="text-muted">Last name</p>
-                <p >{{RightmodalData.account.last_name}}</p>
-                </div>
-                <div>
-                <p class="text-muted">Phone</p>
-                <p >{{RightmodalData.account.phone}}</p>
-                </div>
-                 <div>
-                <p class="text-muted">Account No.</p>
-                <p >{{RightmodalData.account.account_no}}</p>
-                </div>
-          </b-card>
-
-
-          <b-card v-if="RightmodalData.garage !=null" class="text-center shadow-sm mb-3 pt-3" style="border-radius:20px">
-                <h1>Garage & Port</h1>
-                <div >
-                <p class="text-muted">Name</p>
-                <p >{{RightmodalData.garage.name}}</p>
-                </div>
-                <div>
-                <p class="text-muted">Address</p>
-                <p >{{RightmodalData.garage.address}}</p>
-                </div>
-                <div>
-                <p class="text-muted">Latitude</p>
-                <p >{{RightmodalData.garage.latitude}}</p>
-                </div>
-                 <div>
-                <p class="text-muted">Longitude</p>
-                <p >{{RightmodalData.garage.longitude}}</p>
-                </div>
-                 <div>
-                <p class="text-muted">Port</p>
-                <p >{{RightmodalData.port.name}}</p>
-                </div>
-         </b-card>
-
-
-         <b-card v-if="RightmodalData.type !=null" class="text-center shadow-sm mb-3 pt-3" style="border-radius:20px">
-                <h1>Type details</h1>
-                <div >
-                <p class="text-muted">Name</p>
-                <p >{{RightmodalData.type.name}}</p>
-                </div>
-                <div>
-                <p class="text-muted">Amount</p>
-                <p >{{RightmodalData.type.amount}}</p>
-                </div>
-         </b-card>
-                    <template slot="modal-footer">
-                    <b-button variant="secondary" @click="hideModal('modalright')">Cancel</b-button>
-                </template>
-            </b-modal>
-    </b-colxx> -->
     </b-row>
-    <!--<v-contextmenu ref="contextmenu">
-      <v-contextmenu-item @click="onContextMenuAction('copy')">
-        <i class="simple-icon-docs" />
-        <span>Copy</span>
-      </v-contextmenu-item>
-      <v-contextmenu-item @click="onContextMenuAction('move-to-archive')">
-        <i class="simple-icon-drawer" />
-        <span>Move to archive</span>
-      </v-contextmenu-item>
-      <v-contextmenu-item @click="onContextMenuAction('delete')">
-        <i class="simple-icon-trash" />
-        <span>Delete</span>
-      </v-contextmenu-item>
-    </v-contextmenu>-->
   </div>
 </template>
-<script>// @ts-nocheck
+<script>
 
 import Vuetable from "vuetable-2/src/components/Vuetable.vue";
 import VuetablePaginationBootstrap from "../../../../components/Common/VuetablePaginationBootstrap.vue";
@@ -182,52 +65,27 @@ export default {
 
       fields: [
         {
-        name: "name",
-        sortField: "name",
-        title: "Name",
-        titleClass: "",
-        dataClass: "list-item-heading",
-        width: "10%",
+        key: "name",
+        label: "Name",
         },
         {
-          name:"amount",
-          sortField: "amount",
-          title: "Amount",
-          titleClass: "",
-          dataClass: "",
-          width: "10%",
+          key:"amount",
+          label: "Amount",
            callback(val){
         let result = toMoney(val);
         return (result == "0")? "\u20A60.00": "\u20A6"+result;
         }
         },
             {
-            name: "createdAt",
-            sortField: "createdAt",
-            title: "Created On",
-            titleClass: "",
-            dataClass: "",
-            width: "10%",
+            key: "createdAt",
+            label: "Created On",
             callback(value){
             return LUX_ZONE(value);
             },
         },
-        //   {
-        //     name: "account_vehicles",
-        //     sortField: "account",
-        //     title: "No of vehicles",
-        //     titleClass: "",
-        //     dataClass: "",
-        //     width: "10%",
-            
-        // },
         {
-          name: "status",
-          sortField: "status",
-          title: "Status",
-          titleClass: "",
-          dataClass: "",
-          width: "10%",
+          key: "status",
+          label: "Status",
           callback(val){
             return statusA[Number(Boolean(!!Boolean(val)))];
           },

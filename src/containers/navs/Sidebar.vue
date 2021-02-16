@@ -6,6 +6,23 @@
         :settings="{ suppressScrollX: true, wheelPropagation: false }"
       >
         <ul class="list-unstyled">
+         <div class="d-inline-block d-flex" style="z-index:1000">
+        <b-dropdown
+          class="ml-2"
+          style="width:100%"
+          variant="light"
+          size="sm"
+          toggle-class="language-button">
+          <template slot="button-content" >
+            <span  class="name col-1 businessCon">{{currentBusiness}}</span>
+          </template>
+          <b-dropdown-item
+            v-for="(l,index) in businesses.businesses"
+            :key="index"
+            @click="changeBusiness(l.id, l.name)"
+          >{{l.name}}</b-dropdown-item>
+        </b-dropdown>
+      </div>
           <li
             v-for="(item,index) in filteredMenuItems(menuItems)"
             :class="{ 'active' : (selectedParentMenu === item.id && viewingParentMenu === '') || viewingParentMenu === item.id }"
@@ -116,6 +133,8 @@ export default {
       selectedParentMenu: "",
       menuItems,
       viewingParentMenu: "",
+      currentBusiness:""
+
     };
   },
   mounted() {
@@ -130,6 +149,9 @@ export default {
   },
 
   methods: {
+     changeBusiness(locale, name) {
+     this.currentBusiness = name
+    },
     ...mapMutations([
       "changeSideMenuStatus",
       "addMenuClassname",
@@ -314,6 +336,9 @@ export default {
   },
 
   computed: {
+     businesses(){
+      return this.$store.getters.user;
+    },
     ...mapGetters({
       currentUser: "currentUser",
       menuType: "getMenuType",
@@ -344,3 +369,16 @@ export default {
   },
 };
 </script>
+<style scoped>
+
+
+.businessCon {
+    width:20px !important;
+    height:200px !important;
+  /* white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+  resize: horizontal; */
+}
+</style>

@@ -1,7 +1,7 @@
 <template>
   <div id="app-container" :class="getMenuType">
-    <topnav />
     <sidebar />
+    <topnav />
     <main>
       <div class="container-fluid">
         <slot></slot>
