@@ -68,7 +68,6 @@
               </router-link>
             </li>
           </ul>
-          {{ momentBiz }}
         </vue-perfect-scrollbar>
        </div>
     </div>
