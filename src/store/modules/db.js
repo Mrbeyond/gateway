@@ -1,6 +1,7 @@
 import Axios from 'axios';
 import { keepBiz, PROXY } from '../../constants/config';
-import {CUSTOMERS,BUSINESSES, RES_KEY,hToken, REFRESHER, BUSINESSDETAILS,REFRESHING
+import {CUSTOMERS,BUSINESSES, RES_KEY,hToken, REFRESHER, BUSINESSDETAILS,
+  REFRESHING, GETPAYOUTS
 } from '../../constants/formKey';
 
 export default {
@@ -69,9 +70,9 @@ export default {
 
 
   actions: {
-    
+
     [GETPAYOUTS]({commit},id){
-      
+
       commit(REFRESHER, GETPAYOUTS);
       Axios.get(`${PROXY}business/${id}`, {headers: hToken()})
       .then(res=>{

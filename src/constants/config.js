@@ -55,5 +55,5 @@ export const keepBiz=(biz)=>{
 export const isAuthGuardActive = false
 export const themeRadiusStorageKey = 'theme_radius'
 export const themeSelectedColorStorageKey = 'theme_selected_color'
-export const defaultColor =  'light.blueolympic'// 'light.purplemonster'
+export const defaultColor =  'light.bluenavy'// 'light.purplemonster'
 export const colors = ['bluenavy', 'blueyale', 'blueolympic', 'greenmoss', 'greenlime', 'purplemonster', 'orangecarrot', 'redruby', 'yellowgranola', 'greysteel']

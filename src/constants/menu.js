@@ -2,59 +2,48 @@ import { adminRoot } from "./config";
 import { UserRole } from "../utils/auth.roles";
 
 const data = [{
-  id: "dashboards",
+  id: "dashboard",
   icon: "iconsminds-shop-4",
-  label: "Dashboards",
+  label: "Dashboard",
   to: `${adminRoot}`,
 },
 {
-  id: "pages",
-  icon: "iconsminds-credit-card",
-  label: "Transaction",
-  to: `${adminRoot}/pages`,
-  
+  id: "transactions",
+  icon: "fas fa-stream",
+  label: "Transactions",
+  to: `${adminRoot}/transactions`,
+
 },
 {
-  id: "applications",
+  id: "customers",
   icon: "simple-icon-people",
   label: "Customers",
   to: `${adminRoot}/customers`
 },
 
-
-
 {
-  id: "business",
-  icon: "iconsminds-data-storage",
-  label: "Business",
-  to: `${adminRoot}/business`,
- /* subs: [
-  {
-    icon: "simple-icon-layers",
-    label: "menu.business",
-    to: `${adminRoot}/businesses`,
-
-  },
-  {
-    icon: "simple-icon-layers",
-    label: "menu.payout-wallets",
-    to: `${adminRoot}/menu/levels`,
-
-
-  },
-  {
-    icon: "simple-icon-layers",
-    label: "menu.api-keys",
-    to: `${adminRoot}/menu/levels`,
-
-  },
-  ]*/
+  id: "payouts",
+  icon: "fas fa-money-bill-alt",
+  label: "Payouts",
+  to: `${adminRoot}/payouts`
 },
 {
-  id: "blank-page",
+  id: "business",
+  icon: "fas fa-business-time",
+  label: "Business",
+  to: `${adminRoot}/business`,
+},
+{
+id: "invoices",
+icon: "fas fa-file-invoice-dollar",
+label: "Invoices",
+to: `${adminRoot}/invoices`
+},
+{
+  id: "wallets",
   icon: "iconsminds-wallet",
-  label: "Wallet",
-  to: `${adminRoot}/blank-page`
+  label: "Wallets",
+  to: `${adminRoot}/wallets`
 },
 // {
 //   id: "docs",

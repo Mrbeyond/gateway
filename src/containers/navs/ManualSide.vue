@@ -1,5 +1,5 @@
 <template>
-  <div class="main-menu">
+  <div class="main-menu ">
 
     <div v-if="businesses" class="px-2" style="padding-top:0.5em">
 
@@ -22,61 +22,50 @@
         >
           <p class="mb-2 text-small">OTHER BUSINESSES - {{ othersClone.length }}</p>
 
-          <b-form class="mb-2">
+          <b-form class="mb-3">
             <b-form-input size="sm" class="py-1" type="search" placeholder="Search">
             </b-form-input>
           </b-form>
           <p v-for="(biz, index) in othersClone" :key="index"
             class="text-small mb-2  ptr text-semi-muted"
+            @click="changeBusiness(biz.id)"
           >
             {{ biz.name }}
           </p>
           <hr class="mb-2" />
-          <p class="mb-2 ptr text-small text-semi-muted ">Add Business</p>
-          <hr class="my-2" />
-          <p class="mb-2 ptr text-small text-semi-muted">Signout</p>
+          <p class="mb-2 ptr text-small text-semi-muted ">Add a Business</p>
         </div>
       </div>
     </div>
 
-      <div class="mt-5 px-2">
+      <div class="mt-4">
 
         <vue-perfect-scrollbar
           class="scroll"
           :settings="{ suppressScrollX: true, wheelPropagation: false }"
         >
+          <hr class="mb-2" />
           <ul class="list-unstyled">
               <!-- :class="{ 'active' : (selectedParentMenu === item.id && viewingParentMenu === '') || viewingParentMenu === item.id }" -->
             <li
               v-for="(item,index) in menuItems"
               :key="`parent_${index}`"
               :data-flag="item.id"
-              class="my-2 "
+              class=" overs"
 
             >
 
-              <i :class="`${item.icon} mr-2 medCon`"/>
-              <span class="">{{ item.label }}</span>
-              <!--<a v-if="item.newWindow" :href="item.to" rel="noopener noreferrer" target="_blank">
-                <i :class="item.icon" />
-                {{ $t(item.label) }}
-              </a>
-              <a
-                v-else-if="item.subs && item.subs.length>0"
-                @click.prevent="openSubMenu($event,item)"
-                :href="`#${item.to}`"
-              >
-                <i :class="item.icon" />
-                {{ $t(item.label) }}
-              </a>
+              <!-- @click.native="changeSelectedParentHasNoSubmenu(item.id)"
               <router-link
-                v-else
-                @click.native="changeSelectedParentHasNoSubmenu(item.id)"
                 :to="item.to"
               >
-                <i :class="item.icon" />
-                {{ $t(item.label) }}
-              </router-link> -->
+              </router-link>
+               -->
+              <b-link  class="link" :href="item.to">
+                <i :class="`${item.icon} mr-2 medCon`" />
+                {{item.label}}
+
+              </b-link>
             </li>
           </ul>
         </vue-perfect-scrollbar>
@@ -86,6 +75,7 @@
 </template>
 
 <script>
+import { BUSINESSDETAILS } from '../../constants/formKey';
 import menuItems from "../../constants/menu";
 
 export default {
@@ -108,13 +98,13 @@ export default {
     },
     businesses(){
       let user = this.$store.getters.user;
-      if(user && user.businesses && user.businesses.length > 0){
-        let CB;
+      if(user && user.businesses && user.businesses.length > 0){        let CB;
         if(this.lb){
           this.currentBusiness = user.businesses.find(d=> d.id == this.lb)?
           user.businesses.find(d=> d.id == this.lb):
           user.businesses[0];
           this.otherBusinesses = user.businesses.filter(d=>d.id != this.currentBusiness.id);
+          this.othersClone = [...this.otherBusinesses];
 
         }else{
           this.currentBusiness= user.businesses[0];
@@ -131,12 +121,8 @@ export default {
 
   methods:{
 
-    changeBusiness(id, name) {
-     this.currentBusiness = name
-    //  })
-     this.$store.dispatch(BUSINESSDETAILS,id);
-
-    //  console.log(this.currentBusinessDetails);
+    changeBusiness(id) {
+      this.$store.dispatch(BUSINESSDETAILS,id);
     },
 
     shortener(val){
@@ -166,10 +152,37 @@ export default {
 }
 
 .medCon{
-  font-size: 1.2em;
+  font-size: 1.5em;
 }
 
 .medExt{
   font-size: 1.2em !important;
+}
+
+.overs{
+  font-size: 0.8em !important;
+  // padding: 0.7em 1.2em !important;
+  // background: darkgray;
+  &:hover{
+    background: black;
+    // padding: 0.8em 1.4em !important;
+    transition: 0.5s;
+    cursor: pointer;
+    // border-left: 5px solid whitesmoke;
+  }
+}
+
+.link{
+  display: block;
+  width: 100%;
+  color: white;
+  padding: 0.7em 1.2em !important;
+  padding: 0.7em 1.2em !important;
+  &:hover{
+    padding: 0.8em 1.4em !important;
+    // transition: 0.5s;
+    // cursor: pointer;
+    border-left: 5px solid whitesmoke;
+  }
 }
 </style>

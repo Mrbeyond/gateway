@@ -1,12 +1,15 @@
 <template>
   <div id="app-container" >
+      <!-- Top navbar -->
+     <topnav />
+
 
     <!-- Desktop static sidebar -->
     <div
       id="sideBar" ref="sideBar"
       v-show="show"
-      :style="`position: fixed; top:0, left:0; z-index: 50000; width: ${show?200:0}px`"
-      class="bg-primary h-100"
+      :style="`width: ${show?200:0}px`"
+      class="bg-primary h-100 desktopSideBar"
     >
       <manual-side />
     </div>
@@ -14,15 +17,15 @@
     <!-- Mobile modal sidebar -->
     <b-modal v-model="mobily" :hide-header="true"
       style="padding:0"
-      :hide-footer="true" body-class="p-0" modal-class="modal-left ">
+      :hide-footer="true" body-class="p-0 bg-primary" modal-class="modal-left ">
       <manual-side />
     </b-modal>
 
-    <!-- Top navbar -->
-    <topnav />
+
+
 
     <!-- Main Container -->
-    <div :style="`margin-left:  ${show?200:0}px`">
+    <div :style="`height:100%; margin-left:  ${show?200:0}px; margin-top:100px`">
       <div class="container-fluid">
         <slot></slot>
       </div>
@@ -113,3 +116,14 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+
+.desktopSideBar{
+  position: fixed;
+  top:0;
+  left:0;
+  z-index: 50000;
+}
+
+</style>
