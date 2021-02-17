@@ -81,7 +81,7 @@ export default {
     [GETPAYOUTS]({commit},id){
 
       commit(REFRESHER, GETPAYOUTS);
-      Axios.get(`${PROXY}business/${id}`, {headers: hToken()})
+      Axios.get(`${PROXY}business/${id}/payout/wallets`, {headers: hToken()})
       .then(res=>{
         if(!res.data.error){
           console.log(res);

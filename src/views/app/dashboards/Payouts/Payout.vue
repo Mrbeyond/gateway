@@ -1,6 +1,6 @@
 <template>
 <div v-if="businesses">
-    <b-row>
+    <b-row >
         <b-colxx xxs="12">
             <piaf-breadcrumb :heading="$t('menu.blank-page')" />
             <div class="separator mb-5"></div>
@@ -12,52 +12,55 @@
 
       </div>
     <b-row class=" mb-5" >
-        <b-colxx sm="12" md="6" lg="7" class="mr-lg-5">
+        <b-colxx sm="12" md="12" lg="7" class="mr-lg-5">
             <b-card class="mb-4">
-                <div class="row d-flex justify-content-between mb-3">
-                <h2>Business </h2>
-                 <small class="float-right">{{businesses.state.country_code}}</small>
+                <div class="row d-flex justify-content-between " >
+                <div class="border-right text-center" >
+                 <label class="form-group has-float-label mb-4"  >
+                 <b-form-select v-model="balance_type" :options="row_data.business_type" value_field="id" text-field="name" class="selects pr-5"></b-form-select>
+                </label>
+                <h3 class="text-primary">{{businesses.state.country.currency}} 0.00</h3>
+                <p>Available to pay</p>
                 </div>
-          <div class="row mb-3">
-            <strong class="col-lg-6 col-md-6 col-sm-6 col-12 ">Name</strong>  <span class=" col-sm-6 col-lg-6 col-md-6 col-12 text-sm-right  text-lg-right text-md-right"> {{businesses.name}}</span>
+
+                <div>
+                    <div class="mb-4 text-center">
+                <p>Total payout today</p>
+                <h3 class="text-primary">{{businesses.state.country.currency}} 0.00</h3>
+                    </div>
+                <div class="text-center">
+                <p>Daily payout limit</p>
+                <h3>{{businesses.state.country.currency}} 500,000</h3>
+                </div>
+                </div>
                 </div>
                 <hr>
-             <div class="row mb-3">
-            <strong class="col-lg-6 col-md-6 col-sm-6 col-12 ">City</strong>  <span class="col-sm-6 col-lg-6 col-md-6 col-12 text-sm-right  text-lg-right text-md-right"> {{businesses.city}}</span>
-             </div>
-                <hr>
+                <div class="row d-flex justify-content-between">
+                    <div class="border-right pr-4">
+                    <p>Payout this week</p>
+                    <strong class="text-muted">{{businesses.state.country.currency}} 0.000</strong>
+                    </div>
+                     <div class="border-right pr-4">
+                    <p>Payout this month</p>
+                    <strong class="text-muted">{{businesses.state.country.currency}} 0.000</strong>
+                    </div>
+                    <div>
+                    <p>Life time payout</p>
+                    <strong class="text-muted">{{businesses.state.country.currency}} 0.000</strong>
+                    </div>
 
-               <div class="row mb-3">
-            <strong class="col-lg-6 col-md-6 col-sm-6 col-12 ">Address</strong>  <span class="col-sm-6 col-lg-6 col-md-6 col-12 text-sm-right  text-lg-right text-md-right"> {{businesses.address}}</span>
-             </div>
-                <hr>
-                  <div class="row mb-3">
-            <strong class="col-lg-6 col-md-6 col-sm-6 col-12 ">Contact</strong>  <span class="col-sm-6col-lg-6 col-md-6 col-12 text-sm-right  text-lg-right text-md-right"> {{businesses.phone}}</span>
-             </div>
-                <hr>
-
-                <div class="row mb-3">
-            <strong class="col-lg-6 col-md-6 col-sm-6 col-12 ">Email</strong>  <span class="col-sm-6 col-lg-6 col-md-6 col-12 text-sm-right  text-lg-right text-md-right"> {{businesses.email}}</span>
-             </div>
-                 <!-- <div class="row mb-3">
-            <strong class="col-lg-6 col-md-6 col-12 ">Status</strong>  <span class="col-lg-6 col-md-6 col-12  text-lg-right text-md-right"> {{
-                callback(businesses.status)
-
-                }}</span>
-             </div> -->
-
+                </div>
             </b-card>
         </b-colxx>
         <b-colxx sm="12" md="6" lg="4">
             <b-card class="mb-4" :title="'Balance ' + 'in ' + businesses.state.country.currency">
-                <div>
-                <h3>{{businesses.state.country.currency}} 0.00</h3>
-                <p>Available to pay</p>
+                <div class="text-center">
+                <strong>Add settlement method</strong>
+                <p class="text-muted">Add your bank or crypto wallet to receive payouts.</p>
                 </div>
                 <hr>
-                <div>
-                <p>Payouts</p>
-                <h3>{{businesses.state.country.currency}} 0.00</h3>
+                <div class="row justify-content-center">
+                <b-btn>Add settlement</b-btn>
                 </div>
 
             </b-card>
@@ -65,69 +68,21 @@
 
     </b-row>
     <b-row >
-          <b-colxx sm="12" md="12" lg="7" class="mr-lg-5">
-              <div class="row d-flex justify-content-between mr-2 ml-2">
-                  <h3>Last payout</h3>
-                  <strong class="text-primary">View all</strong>
-              </div>
-               <b-card class="mb-4 ">
-                   <p class="justify-content-center">No payout yet.</p>
-                <!-- <div>
-            <strong>First name</strong>  <span class="float-right"> {{businesses.firstname}}</span>
-                </div>
-             <div>
-            <strong>Last name</strong>  <span class="float-right"> {{businesses.lastname}}</span>
-             </div>
-               <div>
-            <strong>Phone</strong>  <span class="float-right"> {{businesses.phone}}</span>
-             </div> -->
-
-
-            </b-card>
-              <!-- <b-card class="mb-4" title="BUSINESS">
-                <b-table responsive :items="businesses.businesses" :fields="fields"/>
-            </b-card> -->
-
-        </b-colxx>
-
-         <b-colxx sm="12" md="6" lg="4">
-                <div class="row d-flex justify-content-between mr-2 ml-2">
-                  <h3>Activity logs</h3>
-              </div>
-            <b-card class="mb-4">
-                <div>
-            <strong>First name</strong>  <span class="float-right"> {{businesses.firstname}}</span>
-                </div>
-             <div>
-            <strong>Last name</strong>  <span class="float-right"> {{businesses.lastname}}</span>
-             </div>
-               <div>
-            <strong>Phone</strong>  <span class="float-right"> {{businesses.phone}}</span>
-             </div>
-
-
+          <b-colxx class="col-12">
+               <b-card class="mb-4 row justify-content-center m-4">
+                   <div class=" col-4 bg-primary align-self-center">
+                   <strong>No payouts yet.</strong>
+                   <p class="text-muted">You have not received any payout on this account. Payouts history will appear here.</p>
+                   </div>
             </b-card>
         </b-colxx>
-    </b-row>
-     <b-row>
-          <b-colxx sm="12" md="12" lg="7">
-              <div class="row d-flex justify-content-between mr-2 ml-2">
-                  <h3>Recent Transactions</h3>
-                 <strong class="text-primary">View all</strong>
-              </div>
-               <b-card class="mb-4 ">
-                   <p class="justify-content-center">No transactions yet.</p>
-            </b-card>
-
-        </b-colxx>
-
     </b-row>
 </div>
 </template>
 <script>
 import Vuetable from "vuetable-2/src/components/Vuetable.vue";
 // import VuetablePaginationBootstrap from "../../../../components/Common/VuetablePaginationBootstrap.vue";
-import { LUX_ZONE,statusA } from '../../../../constants/formKey';
+import { LUX_ZONE,statusA,GETPAYOUTS } from '../../../../constants/formKey';
 export default {
      components: {
     vuetable: Vuetable,
@@ -136,6 +91,10 @@ export default {
   },
     data () {
         return{
+            balance_type:null,
+             row_data:{
+           business_type:[{id: null, name: 'BALANCE IN NGN'},{id:2,name:"BALANCE IN BTC"},{id:3,name:"BALANCE IN ETH"}],
+      },
               // head: {headers: hToken()},
               fields: [
                     {
@@ -159,19 +118,41 @@ export default {
 
         }
     },
+    methods: {
+      Payouts(id){
+          console.log(id);
+          this.$store.dispatch(GETPAYOUTS,id)
+      }
+    },
   computed: {
-    businesses(){
-    return this.$store.getters.businessDetails;
+       pays(){
+        return this.$store.getters.momentBiz
+      },
+      businesses(){
+         return this.$store.getters.businessDetails;
   },
-watch: {
-
-}
-    // resKey(){
-    //   return this.$store.getters.user;
-    // }
   },
+  watch: {
+    pays(val){
+        this.Payouts(val)
+    }
+},
 }
 </script>
 <style scoped>
-
+.selects{
+    font-size: 20px;
+    padding: 5px;
+    box-shadow: none;
+    text-decoration: none;
+    border: none;
+    
+}
+.sett{
+    font-size: 20px;
+    padding: 2px;
+    box-shadow: none;
+    text-decoration: none;
+    
+}
 </style>
