@@ -152,6 +152,13 @@ export default {
       this.processBusinessList(val);
     }
 
+  },
+
+  created(){
+    if(lastBiz()){
+      this.processBusinessList(lastBiz());
+    }
+
   }
 
 }
