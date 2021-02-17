@@ -35,6 +35,10 @@ const routes = [
           path: "business",
           component: () => import(/* webpackChunkName: "error" */ "./views/app/dashboards/Business/Businesses")
         },
+         {
+          path: "payouts",
+          component: () => import(/* webpackChunkName: "error" */ "./views/app/dashboards/Payouts/Payout")
+        },
     ]
   },
   {
