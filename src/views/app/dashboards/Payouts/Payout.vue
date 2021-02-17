@@ -69,10 +69,10 @@
     </b-row>
     <b-row >
           <b-colxx class="col-12">
-               <b-card class="mb-4 row justify-content-center m-4">
-                   <div class=" col-4 bg-primary align-self-center">
-                   <strong>No payouts yet.</strong>
-                   <p class="text-muted">You have not received any payout on this account. Payouts history will appear here.</p>
+               <b-card class="m-4">
+                   <div class="text-center align-self-center">
+                   <h2>No payouts yet.</h2>
+                   <p class="text-muted" style="font-size: 20px">You have not received any payout on this account.<br> Payouts history will<br> appear here.</p>
                    </div>
             </b-card>
         </b-colxx>
