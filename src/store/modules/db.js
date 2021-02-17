@@ -1,7 +1,7 @@
 import Axios from 'axios';
-import { keepBiz, PROXY } from '../../constants/config';
+import { keepBiz, lastBiz, PROXY } from '../../constants/config';
 import {CUSTOMERS,BUSINESSES, RES_KEY,hToken, REFRESHER, BUSINESSDETAILS,
-  REFRESHING, GETPAYOUTS
+  REFRESHING, GETPAYOUTS, MOMENT_BIZ
 } from '../../constants/formKey';
 
 export default {
@@ -13,6 +13,7 @@ export default {
     resKey: {status:false, owner:''},
     refresher: {status:false, owner:''},
     refreshing: false,
+    momentBiz: null,
 
   },
 
@@ -31,6 +32,8 @@ export default {
     refresher: state => state.refresher,
 
     refreshing: state => state.refreshing,
+
+    momentBiz: state => state.momentBiz,
   },
 
   mutations: {
@@ -61,6 +64,10 @@ export default {
 
     [REFRESHING](state){
       state.refreshing = !state.refreshing;
+    },
+
+    [MOMENT_BIZ](state, payload){
+      state.momentBiz = payload;
     },
 
 
@@ -109,6 +116,7 @@ export default {
           try {
             payload = res.data.data
             commit(BUSINESSDETAILS, payload);
+            commit(MOMENT_BIZ, id);
             keepBiz(id);
             commit(RES_KEY, {status:0, owner: BUSINESSDETAILS});
           } catch (e) {
