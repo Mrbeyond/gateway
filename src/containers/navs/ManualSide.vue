@@ -3,7 +3,7 @@
 
     <div v-if="businesses" class="px-2" style="padding-top:0.5em">
 
-      <div class="d-flex bg-dark px-2 py-2 justify-content-between">
+      <div v-if="currentBusiness" class="d-flex bg-dark px-2 py-2 justify-content-between">
         <div>
           <p class="my-0">{{currentBusiness.name}}</p>
           <p class="my-1 text-center text-small test-muted"> {{ currentBusiness.id }}</p>
@@ -61,13 +61,14 @@
               >
               </router-link>
                -->
-              <b-link  class="link" :href="item.to">
+              <router-link  class="link" :to="item.to">
                 <i :class="`${item.icon} mr-2 medCon`" />
                 {{item.label}}
 
-              </b-link>
+              </router-link>
             </li>
           </ul>
+          {{ momentBiz }}
         </vue-perfect-scrollbar>
        </div>
     </div>
@@ -75,6 +76,7 @@
 </template>
 
 <script>
+import { lastBiz } from '../../constants/config';
 import { BUSINESSDETAILS } from '../../constants/formKey';
 import menuItems from "../../constants/menu";
 
@@ -96,12 +98,36 @@ export default {
       return this.$store.getters.currentBiz;
 
     },
+
+    momentBiz(){
+      // console.log(55555);
+      return this.$store.getters.momentBiz;
+    },
     businesses(){
+      return this.$store.getters.currentBiz;
+    },
+
+  },
+
+  methods:{
+
+    changeBusiness(id) {
+      if(this.currentBusiness){
+        if(this.id == this.currentBusiness.id) return;
+        this.$store.dispatch(BUSINESSDETAILS,id);
+      }
+    },
+
+    shortener(val){
+      return !val? " " :val.length > 15? val.slice(0,18)+"...": val
+    },
+
+    processBusinessList(val){
       let user = this.$store.getters.user;
-      if(user && user.businesses && user.businesses.length > 0){        let CB;
-        if(this.lb){
-          this.currentBusiness = user.businesses.find(d=> d.id == this.lb)?
-          user.businesses.find(d=> d.id == this.lb):
+      if(user && user.businesses && user.businesses.length > 0){
+        if(val){
+          this.currentBusiness = user.businesses.find(d=> d.id == val)?
+          user.businesses.find(d=> d.id == val):
           user.businesses[0];
           this.otherBusinesses = user.businesses.filter(d=>d.id != this.currentBusiness.id);
           this.othersClone = [...this.otherBusinesses];
@@ -112,24 +138,28 @@ export default {
           this.othersClone = [...this.otherBusinesses];
         }
       }else{
-        this.noBiz = true;
+        this.$router.push('/user/login');
       }
-      return true;
-    },
-
-  },
-
-  methods:{
-
-    changeBusiness(id) {
-      this.$store.dispatch(BUSINESSDETAILS,id);
-    },
-
-    shortener(val){
-      return !val? " " :val.length > 15? val.slice(0,18)+"...": val
     }
 
   },
+
+  watch:{
+    momentBiz(val){
+      this.processBusinessList(val);
+    },
+    businesses(val){
+      this.processBusinessList(val);
+    }
+
+  },
+
+  created(){
+    if(lastBiz()){
+      this.processBusinessList(lastBiz());
+    }
+
+  }
 
 }
 </script>

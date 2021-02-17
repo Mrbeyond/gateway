@@ -6,6 +6,7 @@
 
 
 <script>// @ts-nocheck
+import { lastBiz } from '../../constants/config';
 import { BUSINESSDETAILS } from '../../constants/formKey';
 
 // write security logics here, beyond.
@@ -22,9 +23,9 @@ export default {
       let user = this.$store.getters.user;
       if(user && user.businesses && user.businesses.length > 0){
         let id;
-        if(this.currentBiz){
-          id = user.businesses.find(d=> d.id == this.currentBiz)?
-          user.businesses.find(d=> d.id == this.currentBiz).id:
+        if(lastBiz()){
+          id = user.businesses.find(d=> d.id == lastBiz())?
+          user.businesses.find(d=> d.id == lastBiz()).id:
           user.businesses[0].id;
         }else{
          id = user.businesses[0].id;
