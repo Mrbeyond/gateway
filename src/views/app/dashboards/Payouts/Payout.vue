@@ -14,20 +14,19 @@
     <b-row class=" mb-5" >
         <b-colxx sm="12" md="12" lg="7" class="mr-lg-5">
             <b-card class="mb-4">
-                <div class="row d-flex justify-content-between " >
+                <div class="row d-flex justify-content-center" >
                 <div class="border-right text-center" >
                  <label class="form-group has-float-label mb-4"  >
                  <b-form-select v-model="balance_type" :options="row_data.business_type" value_field="id" text-field="name" class="selects pr-5"></b-form-select>
-                </label>
                 <h3 class="text-primary">{{businesses.state.country.currency}} 0.00</h3>
-                <p>Available to pay</p>
+                </label>
                 </div>
 
-                <div>
-                    <div class="mb-4 text-center">
+                <div class=" pl-4">
+                <div class="mb-4 ">
                 <p>Total payout today</p>
                 <h3 class="text-primary">{{businesses.state.country.currency}} 0.00</h3>
-                    </div>
+                 </div>
                 <div class="text-center">
                 <p>Daily payout limit</p>
                 <h3>{{businesses.state.country.currency}} 500,000</h3>
@@ -36,14 +35,16 @@
                 </div>
                 <hr>
                 <div class="row d-flex justify-content-between">
-                    <div class="border-right pr-4">
+                    <div class="border-right pr-4 mb-4">
                     <p>Payout this week</p>
                     <strong class="text-muted">{{businesses.state.country.currency}} 0.000</strong>
                     </div>
-                     <div class="border-right pr-4">
+                    <hr>
+                     <div class="border-right pr-4 mb-4">
                     <p>Payout this month</p>
                     <strong class="text-muted">{{businesses.state.country.currency}} 0.000</strong>
                     </div>
+                    <hr>
                     <div>
                     <p>Life time payout</p>
                     <strong class="text-muted">{{businesses.state.country.currency}} 0.000</strong>
