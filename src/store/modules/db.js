@@ -1,7 +1,7 @@
 import Axios from 'axios';
 import { keepBiz, lastBiz, PROXY } from '../../constants/config';
 import {CUSTOMERS,BUSINESSES, RES_KEY,hToken, REFRESHER, BUSINESSDETAILS,
-  REFRESHING, GETPAYOUTS, MOMENT_BIZ
+  REFRESHING, GETPAYOUTS,WALLETS,WALLETSDETAILS, MOMENT_BIZ
 } from '../../constants/formKey';
 
 export default {
@@ -9,6 +9,8 @@ export default {
     customers: null,
     businesses: null,
     payouts: null,
+    wallets: null,
+    walletsdetails: null,
     businessDetails: null,
     resKey: {status:false, owner:''},
     refresher: {status:false, owner:''},
@@ -19,6 +21,10 @@ export default {
 
   /** This is manually included */
   getters: {
+    payouts: state=> state.walletsdetails,
+
+    payouts: state=> state.wallets,
+
     payouts: state=> state.payouts,
 
     businessDetails: state=> state.businessDetails,
@@ -37,6 +43,12 @@ export default {
   },
 
   mutations: {
+    [WALLETSDETAILS](state, payload){
+      state.walletsdetails = payload;
+    },
+    [WALLETS](state, payload){
+      state.wallets = payload;
+    },
 
     [GETPAYOUTS](state, payload){
       state.payouts = payload;
@@ -77,6 +89,60 @@ export default {
 
 
   actions: {
+    [WALLETSDETAILS]({commit},id,wallet_id){
+
+      commit(REFRESHER, WALLETSDETAILS);
+      Axios.get(`${PROXY}wallet/${id}/details/${wallet_id}`, {headers: hToken()})
+      .then(res=>{
+        if(!res.data.error){
+          console.log(res);
+          let payload;
+          try {
+            payload = res.data.data
+            commit(WALLETSDETAILS, payload);
+            commit(RES_KEY, {status:0, owner: WALLETSDETAILS});
+          } catch (e) {
+            commit(RES_KEY, {status:1, owner: WALLETSDETAILS});
+          }
+        }else{
+          commit(RES_KEY, {status:1, owner: WALLETSDETAILS});
+        }
+        commit(REFRESHER, WALLETSDETAILS);
+      })
+      .catch(err => {
+        if(err.response){
+          commit(RES_KEY, {status:2, owner: WALLETSDETAILS});
+          commit(REFRESHER, WALLETSDETAILS);
+        }
+      })
+    },
+    [WALLETS]({commit},id){
+
+      commit(REFRESHER, WALLETS);
+      Axios.get(`${PROXY}business/${id}/payout/wallets`, {headers: hToken()})
+      .then(res=>{
+        if(!res.data.error){
+          console.log(res);
+          let payload;
+          try {
+            payload = res.data.data
+            commit(WALLETS, payload);
+            commit(RES_KEY, {status:0, owner: WALLETS});
+          } catch (e) {
+            commit(RES_KEY, {status:1, owner: WALLETS});
+          }
+        }else{
+          commit(RES_KEY, {status:1, owner: WALLETS});
+        }
+        commit(REFRESHER, WALLETS);
+      })
+      .catch(err => {
+        if(err.response){
+          commit(RES_KEY, {status:2, owner: WALLETS});
+          commit(REFRESHER, WALLETS);
+        }
+      })
+    },
 
     [GETPAYOUTS]({commit},id){
 
