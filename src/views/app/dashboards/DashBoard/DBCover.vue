@@ -19,25 +19,25 @@
                  <small class="float-right">{{businesses.state.country_code}}</small>
                 </div>
           <div class="row mb-3">
-            <strong class="col-lg-6 col-md-6 col-sm-6 col-12 ">Name</strong>  <span class=" col-sm-6 col-lg-6 col-md-6 col-12  text-lg-right text-md-right"> {{businesses.name}}</span>
+            <strong class="col-lg-6 col-md-6 col-sm-6 col-12 ">Name</strong>  <span class=" col-sm-6 col-lg-6 col-md-6 col-12 text-sm-right  text-lg-right text-md-right"> {{businesses.name}}</span>
                 </div>
                 <hr>
              <div class="row mb-3">
-            <strong class="col-lg-6 col-md-6 col-12 ">City</strong>  <span class="col-lg-6 col-md-6 col-12  text-lg-right text-md-right"> {{businesses.city}}</span>
+            <strong class="col-lg-6 col-md-6 col-sm-6 col-12 ">City</strong>  <span class="col-sm-6 col-lg-6 col-md-6 col-12 text-sm-right  text-lg-right text-md-right"> {{businesses.city}}</span>
              </div>
                 <hr>
 
                <div class="row mb-3">
-            <strong class="col-lg-6 col-md-6 col-12 ">Address</strong>  <span class="col-lg-6 col-md-6 col-12  text-lg-right text-md-right"> {{businesses.address}}</span>
+            <strong class="col-lg-6 col-md-6 col-sm-6 col-12 ">Address</strong>  <span class="col-sm-6 col-lg-6 col-md-6 col-12 text-sm-right  text-lg-right text-md-right"> {{businesses.address}}</span>
              </div>
                 <hr>
                   <div class="row mb-3">
-            <strong class="col-lg-6 col-md-6 col-12 ">Contact</strong>  <span class="col-lg-6 col-md-6 col-12  text-lg-right text-md-right"> {{businesses.phone}}</span>
+            <strong class="col-lg-6 col-md-6 col-sm-6 col-12 ">Contact</strong>  <span class="col-sm-6col-lg-6 col-md-6 col-12 text-sm-right  text-lg-right text-md-right"> {{businesses.phone}}</span>
              </div>
                 <hr>
 
                 <div class="row mb-3">
-            <strong class="col-lg-6 col-md-6 col-12 ">Email</strong>  <span class="col-lg-6 col-md-6 col-12  text-lg-right text-md-right"> {{businesses.email}}</span>
+            <strong class="col-lg-6 col-md-6 col-sm-6 col-12 ">Email</strong>  <span class="col-sm-6 col-lg-6 col-md-6 col-12 text-sm-right  text-lg-right text-md-right"> {{businesses.email}}</span>
              </div>
                  <!-- <div class="row mb-3">
             <strong class="col-lg-6 col-md-6 col-12 ">Status</strong>  <span class="col-lg-6 col-md-6 col-12  text-lg-right text-md-right"> {{
