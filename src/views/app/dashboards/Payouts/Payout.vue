@@ -141,6 +141,9 @@ export default {
         this.Payouts(val)
     }
 },
+created() {
+   this.Payouts(this.pays)
+}
 }
 </script>
 <style scoped>
