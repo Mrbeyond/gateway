@@ -53,8 +53,9 @@
             </b-card>
         </b-colxx>
         <b-colxx sm="12" md="6" lg="4">
-            <b-card class="mb-4" :title="'Balance ' + 'in ' + businesses.state.country.currency">
+            <b-card class="mb-4">
                 <div class="text-center">
+                    <i class="iconsminds-bank" style="font-size:30px;"></i><br>
                 <strong>Add settlement method</strong>
                 <p class="text-muted">Add your bank or crypto wallet to receive payouts.</p>
                 </div>
@@ -71,6 +72,8 @@
           <b-colxx class="col-12">
                <b-card class="m-4">
                    <div class="text-center align-self-center">
+                       <!-- <img  src="./../../../../assets/img/uploads/p_crypto_bank_settle.svg" /> -->
+                    <i class="iconsminds-financial" style="font-size:40px;"></i><br>
                    <h2>No payouts yet.</h2>
                    <p class="text-muted" style="font-size: 20px">You have not received any payout on this account.<br> Payouts history will<br> appear here.</p>
                    </div>
