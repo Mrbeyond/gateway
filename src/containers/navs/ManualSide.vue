@@ -52,6 +52,7 @@
               :key="`parent_${index}`"
               :data-flag="item.id"
               class=" overs"
+              @click="toggleSide"
 
 
             >
@@ -77,7 +78,7 @@
 
 <script>
 import { lastBiz } from '../../constants/config';
-import { BUSINESSDETAILS } from '../../constants/formKey';
+import { BUSINESSDETAILS, MOBILE } from '../../constants/formKey';
 import menuItems from "../../constants/menu";
 
 export default {
@@ -110,11 +111,20 @@ export default {
 
     sideEmph(){
       return this.$store.getters.sideEmph;
+    },
+
+    mobile(){
+      return this.$store.getters.mobile;
     }
 
   },
 
   methods:{
+    toggleSide(){
+      if(this.mobile){
+        this.$store.commit(MOBILE, !this.mobile);
+      }
+    },
 
     changeBusiness(id) {
       if(this.currentBusiness){
@@ -164,7 +174,7 @@ export default {
       // console.log('new val', val);
       setTimeout((()=>{
           doc.classList.add("dyna")
-        }), 200)
+        }), 300)
       }
     }
 
@@ -172,15 +182,20 @@ export default {
 
   created(){
     if(lastBiz()){
+
       this.processBusinessList(lastBiz());
     }
 
   },
 
   mounted() {
+    console.log("new", this.sideEmph);
     let doc = document.getElementById(this.sideEmph);
     if (doc) {
       doc.classList.add("dyna")
+      // setTimeout((()=>{
+      //   doc.classList.add("dyna")
+      // }), 300)
       // console.log(doc);
     }
   },
