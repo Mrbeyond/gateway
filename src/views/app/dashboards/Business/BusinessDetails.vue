@@ -13,9 +13,9 @@
       </div>
     <b-row class=" mb-5" >
         <b-colxx sm="12" md="6" lg="7" class="mr-lg-5">
+                <h2>Business </h2>
             <b-card class="mb-4">
                 <div class="row d-flex justify-content-between mb-3">
-                <h2>Business </h2>
                  <small class="float-right">{{businesses.state.country_code}}</small>
                 </div>
           <div class="row mb-3">
@@ -49,9 +49,10 @@
             </b-card>
         </b-colxx>
         <b-colxx sm="12" md="6" lg="4">
-            <b-card class="mb-4" title="Business type">
+            <h2>Type</h2>
+            <b-card class="mb-4">
                 <div>
-                <strong>Type name</strong>
+                <strong>Name</strong>
                 <p class="text-muted">{{businesses.business_type.name}}</p>
                 </div>
                 <hr>
@@ -65,9 +66,9 @@
     </b-row>
       <b-row class=" mb-5" >
         <b-colxx sm="12" md="6" lg="6">
+                <h2>Industry</h2>
             <b-card class="mb-4">
                 <div class="row d-flex justify-content-between mb-3">
-                <h2>Industry</h2>
                  <small class="float-right">{{businesses.state.country_code}}</small>
                 </div>
           <div class="row mb-3">
@@ -101,10 +102,9 @@
             </b-card>
         </b-colxx>
         <b-colxx sm="12" md="6" lg="6">
+                <h2>Adress</h2>
            <b-card class="mb-4">
                 <div class="row d-flex justify-content-between mb-3">
-                <h2>Adress</h2>
-                 <small class="float-right">{{businesses.state.country_code}}</small>
                 </div>
           <div class="row mb-3">
             <strong class="col-lg-6 col-md-6 col-sm-6 col-12 ">State</strong>  <span class=" col-sm-6 col-lg-6 col-md-6 col-12 text-sm-right  text-lg-right text-md-right"> {{businesses.state.name}}</span>
@@ -126,12 +126,6 @@
                 <div class="row mb-3">
             <strong class="col-lg-6 col-md-6 col-sm-6 col-12 ">Currency</strong>  <span class="col-sm-6 col-lg-6 col-md-6 col-12 text-sm-right  text-lg-right text-md-right"> {{businesses.state.country.currency}}</span>
              </div>
-                 <!-- <div class="row mb-3">
-            <strong class="col-lg-6 col-md-6 col-12 ">Status</strong>  <span class="col-lg-6 col-md-6 col-12  text-lg-right text-md-right"> {{
-                callback(businesses.status)
-
-                }}</span>
-             </div> -->
 
             </b-card>
         </b-colxx>
