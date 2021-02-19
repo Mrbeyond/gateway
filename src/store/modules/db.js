@@ -1,7 +1,7 @@
 import Axios from 'axios';
 import { keepBiz, lastBiz, PROXY } from '../../constants/config';
 import {CUSTOMERS,BUSINESSES, RES_KEY,hToken, REFRESHER, BUSINESSDETAILS,
-  REFRESHING, GETPAYOUTS,WALLETS,WALLETSDETAILS, MOMENT_BIZ, SIDE_EMPH
+  REFRESHING, GETPAYOUTS,WALLETS,WALLETSDETAILS, MOMENT_BIZ, SIDE_EMPH, PROGRESS
 } from '../../constants/formKey';
 
 export default {
@@ -12,11 +12,12 @@ export default {
     wallets: null,
     walletsdetails: null,
     businessDetails: null,
-    resKey: {status:false, owner:''},
-    refresher: {status:false, owner:''},
+    resKey: {status:0, owner:''},
+    refresher: {status:0, owner:''},
     refreshing: false,
     momentBiz: null,
     sideEmph: "dashboard",
+    progress: 0,
 
   },
 
@@ -43,9 +44,15 @@ export default {
     momentBiz: state => state.momentBiz,
 
     sideEmph: state => state.sideEmph,
+
+    progress: state => state.progress,
   },
 
   mutations: {
+    [PROGRESS]( state, payload){
+      state.progress = payload;
+    },
+
     [WALLETSDETAILS](state, payload){
       state.walletsdetails = payload;
     },
@@ -179,9 +186,21 @@ export default {
       })
     },
     [BUSINESSDETAILS]({commit},id){
-
+      commit(PROGRESS, 0);
       commit(REFRESHER, BUSINESSDETAILS);
-      Axios.get(`${PROXY}business/${id}`, {headers: hToken()})
+      commit(RES_KEY, {status:1, owner: BUSINESSDETAILS});
+      Axios.get(`${PROXY}business/${id}`,
+      {
+        headers: hToken(),
+        onDownloadProgress: ({loaded, total})=>{
+          // console.log(loaded, total);
+          if(total > 0){
+            alert();
+              commit(PROGRESS, Math.round((loaded*100) /total));
+           }
+         }
+        }
+      )
       .then(res=>{
         if(!res.data.error){
           // console.log(res);
@@ -191,18 +210,18 @@ export default {
             commit(BUSINESSDETAILS, payload);
             commit(MOMENT_BIZ, id);
             keepBiz(id);
-            commit(RES_KEY, {status:0, owner: BUSINESSDETAILS});
+            commit(RES_KEY, {status:2, owner: BUSINESSDETAILS});
           } catch (e) {
-            commit(RES_KEY, {status:1, owner: BUSINESSDETAILS});
+            commit(RES_KEY, {status:3, owner: BUSINESSDETAILS});
           }
         }else{
-          commit(RES_KEY, {status:1, owner: BUSINESSDETAILS});
+          commit(RES_KEY, {status:3, owner: BUSINESSDETAILS});
         }
         commit(REFRESHER, BUSINESSDETAILS);
       })
       .catch(err => {
         if(err.response){
-          commit(RES_KEY, {status:2, owner: BUSINESSDETAILS});
+          commit(RES_KEY, {status:3, owner: BUSINESSDETAILS});
           commit(REFRESHER, BUSINESSDETAILS);
         }
       })

@@ -291,7 +291,7 @@ export default {
         password: this.password,
       }
 
-      console.log(formData);
+      // console.log(formData);
       this.submitting = true;
       axios.post(`${PROXY}user/register`, formData)
       .then(res=>{

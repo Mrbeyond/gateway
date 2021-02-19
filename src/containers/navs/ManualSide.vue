@@ -1,18 +1,23 @@
 <template>
   <div class="main-menu ">
 
-    <div v-if="businesses" class="px-2" style="padding-top:0.5em">
+    <div v-if="currentBiz" class="px-2" style="padding-top:0.5em">
 
-      <div v-if="currentBusiness" class="d-flex bg-dark px-2 py-2 justify-content-between">
-        <div>
-          <p class="my-0">{{currentBusiness.name}}</p>
-          <p class="my-1 text-center text-small test-muted"> {{ currentBusiness.id }}</p>
-        </div>
-        <div @click="bizShow = !bizShow" class="align-self-center" >
-          <strong>
-            <i v-if="!bizShow" style="font-size: 1.5em" class="simple-icon-arrow-down" />
-            <i v-else style="font-size: 1.5em"  class="simple-icon-arrow-up" />
-          </strong>
+      <div v-if="currentBusiness" class=" bg-dark px-2 pb-2 pt-0 position-relative" >
+        <b-spinner small v-if="resKey && resKey.status == 1 && resKey.owner == BUSINESSDETAILS"
+          class="spen text-white pb-2"
+        />
+        <div class="d-flex justify-content-between pt-2">
+          <div>
+            <p class="my-0">{{currentBusiness.name}}</p>
+            <p class="my-1 text-center text-small test-muted"> {{ currentBusiness.id }}</p>
+          </div>
+          <div @click="bizShow = !bizShow" class="align-self-center" >
+            <strong>
+              <i v-if="!bizShow" style="font-size: 1.5em" class="simple-icon-arrow-down" />
+              <i v-else style="font-size: 1.5em"  class="simple-icon-arrow-up" />
+            </strong>
+          </div>
         </div>
       </div>
       <div style="position: relative">
@@ -63,7 +68,7 @@
               >
               </router-link>
                -->
-              <router-link :id="item.id"  class="link " :to="item.to">
+              <router-link :id="item.id"  :class="{link:true, dyna: item.id == sideEmph }" :to="item.to">
                 <i :class="`${item.icon} mr-2 medCon`" />
                 {{item.label}}
 
@@ -71,19 +76,44 @@
             </li>
           </ul>
         </vue-perfect-scrollbar>
+        <div>
+         <!--  <b-button @click="testAx">
+            Here {{ progress }}
+          </b-button>
+          <hr />
+          <b-progress :value="prog" :max="100" show-progress ></b-progress>
+            <b-spinner small v-if="resKey && resKey.status == 2 && resKey.owner == BUSINESSDETAILS"
+          class="spen text-white pb-2"
+        />
+
+          -->
+          <b-toast
+            :variant="resKey.status == 2? 'success':resKey.status == 3? 'warning': 'primary'"
+            id="example-toast"
+            :title="resKey.status == 2? 'Profile changed':resKey.status == 3? 'Something went wrong': 'Error'" >
+            {{
+              resKey.status == 2? `You are now using ${currentBusiness.name} profile. `:
+              resKey.status == 3? 'There seem to be connection error.': 'Oops! Something went wrong, please try again.'
+            }}
+          </b-toast>
+
+        </div>
        </div>
     </div>
 
 </template>
 
 <script>
-import { lastBiz } from '../../constants/config';
+import Axios from 'axios';
+import { lastBiz, PROXY } from '../../constants/config';
 import { BUSINESSDETAILS, MOBILE } from '../../constants/formKey';
 import menuItems from "../../constants/menu";
+import { mapGetters } from 'vuex';
 
 export default {
 
   data: ()=>({
+    BUSINESSDETAILS,
     menuItems: menuItems,
     currentBusiness:null,
     currentBusinessDetails:"",
@@ -91,35 +121,60 @@ export default {
     othersClone: null,
     noBiz: false,
     bizShow: false,
+    prog: 0,
 
   }),
 
   computed:{
-    lb(){
-      return this.$store.getters.currentBiz;
+    ...mapGetters(["momentBiz", "resKey", "currentBiz", "sideEmph", "mobile", "progress"]),
 
-    },
+    // momentBiz(){
+    //   // console.log(55555);
+    //   return this.$store.getters.momentBiz;
+    // },
 
-    momentBiz(){
-      // console.log(55555);
-      return this.$store.getters.momentBiz;
-    },
+    // businesses(){
+    //   return this.$store.getters.currentBiz;
+    // },
 
-    businesses(){
-      return this.$store.getters.currentBiz;
-    },
+    // sideEmph(){
+    //   return this.$store.getters.sideEmph;
+    // },
 
-    sideEmph(){
-      return this.$store.getters.sideEmph;
-    },
+    // mobile(){
+    //   return this.$store.getters.mobile;
+    // },
 
-    mobile(){
-      return this.$store.getters.mobile;
-    }
+    // progress(){
+    //   return this.$store.getters.progress;
+    // },
 
   },
 
   methods:{
+    testAx(){
+      this.prog = 0;
+      let up=(e)=>{
+        console.log(e, "uploader");
+      };
+      let down = (e)=>{
+        let {loaded, total} = e;
+        console.log(e);
+        console.log(loaded, total, "down");
+        this.prog = Math.round((loaded*100) /total)
+        console.log(this.prog, e.lengthComputable);
+      }
+      Axios.get(`${PROXY}generic/business-parameters`//"https://fetch-progress.anthum.com/30kbps/images/sunrise-baseline.jpg" /*"https://jsonplaceholder.typicode.com/comments"'https://run.mocky.io/v3/0b08bcb2-d5aa-4be5-a964-e43c488536e7'*/
+        , {onUploadProgress: up, onDownloadProgress: down
+      })
+      .then(res=>{
+        console.log(res);
+      })
+      .catch(err=>{
+        console.log(err);
+      })
+    },
+
     toggleSide(){
       if(this.mobile){
         this.$store.commit(MOBILE, !this.mobile);
@@ -160,36 +215,31 @@ export default {
   },
 
   watch:{
+    resKey(val){
+      if(val && val.status == 2 && val.owner == BUSINESSDETAILS){
+        this.$bvToast.show("example-toast");
+      }
+    },
+
     momentBiz(val){
       this.processBusinessList(val);
     },
 
-    businesses(val){
+    currentBiz(val){
       this.processBusinessList(val);
     },
-
-    sideEmph(val){
-      let doc = document.getElementById(val);
-      if (doc) {
-      // console.log('new val', val);
-      setTimeout((()=>{
-          doc.classList.add("dyna")
-        }), 300)
-      }
-    }
 
   },
 
   created(){
     if(lastBiz()){
-
       this.processBusinessList(lastBiz());
     }
 
   },
 
   mounted() {
-    console.log("new", this.sideEmph);
+    /*console.log("new", this.sideEmph);
     let doc = document.getElementById(this.sideEmph);
     if (doc) {
       doc.classList.add("dyna")
@@ -197,7 +247,7 @@ export default {
       //   doc.classList.add("dyna")
       // }), 300)
       // console.log(doc);
-    }
+    }*/
   },
 
 }
@@ -264,5 +314,10 @@ export default {
   // cursor: pointer;
   background: black;
   border-left: 5px solid whitesmoke;
+}
+
+.spen{
+  position: absolute;
+  right: 0;
 }
 </style>
