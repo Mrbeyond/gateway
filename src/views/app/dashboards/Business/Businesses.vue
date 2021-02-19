@@ -8,9 +8,16 @@
     </div>
     <b-row v-else>
       <b-colxx xxs="12">
-
           <b-card class="mb-4" title="BUSINESS">
-                <b-table responsive :items="businesses" :fields="fields"/>
+                <b-table responsive :items="businesses" :fields="fields">
+                  <template #cell(actions)="row">
+                    <router-link :to="`/dashbord/business/${row.item.id}`">
+                  <b-button size="sm" class="mr-1 bg-primary">
+                   More info
+                  </b-button>
+                    </router-link>
+                </template>
+                </b-table>
             </b-card>
       </b-colxx>
     </b-row>
@@ -79,7 +86,8 @@ export default {
                 sortable: true,
                 // Variant applies to the whole column, including the header and footer
                 // variant: 'danger'
-            }
+            },
+                 { key: 'actions', label: 'Actions' }
     ],
     };
   },
