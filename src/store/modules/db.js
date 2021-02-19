@@ -1,7 +1,7 @@
 import Axios from 'axios';
 import { keepBiz, lastBiz, PROXY } from '../../constants/config';
 import {CUSTOMERS,BUSINESSES, RES_KEY,hToken, REFRESHER, BUSINESSDETAILS,
-  REFRESHING, GETPAYOUTS,WALLETS,WALLETSDETAILS, MOMENT_BIZ
+  REFRESHING, GETPAYOUTS,WALLETS,WALLETSDETAILS,GETAPIS, MOMENT_BIZ
 } from '../../constants/formKey';
 
 export default {
@@ -11,6 +11,7 @@ export default {
     payouts: null,
     wallets: null,
     walletsdetails: null,
+    getapis:null,
     businessDetails: null,
     resKey: {status:false, owner:''},
     refresher: {status:false, owner:''},
@@ -21,6 +22,8 @@ export default {
 
   /** This is manually included */
   getters: {
+    getapis: state=> state.getapis,
+
     payouts: state=> state.walletsdetails,
 
     payouts: state=> state.wallets,
@@ -43,6 +46,10 @@ export default {
   },
 
   mutations: {
+    [GETAPIS](state, payload){
+      state.getapis = payload;
+    },
+
     [WALLETSDETAILS](state, payload){
       state.walletsdetails = payload;
     },
@@ -89,6 +96,35 @@ export default {
 
 
   actions: {
+    
+    [GETAPIS]({commit},id){
+
+      commit(REFRESHER, GETAPIS);
+      Axios.get(`${PROXY}business/${id}/keys`, {headers: hToken()})
+      .then(res=>{
+        if(!res.data.error){
+          console.log(res);
+          let payload;
+          try {
+            payload = res.data.data
+            commit(GETAPIS, payload);
+            commit(RES_KEY, {status:0, owner: GETAPIS});
+          } catch (e) {
+            commit(RES_KEY, {status:1, owner: GETAPIS});
+          }
+        }else{
+          commit(RES_KEY, {status:1, owner: GETAPIS});
+        }
+        commit(REFRESHER, GETAPIS);
+      })
+      .catch(err => {
+        if(err.response){
+          commit(RES_KEY, {status:2, owner: GETAPIS});
+          commit(REFRESHER, GETAPIS);
+        }
+      })
+    },
+
     [WALLETSDETAILS]({commit},id,wallet_id){
 
       commit(REFRESHER, WALLETSDETAILS);
@@ -116,6 +152,7 @@ export default {
         }
       })
     },
+
     [WALLETS]({commit},id){
 
       commit(REFRESHER, WALLETS);

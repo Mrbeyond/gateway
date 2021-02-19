@@ -39,6 +39,10 @@ const routes = [
           path: "business/:id",
           component: () => import(/* webpackChunkName: "error" */ "./views/app/dashboards/Business/BusinessDetails.vue")
         },
+        {
+          path: "apis",
+          component: () => import(/* webpackChunkName: "error" */ "./views/app/dashboards/ApiKeys/Apis.vue")
+        },
          {
           path: "payouts",
           component: () => import(/* webpackChunkName: "error" */ "./views/app/dashboards/Payouts/Payout")

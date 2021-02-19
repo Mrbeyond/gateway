@@ -32,6 +32,7 @@ export const AUTO_FETCHING = "AUTO_FETCHING";
 export const REFRESHER = "REFRESHER";
 export const REFRESHING = "REFRESHING";
 export const GETPAYOUTS = "GETPAYOUTS";
+export const GETAPIS = "GETAPIS";
 export const WALLETS = "WALLETS";
 export const WALLETSDETAILS = "WALLETSDETAILS";
 
