@@ -21,16 +21,19 @@
         </div>
       </div>
       <div style="position: relative">
-        <div v-if="bizShow && othersClone.length >0"
+        <div v-if="bizShow && otherBusinesses.length >0"
           class="w-100 bizs px-2 py-2 bg-dark"
           style="border-radius: 5px"
         >
           <p class="mb-2 text-small">OTHER BUSINESSES - {{ othersClone.length }}</p>
 
+            <b-input size="sm" class="py-1 mb-3"
+              type="search" placeholder="Search"
+              v-model="filterer" @keyup.passive="searcher"
+            />
+          <!--
           <b-form class="mb-3">
-            <b-form-input size="sm" class="py-1" type="search" placeholder="Search">
-            </b-form-input>
-          </b-form>
+          </b-form> -->
           <p v-for="(biz, index) in othersClone" :key="index"
             class="text-small mb-2  ptr text-semi-muted"
             @click="changeBusiness(biz.id)"
@@ -83,17 +86,17 @@
           <hr />
           <b-progress :value="prog" :max="100" show-progress ></b-progress>
             <b-spinner small v-if="resKey && resKey.status == 2 && resKey.owner == BUSINESSDETAILS"
-          class="spen text-white pb-2"
-        />
+            class="spen text-white pb-2"
+          />
 
           -->
           <b-toast
             :variant="resKey.status == 2? 'success':resKey.status == 3? 'warning': 'primary'"
-            id="example-toast"
-            :title="resKey.status == 2? 'Profile changed':resKey.status == 3? 'Something went wrong': 'Error'" >
+            id="profile_switch" auto-hide-delay="2000"
+            :title="resKey.status == 2? 'Profile changed':resKey.status == 3? 'Something went wrong': ''" >
             {{
               resKey.status == 2? `You are now using ${currentBusiness.name} profile. `:
-              resKey.status == 3? 'There seem to be connection error.': 'Oops! Something went wrong, please try again.'
+              resKey.status == 3? 'There seem to be connection error.': null
             }}
           </b-toast>
 
@@ -121,6 +124,7 @@ export default {
     othersClone: null,
     noBiz: false,
     bizShow: false,
+    filterer:"",
     prog: 0,
 
   }),
@@ -128,30 +132,19 @@ export default {
   computed:{
     ...mapGetters(["momentBiz", "resKey", "currentBiz", "sideEmph", "mobile", "progress"]),
 
-    // momentBiz(){
-    //   // console.log(55555);
-    //   return this.$store.getters.momentBiz;
-    // },
-
-    // businesses(){
-    //   return this.$store.getters.currentBiz;
-    // },
-
-    // sideEmph(){
-    //   return this.$store.getters.sideEmph;
-    // },
-
-    // mobile(){
-    //   return this.$store.getters.mobile;
-    // },
-
-    // progress(){
-    //   return this.$store.getters.progress;
-    // },
-
   },
 
   methods:{
+
+    searcher(){
+      let val = this.filterer.trim();
+      if(val){
+         this.othersClone = this.otherBusinesses.filter(d=>d.name.toString().toLowerCase().includes(val.toLowerCase()))
+      }else{
+        this.othersClone = [...this.otherBusinesses]
+      }
+    },
+
     testAx(){
       this.prog = 0;
       let up=(e)=>{
@@ -217,7 +210,8 @@ export default {
   watch:{
     resKey(val){
       if(val && val.status == 2 && val.owner == BUSINESSDETAILS){
-        this.$bvToast.show("example-toast");
+        this.$bvToast.show("profile_switch");
+        this.toggleSide();
       }
     },
 
@@ -236,18 +230,6 @@ export default {
       this.processBusinessList(lastBiz());
     }
 
-  },
-
-  mounted() {
-    /*console.log("new", this.sideEmph);
-    let doc = document.getElementById(this.sideEmph);
-    if (doc) {
-      doc.classList.add("dyna")
-      // setTimeout((()=>{
-      //   doc.classList.add("dyna")
-      // }), 300)
-      // console.log(doc);
-    }*/
   },
 
 }
