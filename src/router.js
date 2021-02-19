@@ -3,7 +3,6 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import AuthGuard from "./utils/auth.guard";
 import { adminRoot } from "./constants/config";
-import { UserRole } from "./utils/auth.roles";
 
 Vue.use(VueRouter);
 
@@ -35,9 +34,25 @@ const routes = [
           path: "business",
           component: () => import(/* webpackChunkName: "error" */ "./views/app/dashboards/Business/Businesses")
         },
-         {
+        {
           path: "payouts",
           component: () => import(/* webpackChunkName: "error" */ "./views/app/dashboards/Payouts/Payout")
+        },
+        {
+          path: "wallets",
+          component: () => import(/* webpackChunkName: "error" */ "./views/app/dashboards/Wallet/Wallet.vue")
+        },
+        {
+          path: "transactions",
+          component: () => import(/* webpackChunkName: "error" */ "./views/app/dashboards/Transactions/TransactionsCover.vue")
+        },
+        {
+          path: "settings",
+          component: () => import(/* webpackChunkName: "error" */ "./views/app/dashboards/Settings/SettingsCover.vue")
+        },
+        {
+          path: "invoices",
+          component: () => import(/* webpackChunkName: "error" */ "./views/app/dashboards/Invoices/InvoicesCover.vue")
         },
     ]
   },

@@ -86,7 +86,7 @@
 <script>
 import Vuetable from "vuetable-2/src/components/Vuetable.vue";
 // import VuetablePaginationBootstrap from "../../../../components/Common/VuetablePaginationBootstrap.vue";
-import { LUX_ZONE,statusA,GETPAYOUTS } from '../../../../constants/formKey';
+import { LUX_ZONE,statusA,GETPAYOUTS, SIDE_EMPH } from '../../../../constants/formKey';
 export default {
      components: {
     vuetable: Vuetable,
@@ -124,26 +124,33 @@ export default {
     },
     methods: {
       Payouts(id){
-          console.log(id);
+          // console.log(id);
           this.$store.dispatch(GETPAYOUTS,id)
       }
     },
   computed: {
-       pays(){
-        return this.$store.getters.momentBiz
-      },
-      businesses(){
-         return this.$store.getters.businessDetails;
+    pays(){
+      return this.$store.getters.momentBiz
+    },
+    businesses(){
+      return this.$store.getters.businessDetails;
+    },
   },
-  },
+
   watch: {
     pays(val){
-        this.Payouts(val)
+      this.Payouts(val)
     }
-},
-created() {
-   this.Payouts(this.pays)
-}
+  },
+
+  created() {
+    this.Payouts(this.pays);
+    this.$store.commit(SIDE_EMPH, 'payouts');
+  },
+
+  // beforeDestroy(){
+  //   this.$store.commit(SIDE_EMPH, '');
+  // }
 }
 </script>
 <style scoped>
@@ -153,13 +160,13 @@ created() {
     box-shadow: none;
     text-decoration: none;
     border: none;
-    
+
 }
 .sett{
     font-size: 20px;
     padding: 2px;
     box-shadow: none;
     text-decoration: none;
-    
+
 }
 </style>

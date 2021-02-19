@@ -85,7 +85,7 @@
 <script>
 import Vuetable from "vuetable-2/src/components/Vuetable.vue";
 // import VuetablePaginationBootstrap from "../../../../components/Common/VuetablePaginationBootstrap.vue";
-import { LUX_ZONE,statusA,GETPAYOUTS } from '../../../../constants/formKey';
+import { LUX_ZONE,statusA,GETPAYOUTS, SIDE_EMPH } from '../../../../constants/formKey';
 export default {
      components: {
     vuetable: Vuetable,
@@ -139,23 +139,28 @@ export default {
     pays(val){
         this.Payouts(val)
     }
-},
+  },
+
+  created() {
+    this.$store.commit(SIDE_EMPH, 'wallets');
+  },
 }
 </script>
 <style scoped>
+
 .selects{
     font-size: 20px;
     padding: 5px;
     box-shadow: none;
     text-decoration: none;
     border: none;
-    
+
 }
 .sett{
     font-size: 20px;
     padding: 2px;
     box-shadow: none;
     text-decoration: none;
-    
+
 }
 </style>

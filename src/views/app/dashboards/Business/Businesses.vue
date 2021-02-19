@@ -21,7 +21,7 @@
 import Vuetable from "vuetable-2/src/components/Vuetable.vue";
 import VuetablePaginationBootstrap from "../../../../components/Common/VuetablePaginationBootstrap.vue";
 import { apiUrl, PROXY } from "../../../../constants/config";
-import { hToken, loadash, LUX_ZONE, statusA } from "../../../../constants/formKey";
+import { hToken, loadash, LUX_ZONE, SIDE_EMPH, statusA } from "../../../../constants/formKey";
 import {BUSINESSES } from '../../../../constants/formKey';
 
 
@@ -257,6 +257,7 @@ export default {
   },
   created(){
     this.getBusinesses();
+    this.$store.commit(SIDE_EMPH, 'business');
     // console.log( loadash.sortBy([{a:1,b:2,c:{a:1,b:2}},{a:1,b:2,c:{a:5,b:2}},{a:5,b:2,c:{a:2,b:2}},{a:3,b:2,c:{a:1,b:2}}], ['c.a','c.b']));
   }
 };

@@ -2,11 +2,11 @@
   <b-row class="h-100">
     <b-colxx xxs="12" md=10  class="mx-auto my-auto mb-5">
       <b-card class="auth-card" no-body>
-          <div class="position-relative image-side ">
-            <p class=" text-white h2">{{ $t('dashboards.magic-is-in-the-details') }}</p>
-              <p class="white mb-0">  Please use this form to register. <br />If you are a member, please
-                <router-link tag="a" to="/user/login" class="white">login</router-link>.
-              </p>
+          <div >
+          <!-- class="position-relative image-side" -->
+            <p class="white mb-0">  Please use this form to register. <br />If you are a member, please
+              <router-link tag="a" to="/user/login" class="white">login</router-link>.
+            </p>
           </div>
           <div class="form-side">
             <router-link tag="a" to="/"><span class="logo-single"/></router-link>
@@ -53,7 +53,7 @@
                 <b-form-invalid-feedback :force-show="phoneTouched && isPhoneInvalid" >
                   A valid phone number is required
                 </b-form-invalid-feedback>
-              </b-form-group> 
+              </b-form-group>
 
               <div class="text-center">
                 <b-spinner v-if="submitting" label="Spinning"></b-spinner>
@@ -153,7 +153,7 @@
                   <span>Number of staff</span>
                 </label>
               </b-form-group>
-                 
+
               <b-form-group >
                 <label class="form-group has-float-label mb-4">
                   <input id="business_description" type="text"
@@ -224,7 +224,7 @@ export default {
 
     }
   },
-      
+
   methods: {
     businessSubmit(){
         let businessData = {

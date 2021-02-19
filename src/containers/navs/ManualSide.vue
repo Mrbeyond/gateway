@@ -53,6 +53,7 @@
               :data-flag="item.id"
               class=" overs"
 
+
             >
 
               <!-- @click.native="changeSelectedParentHasNoSubmenu(item.id)"
@@ -61,7 +62,7 @@
               >
               </router-link>
                -->
-              <router-link  class="link" :to="item.to">
+              <router-link :id="item.id"  class="link " :to="item.to">
                 <i :class="`${item.icon} mr-2 medCon`" />
                 {{item.label}}
 
@@ -102,9 +103,14 @@ export default {
       // console.log(55555);
       return this.$store.getters.momentBiz;
     },
+
     businesses(){
       return this.$store.getters.currentBiz;
     },
+
+    sideEmph(){
+      return this.$store.getters.sideEmph;
+    }
 
   },
 
@@ -147,8 +153,19 @@ export default {
     momentBiz(val){
       this.processBusinessList(val);
     },
+
     businesses(val){
       this.processBusinessList(val);
+    },
+
+    sideEmph(val){
+      let doc = document.getElementById(val);
+      if (doc) {
+      // console.log('new val', val);
+      setTimeout((()=>{
+          doc.classList.add("dyna")
+        }), 200)
+      }
     }
 
   },
@@ -158,7 +175,15 @@ export default {
       this.processBusinessList(lastBiz());
     }
 
-  }
+  },
+
+  mounted() {
+    let doc = document.getElementById(this.sideEmph);
+    if (doc) {
+      doc.classList.add("dyna")
+      // console.log(doc);
+    }
+  },
 
 }
 </script>
@@ -213,5 +238,16 @@ export default {
     // cursor: pointer;
     border-left: 5px solid whitesmoke;
   }
+}
+
+.dyna{
+  display: block;
+  width: 100%;
+  color: white;
+  padding: 0.8em 1.4em !important;
+  // transition: 0.5s;
+  // cursor: pointer;
+  background: black;
+  border-left: 5px solid whitesmoke;
 }
 </style>

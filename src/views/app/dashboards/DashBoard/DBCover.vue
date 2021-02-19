@@ -127,50 +127,52 @@
 <script>
 import Vuetable from "vuetable-2/src/components/Vuetable.vue";
 // import VuetablePaginationBootstrap from "../../../../components/Common/VuetablePaginationBootstrap.vue";
-import { LUX_ZONE,statusA } from '../../../../constants/formKey';
+import { LUX_ZONE,SIDE_EMPH,statusA } from '../../../../constants/formKey';
 export default {
      components: {
     vuetable: Vuetable,
     // "vuetable-pagination-bootstrap": VuetablePaginationBootstrap,
     // "datatable-heading": DatatableHeading
   },
-    data () {
-        return{
-              // head: {headers: hToken()},
-              fields: [
-                    {
-                        key: 'name',
-                        label:"Name",
-                        sortable: true
-                    },
-                    {
-                        key: 'city',
-                        labels:"City",
-                        sortable: true
-                    },
-                    {
-                        key: 'address',
-                        label: 'Adress',
-                        sortable: true,
-                        // Variant applies to the whole column, including the header and footer
-                        // variant: 'danger'
-                    }
-            ],
-
+  data () {
+    return{
+      // head: {headers: hToken()},
+      fields: [
+        {
+            key: 'name',
+            label:"Name",
+            sortable: true
+        },
+        {
+            key: 'city',
+            labels:"City",
+            sortable: true
+        },
+        {
+            key: 'address',
+            label: 'Adress',
+            sortable: true,
+            // Variant applies to the whole column, including the header and footer
+            // variant: 'danger'
         }
-    },
+      ],
+
+    }
+  },
   computed: {
     businesses(){
-    return this.$store.getters.businessDetails;
+      return this.$store.getters.businessDetails;
+    },
   },
 
-// watch: {
-
-// }
-    // resKey(){
-    //   return this.$store.getters.user;
-    // }
+  created(){
+    this.$store.commit(SIDE_EMPH, 'dashboard');
   },
+
+  // beforeDestroy(){
+  //   this.$store.commit(SIDE_EMPH, '');
+  // }
+
 }
 </script>
 <style scoped>

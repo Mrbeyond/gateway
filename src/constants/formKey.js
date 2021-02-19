@@ -21,6 +21,7 @@ export const GENERROR = "GENERROR";
 
 export const SHOW = "SHOW";
 export const MOBILE = "MOBILE";
+export const SIDE_EMPH = "SIDE_EMPH";
 
 
 export const BUSINESSES = "BUSINESSES";
