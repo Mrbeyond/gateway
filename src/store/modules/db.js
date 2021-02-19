@@ -1,7 +1,8 @@
 import Axios from 'axios';
 import { keepBiz, lastBiz, PROXY } from '../../constants/config';
 import {CUSTOMERS,BUSINESSES, RES_KEY,hToken, REFRESHER, BUSINESSDETAILS,
-  REFRESHING, GETPAYOUTS,WALLETS,WALLETSDETAILS,GETAPIS, MOMENT_BIZ
+  REFRESHING, GETPAYOUTS,WALLETS,WALLETSDETAILS,GETAPIS, MOMENT_BIZ,
+   SIDE_EMPH, PROGRESS
 } from '../../constants/formKey';
 
 export default {
@@ -13,10 +14,12 @@ export default {
     walletsdetails: null,
     getapis:null,
     businessDetails: null,
-    resKey: {status:false, owner:''},
-    refresher: {status:false, owner:''},
+    resKey: {status:0, owner:''},
+    refresher: {status:0, owner:''},
     refreshing: false,
     momentBiz: null,
+    sideEmph: "dashboard",
+    progress: 0,
 
   },
 
@@ -43,11 +46,18 @@ export default {
     refreshing: state => state.refreshing,
 
     momentBiz: state => state.momentBiz,
+
+    sideEmph: state => state.sideEmph,
+
+    progress: state => state.progress,
   },
 
   mutations: {
     [GETAPIS](state, payload){
       state.getapis = payload;
+    },
+    [PROGRESS]( state, payload){
+      state.progress = payload;
     },
 
     [WALLETSDETAILS](state, payload){
@@ -89,6 +99,10 @@ export default {
       state.momentBiz = payload;
     },
 
+    [SIDE_EMPH](state, payload){
+      // console.log(payload, 'from store');
+      state.sideEmph = payload;
+    },
 
 
   },
@@ -131,7 +145,7 @@ export default {
       Axios.get(`${PROXY}wallet/${id}/details/${wallet_id}`, {headers: hToken()})
       .then(res=>{
         if(!res.data.error){
-          console.log(res);
+          // console.log(res);
           let payload;
           try {
             payload = res.data.data
@@ -159,7 +173,7 @@ export default {
       Axios.get(`${PROXY}business/${id}/payout/wallets`, {headers: hToken()})
       .then(res=>{
         if(!res.data.error){
-          console.log(res);
+          // console.log(res);
           let payload;
           try {
             payload = res.data.data
@@ -187,7 +201,7 @@ export default {
       Axios.get(`${PROXY}business/${id}/payout/wallets`, {headers: hToken()})
       .then(res=>{
         if(!res.data.error){
-          console.log(res);
+          // console.log(res);
           let payload;
           try {
             payload = res.data.data
@@ -209,9 +223,21 @@ export default {
       })
     },
     [BUSINESSDETAILS]({commit},id){
-
+      commit(PROGRESS, 0);
       commit(REFRESHER, BUSINESSDETAILS);
-      Axios.get(`${PROXY}business/${id}`, {headers: hToken()})
+      commit(RES_KEY, {status:1, owner: BUSINESSDETAILS});
+      Axios.get(`${PROXY}business/${id}`,
+      {
+        headers: hToken(),
+        onDownloadProgress: ({loaded, total})=>{
+          // console.log(loaded, total);
+          if(total > 0){
+            alert();
+              commit(PROGRESS, Math.round((loaded*100) /total));
+           }
+         }
+        }
+      )
       .then(res=>{
         if(!res.data.error){
           // console.log(res);
@@ -221,18 +247,18 @@ export default {
             commit(BUSINESSDETAILS, payload);
             commit(MOMENT_BIZ, id);
             keepBiz(id);
-            commit(RES_KEY, {status:0, owner: BUSINESSDETAILS});
+            commit(RES_KEY, {status:2, owner: BUSINESSDETAILS});
           } catch (e) {
-            commit(RES_KEY, {status:1, owner: BUSINESSDETAILS});
+            commit(RES_KEY, {status:3, owner: BUSINESSDETAILS});
           }
         }else{
-          commit(RES_KEY, {status:1, owner: BUSINESSDETAILS});
+          commit(RES_KEY, {status:3, owner: BUSINESSDETAILS});
         }
         commit(REFRESHER, BUSINESSDETAILS);
       })
       .catch(err => {
         if(err.response){
-          commit(RES_KEY, {status:2, owner: BUSINESSDETAILS});
+          commit(RES_KEY, {status:3, owner: BUSINESSDETAILS});
           commit(REFRESHER, BUSINESSDETAILS);
         }
       })
@@ -242,7 +268,7 @@ export default {
       commit(REFRESHER, BUSINESSES);
       Axios.get(`${PROXY}business`, {headers: hToken()})
       .then(res=>{
-        console.log(res.data)
+        // console.log(res.data)
         if(!res.data.error){
           let payload;
           try {

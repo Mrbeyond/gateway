@@ -20,7 +20,7 @@
 import Vuetable from "vuetable-2/src/components/Vuetable.vue";
 import VuetablePaginationBootstrap from "../../../../components/Common/VuetablePaginationBootstrap.vue";
 import { apiUrl, PROXY } from "../../../../constants/config";
-import { hToken, loadash, LUX_ZONE, statusA,toMoney } from "../../../../constants/formKey";
+import { hToken, loadash, LUX_ZONE, SIDE_EMPH, statusA,toMoney } from "../../../../constants/formKey";
 // import {LGS} from '../../../../constants/formKey';
 // import {ADD_CARD,VEHICLE_TYPES } from '../../../../constants/formKey';
 
@@ -268,9 +268,8 @@ export default {
 
     // }
   },
-  created(){
-    // this.GetEHICLEtYPES();
-    // console.log(this.head);
-  }
+  created() {
+    this.$store.commit(SIDE_EMPH, 'customers');
+  },
 };
 </script>

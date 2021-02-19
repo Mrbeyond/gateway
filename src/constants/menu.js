@@ -34,16 +34,22 @@ const data = [{
   to: `${adminRoot}/business`,
 },
 {
-id: "invoices",
-icon: "fas fa-file-invoice-dollar",
-label: "Invoices",
-to: `${adminRoot}/invoices`
+  id: "invoices",
+  icon: "fas fa-file-invoice-dollar",
+  label: "Invoices",
+  to: `${adminRoot}/invoices`
 },
 {
   id: "wallets",
   icon: "iconsminds-wallet",
   label: "Wallets",
   to: `${adminRoot}/wallets`
+},
+{
+  id: "settings",
+  icon: "simple-icon-settings",
+  label: "Settings",
+  to: `${adminRoot}/settings`
 },
 // {
 //   id: "docs",
