@@ -36,46 +36,31 @@
                 </b-form-group>
 
                 <b-form-group label="Industry category" class="error-l-100">
-                  <b-select v-model="$v.industry_category_id.$model"
-                    :state="!$v.industry_category_id.$error"
-                    :options="categoryModel"
-                  />
+                  <b-select type="text" v-model="$v.industry_category_id.$model" :state="!$v.industry_category_id.$error" />
                   <b-form-invalid-feedback v-if="!$v.industry_category_id.required">Industry category is required</b-form-invalid-feedback>
                 </b-form-group>
 
                 <b-form-group label="Business type" class="error-l-100">
-                  <b-select v-model="$v.business_type_id.$model"
-                    :state="!$v.business_type_id.$error"
-                    :options="typeModel"
-                  />
+                  <b-select type="text" v-model="$v.business_type_id.$model" :state="!$v.business_type_id.$error" />
                   <b-form-invalid-feedback v-if="!$v.business_type_id.required">Business type category is required</b-form-invalid-feedback>
                 </b-form-group>
 
                 <b-form-group label="Staff size" class="error-l-100">
-                  <b-select v-model="$v.staff_size_id.$model"
-                    :state="!$v.staff_size_id.$error"
-                    :options="staffModel"
-                  />
+                  <b-select type="text" v-model="$v.staff_size_id.$model" :state="!$v.staff_size_id.$error" />
                   <b-form-invalid-feedback v-if="!$v.staff_size_id.required">Staff size is required</b-form-invalid-feedback>
                 </b-form-group>
 
                 <b-input-group >
                   <template>
-                    <b-form-group label="Country" class="error-l-100">
-                      <b-select
-                        v-model="country"
-                        :options="countryModel"
-                      />
+                    <b-form-group label="State" class="error-l-100">
+                      <b-select type="text" v-model="$v.industry_category_id.$model" :state="!$v.industry_category_id.$error" />
+                      <b-form-invalid-feedback v-if="!$v.industry_category_id.required">Industry category is required</b-form-invalid-feedback>
                     </b-form-group>
                   </template>
                   <template>
                     <b-form-group label="State" class="error-l-100">
-                      <b-select
-                        v-model="$v.state_id.$model"
-                        :state="!$v.state_id.$error"
-                        :options="stateModel"
-                       />
-                      <b-form-invalid-feedback v-if="!$v.state_id.required">Industry category is required</b-form-invalid-feedback>
+                      <b-select type="text" v-model="$v.industry_category_id.$model" :state="!$v.industry_category_id.$error" />
+                      <b-form-invalid-feedback v-if="!$v.industry_category_id.required">Industry category is required</b-form-invalid-feedback>
                     </b-form-group>
                   </template>
                 </b-input-group>
@@ -110,7 +95,7 @@ import {
     validationMixin
 } from "vuelidate";
 import { PROXY } from '../../../../constants/config';
-import { BUSINESSES, hToken } from '../../../../constants/formKey';
+import { BUSINESSES, AGENTTYPES, AUTO_FETCHING, GARAGES, genRand, hToken } from '../../../../constants/formKey';
 import { mapGetters } from 'vuex';
 const {
     required,
@@ -122,6 +107,7 @@ const {
 
 
 export default {
+  props:['currentBIz'],
   data() {
     return {
       name: "",
@@ -129,19 +115,11 @@ export default {
       email: "",
       phone: "",
       address: '',
-      industry_category_id: null,
-      business_type_id: null,
+      industry_category_id: "",
+      business_type_id:"",
       staff_size_id:'',
-      state_id: null,
+      state_id: "",
       city:"",
-      country:'',
-      categoryModel: null,
-      countryModel: null,
-      staffModel: null,
-      stateModel: null,
-      typeModel: null,
-
-
 
       resMessage: "",
       submitting: false,
@@ -189,34 +167,42 @@ export default {
   },
 
   computed: {
-   ...mapGetters(['busiParams'])
+    ...mapGetters(['momentBiz'])
 
   },
 
   watch:{
-    busiParams(val){
-      if(val){
-        this.automateModel(val);
-      }
-    },
+    currentBiz(val){
 
-    country(val){
-      if(val){
-        console.log(this.busiParams.countries.find(data=>data.id == val).states, val);
-        // this.stateModel = this.countryModel.find(data=>data.id == val).states;
-      }
+      console.log(val);
+      this.name= val.name;
+      this.business_description= "";
+      this.email= val.email;
+      this.phone= val.contact;
+      this.address= val.address;
+      this.industry_category_id= "";
+      this.business_type_id="";
+      this.staff_size_id='';
+      this.state_id= "";
+      this.city=val.state.city;
     }
+
   },
 
   methods: {
 
-    automateModel(val){
-      console.log("here");
-      this.countryModel = val.countries.map(data=>({value:data.id, text: data.name}))
-      this.staffModel = val.staff_sizes.map(data=>({value:data.id, text: data.name}))
-      this.typeModel = val.business_types.map(data=>({value:data.id, text: data.name}))
-      this.categoryModel = val.industries.map(data=>({value:data.id, text: data.name}))
+    regetAgentTypes(){
+      this.$store.dispatch(AGENTTYPES);
+    },
 
+    monitorType(){
+      // console.log(this.industry_category_id);
+      this.business_type_id = "";
+      this.selectedGarage = "";
+    },
+
+    processSelectedLG(){
+      this.$store.dispatch(GARAGES,this.selectedLG);
     },
 
     onValitadeFormSubmit() {
@@ -285,8 +271,9 @@ export default {
 
 
   },
-  created(){
-    this.automateModel(this.busiParams);
+  mounted(){
+    // console.log(genRand(),4545);
+    // console.log(this.lgs);
   }
 };
 </script>

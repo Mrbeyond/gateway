@@ -1,44 +1,32 @@
 <template>
 <div v-if="businesses">
-    <b-row>
-        <b-colxx xxs="12">
-            <piaf-breadcrumb :heading="$t('menu.blank-page')" />
-            <div class="separator mb-5"></div>
-        </b-colxx>
-    </b-row>
-      <div class="row d-flex">
-        <h2 class="text-center mb-4">This is just a placeholder</h2>
-
-
-      </div>
     <b-row class=" mb-5" >
         <b-colxx sm="12" md="6" lg="7" class="mr-lg-5">
-            <b-card class="mb-4">
-                <div class="row d-flex justify-content-between mb-3">
-                <h2>Business </h2>
-                 <small class="float-right">{{businesses.state.country_code}}</small>
-                </div>
-          <div class="row mb-3">
-            <strong class="col-lg-6 col-md-6 col-sm-6 col-12 ">Name</strong>  <span class=" col-sm-6 col-lg-6 col-md-6 col-12 text-sm-right  text-lg-right text-md-right"> {{businesses.name}}</span>
-                </div>
-                <hr>
-             <div class="row mb-3">
-            <strong class="col-lg-6 col-md-6 col-sm-6 col-12 ">City</strong>  <span class="col-sm-6 col-lg-6 col-md-6 col-12 text-sm-right  text-lg-right text-md-right"> {{businesses.city}}</span>
-             </div>
-                <hr>
+          <b-card class="mb-4">
+            <div class="row d-flex justify-content-between mb-3">
+              <h2>Business </h2>
+              <small class="float-right">{{businesses.state.country_code}}</small>
+            </div>
+            <div class="row mb-3">
+              <strong class="col-lg-6 col-md-6 col-sm-6 col-12 ">Name</strong>  <span class=" col-sm-6 col-lg-6 col-md-6 col-12 text-sm-right  text-lg-right text-md-right"> {{businesses.name}}</span>
+            </div>
+            <hr>
+            <div class="row mb-3">
+              <strong class="col-lg-6 col-md-6 col-sm-6 col-12 ">City</strong>  <span class="col-sm-6 col-lg-6 col-md-6 col-12 text-sm-right  text-lg-right text-md-right"> {{businesses.city}}</span>
+            </div>
+            <hr>
 
-               <div class="row mb-3">
-            <strong class="col-lg-6 col-md-6 col-sm-6 col-12 ">Address</strong>  <span class="col-sm-6 col-lg-6 col-md-6 col-12 text-sm-right  text-lg-right text-md-right"> {{businesses.address}}</span>
-             </div>
-                <hr>
-                  <div class="row mb-3">
-            <strong class="col-lg-6 col-md-6 col-sm-6 col-12 ">Contact</strong>  <span class="col-sm-6col-lg-6 col-md-6 col-12 text-sm-right  text-lg-right text-md-right"> {{businesses.phone}}</span>
-             </div>
-                <hr>
-
-                <div class="row mb-3">
-            <strong class="col-lg-6 col-md-6 col-sm-6 col-12 ">Email</strong>  <span class="col-sm-6 col-lg-6 col-md-6 col-12 text-sm-right  text-lg-right text-md-right"> {{businesses.email}}</span>
-             </div>
+            <div class="row mb-3">
+              <strong class="col-lg-6 col-md-6 col-sm-6 col-12 ">Address</strong>  <span class="col-sm-6 col-lg-6 col-md-6 col-12 text-sm-right  text-lg-right text-md-right"> {{businesses.address}}</span>
+            </div>
+            <hr>
+            <div class="row mb-3">
+              <strong class="col-lg-6 col-md-6 col-sm-6 col-12 ">Contact</strong>  <span class="col-sm-6col-lg-6 col-md-6 col-12 text-sm-right  text-lg-right text-md-right"> {{businesses.phone}}</span>
+            </div>
+            <hr>
+            <div class="row mb-3">
+              <strong class="col-lg-6 col-md-6 col-sm-6 col-12 ">Email</strong>  <span class="col-sm-6 col-lg-6 col-md-6 col-12 text-sm-right  text-lg-right text-md-right"> {{businesses.email}}</span>
+            </div>
                  <!-- <div class="row mb-3">
             <strong class="col-lg-6 col-md-6 col-12 ">Status</strong>  <span class="col-lg-6 col-md-6 col-12  text-lg-right text-md-right"> {{
                 callback(businesses.status)

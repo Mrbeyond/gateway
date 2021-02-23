@@ -1,11 +1,11 @@
 <template>
 <div v-if="businesses">
-    <b-row >
+    <!-- <b-row >
         <b-colxx xxs="12">
             <piaf-breadcrumb :heading="$t('menu.blank-page')" />
             <div class="separator mb-5"></div>
         </b-colxx>
-    </b-row>
+    </b-row> -->
       <div class="row d-flex">
         <h2 class="text-center mb-4">This is just a placeholder</h2>
 

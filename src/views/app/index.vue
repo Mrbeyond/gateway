@@ -7,7 +7,7 @@
 
 <script>// @ts-nocheck
 import { lastBiz } from '../../constants/config';
-import { BUSINESSDETAILS } from '../../constants/formKey';
+import { BUSINESSDETAILS, BUSI_PARAM } from '../../constants/formKey';
 
 // write security logics here, beyond.
 
@@ -39,6 +39,10 @@ export default {
       }
     },
 
+    fetchCountries(){
+      this.$store.dispatch(BUSI_PARAM);
+    },
+
   },
 
   watch:{
@@ -56,7 +60,8 @@ export default {
   },
 
   created(){
-    this.processBusiness()
+    this.processBusiness();
+    this.fetchCountries();
   },
 
 }
