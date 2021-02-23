@@ -7,247 +7,271 @@
         Went wrong slot
     </div>
     <b-row v-else>
-      <b-colxx xxs="12">
-          <b-card class="mb-4" title="BUSINESS">
-                <b-table responsive :items="businesses" :fields="fields">
-                  <template #cell(actions)="row">
-                    <router-link :to="`/dashbord/business/${row.item.id}`">
-                  <b-button size="sm" class="mr-1 bg-primary">
-                   More info
-                  </b-button>
-                    </router-link>
+      <b-colxx  xxs="12">
+        <b-row>
+          <b-colxx class="text-right mb-3">
+            <b-button @click="addBiz" >Add a Business</b-button>
+          </b-colxx>
+        </b-row>
+        <b-row>
+          <b-colxx sm="12 d-flex" md="7" >
+            <div class="flex-fill">
+              <b-card body-class="pt-0" header-class="py-2">
+                <template #header>
+                  <div  class="d-flex justify-content-between">
+                    <h6 class="mb-0">Current</h6>
+                    <div>
+                      <b-button  size="sm" class="py-1">Edit</b-button>
+                    </div>
+                  </div>
                 </template>
-                </b-table>
-            </b-card>
+                <!-- Card Body -->
+                <template >
+                  <b-card-text v-if="current" class="mt-0">
+
+                    <div class="mb-3 d-flex">
+                      <div class="d-inline-block">
+                        <b-avatar v-if="current.logo"
+                          :src="current.logo"
+                          size="6rem"
+                        >
+                        </b-avatar>
+                        <b-avatar v-else text="NO LOGO"></b-avatar>
+                      </div>
+                      <div class="mx-auto align-self-center">
+                          <div style="font-size: 1.8em">{{ current.name }}</div>
+                          <div class="mt-2" style="font-size: 1.2em">{{ current.id }}</div>
+
+                      </div>
+                    </div>
+
+                  <!-- Details -->
+                    <div >
+                      <div class="row mb-3">
+                        <strong class="col-12 col-sm-6">
+                          Name
+                        </strong>
+                        <span class=" col-12 col-sm-6 text-right"> {{current.name}}</span>
+                      </div>
+                      <hr />
+
+                      <div class="row mb-3">
+                        <strong class="col-12 col-sm-6">
+                          Category
+                        </strong>
+                        <span class="col-12 col-sm-6 text-right"> {{current.industry_category.name}}</span>
+                      </div>
+                      <hr />
+
+                      <div class="row mb-3">
+                        <strong class="col-12 col-sm-6">
+                          Type
+                        </strong>
+                        <span class="col-12 col-sm-6 text-right"> {{current.business_type.name}}</span>
+                      </div>
+                      <hr />
+
+                      <div class="row mb-3">
+                        <strong class="col-12 col-sm-6">
+                          Description
+                        </strong>
+                        <span class=" col-12 col-sm-6 text-right"> {{current.business_type.description}}</span>
+                      </div>
+                      <hr />
+
+                      <div class="row mb-3">
+                        <strong class="col-12 col-sm-6">
+                          Email
+                        </strong>
+                        <span class="col-12 col-sm-6 text-right"> {{current.email}}</span>
+                      </div>
+                      <hr />
+
+                      <div class="row mb-3">
+                        <strong class="col-12 col-sm-6">
+
+                          Staff size
+
+                        </strong>
+                        <span class="col-sm-6 col-12 text-right">
+                        {{current.staff_size.name && current.staff_size.name}}
+                        </span>
+                      </div>
+                      <hr>
+
+                      <div class="row mb-3">
+                        <strong class="col-12 col-sm-6">
+                          Country
+                        </strong>
+                        <span class="col-sm-6 col-12 text-right">
+                        {{current.state.country.name && current.state.country.name}}
+                        </span>
+                      </div>
+
+                      <hr>
+
+                      <div class="row mb-3">
+                        <strong class="col-12 col-sm-6">
+                          Currency
+                        </strong>
+                        <span class="col-sm-6 col-12 text-right">
+                        {{current.state.country.currency && current.state.country.currency}}
+                        </span>
+                      </div>
+
+                    </div>
+                  </b-card-text>
+                </template>
+              </b-card>
+            </div>
+          </b-colxx>
+          <b-colxx sm="12" md="5" class="d-flex">
+            <div class="flex-fill bg-danger">
+              <!-- API CARD -->
+              <div>
+
+                  here2
+                <b-card header-tag="header">
+                  <template #header>
+                    <div  class="d-flex justify-content-between">
+                      <h6 class="mb-0">API Keys</h6>
+                      <div>
+                        <b-button  size="sm" class="py-1">Generate</b-button>
+                      </div>
+                    </div>
+                  </template>
+                </b-card>
+              </div>
+              <!-- API CARD ENDS HERE -->
+
+              <!-- URL CARD -->
+              <div>
+
+                <b-card header-tag="header">
+                  <template #header>
+                    <div  class="d-flex justify-content-between">
+                      <h6 class="mb-0">Notification URL</h6>
+                      <div>
+                        <b-button  size="sm" class="py-1">Add</b-button>
+                      </div>
+                    </div>
+                  </template>
+                </b-card>
+              </div>
+              <!-- URL ENDS HERE -->
+
+            </div>
+          </b-colxx>
+        </b-row>
+      </b-colxx>
+      <b-colxx sm="12" md="8">
+        <b-card class="mb-4" title="BUSINESS">
+          <b-table responsive :items="others" :fields="fields">
+            <template #cell(actions)="row">
+              <router-link :to="`/dashbord/business/${row.item.id}`">
+                <b-button size="sm" class="mr-1 bg-primary">
+                  View
+                </b-button>
+              </router-link>
+            </template>
+          </b-table>
+        </b-card>
       </b-colxx>
     </b-row>
+
+    <b-modal
+      id="_modalright"
+      ref="_modalright"
+      :title="modalTitle"
+      modal-class="modal-right"
+    >
+      <add-business v-if="currentForm == 'add_biz'"  />
+
+      <template slot="modal-footer">
+        <b-button
+          variant="outline-secondary"
+          @click="hideModal('_modalright')"
+        >{{ $t('pages.cancel') }}</b-button>
+      </template>
+  </b-modal>
+
   </div>
 </template>
 <script>// @ts-nocheck
+import { mapGetters } from 'vuex';
 
-import Vuetable from "vuetable-2/src/components/Vuetable.vue";
-import VuetablePaginationBootstrap from "../../../../components/Common/VuetablePaginationBootstrap.vue";
-import { apiUrl, PROXY } from "../../../../constants/config";
-import { hToken, loadash, LUX_ZONE, SIDE_EMPH, statusA } from "../../../../constants/formKey";
+
+import {LUX_ZONE, SIDE_EMPH, statusA } from "../../../../constants/formKey";
 import {BUSINESSES } from '../../../../constants/formKey';
+import AddBusiness from './../AdderForms/AddBusiness.vue';
 
 
 export default {
   props: ["title"],
-  components: {
-    vuetable: Vuetable,
-    "vuetable-pagination-bootstrap": VuetablePaginationBootstrap,
-    // "datatable-heading": DatatableHeading
+  components:{
+    AddBusiness,
   },
   data() {
     return {
-      // ADD_CARD,
-      head: {headers: hToken()},
       isLoading: true,
       isFetched: false,
-      apiBase: `${PROXY}location/garages/`,
-      sort: "",
-      page: 1,
-      perPage: 8,
-      search: "",
-      from: 0,
-      to: 0,
-      total: 0,
-      lastPage: 0,
       items: [],
-      selectedItems: [],
-      RightmodalData:"",
-      RigthVery:"",
-
-      // isFetched: false,
-      // isLoadinging: true,
+      current: null,
+      others: [],
+      currentForm:'',
+      showForm:false,
+      modalTitle: "",
 
       fields: [
-            {
-                key: 'name',
-                label:"Name",
-                sortable: true
-            },
-            {
-                key: 'city',
-                labels:"City",
-                sortable: true
-            },
-            {
-                key: 'address',
-                label: 'Adress',
-                sortable: true,
-                // Variant applies to the whole column, including the header and footer
-                // variant: 'danger'
-            },
-             {
-                key: 'phone',
-                label: 'Phone',
-                sortable: true,
-                // Variant applies to the whole column, including the header and footer
-                // variant: 'danger'
-            },
-                 { key: 'actions', label: 'Actions' }
-    ],
+        {
+          key: 'name',
+          label:"Name",
+          sortable: true
+        },
+        {
+          key: 'city',
+          labels:"City",
+          sortable: true
+        },
+        {
+          key: 'address',
+          label: 'Adress',
+          sortable: true,
+        },
+        {
+          key: 'phone',
+          label: 'Phone',
+          sortable: true,
+        },
+        {
+          key: 'actions',
+          label: 'Actions'
+        }
+      ],
     };
   },
   methods: {
      getBusinesses(){
       this.$store.dispatch(BUSINESSES);
     },
-    modalinfo(garages){
-    this.RightmodalData = garages
-   console.log( this.RightmodalData)
-    },
-      hideModal (refname) {
-      this.$refs[refname].hide()
-      console.log('hide modal:: ' + refname)
 
-      if (refname === 'modalnestedinline') {
-        this.$refs['modalnested'].show()
-      }
-    },
-    makeQueryParams(sortOrder, currentPage, perPage) {
-      this.selectedItems = [];
-      return sortOrder[0]
-        ? {
-            sort: sortOrder[0]
-              ? sortOrder[0].field + "|" + sortOrder[0].direction
-              : "",
-            page: currentPage,
-            per_page: this.perPage,
-            search: this.search
-          }
-        : {
-            page: currentPage,
-            per_page: this.perPage,
-            search: this.search
-          };
-    },
-    onRowClass(dataItem, index) {
-      if (this.selectedItems.includes(dataItem.id)) {
-        return "selected";
-      }
-      return "";
+    hideModal(refname) {
+      this.$refs[refname].hide();
     },
 
-    cellClicked(item, field, event){
-      // // alert()
-      // console.log(item, 'item');
-      // console.log(field, 'feild');
-      // console.log(event,'eve');
+    showModal(){
+      this.$refs["_modalright"].show();
     },
 
-    rowClicked(dataItem, event) {
-      // const itemId = dataItem.id;
-      console.log(dataItem)
-      // alert();
-      return;
-      if (event.shiftKey && this.selectedItems.length > 0) {
-        let itemsForToggle = this.items;
-        var start = this.getIndex(itemId, itemsForToggle, "id");
-        var end = this.getIndex(
-          this.selectedItems[this.selectedItems.length - 1],
-          itemsForToggle,
-          "id"
-        );
-        itemsForToggle = itemsForToggle.slice(
-          Math.min(start, end),
-          Math.max(start, end) + 1
-        );
-        this.selectedItems.push(
-          ...itemsForToggle.map(item => {
-            return item.id;
-          })
-        );
-        this.selectedItems = [...new Set(this.selectedItems)];
-      } else {
-        if (this.selectedItems.includes(itemId)) {
-          this.selectedItems = this.selectedItems.filter(x => x !== itemId);
-        } else this.selectedItems.push(itemId);
-      }
-    },
-    rightClicked(dataItem, field, event) {
-      event.preventDefault();
-      if (!this.selectedItems.includes(dataItem.id)) {
-        this.selectedItems = [dataItem.id];
-      }
-      // this.$refs.contextmenu.show({ top: event.pageY, left: event.pageX });
-    },
-    onPaginationData(paginationData) {
-      console.log(paginationData);
-      this.from = paginationData.from;
-      this.to = paginationData.to;
-      this.total = paginationData.total;
-      this.lastPage = paginationData.last_page;
-      this.items = paginationData.data;
-      this.$refs.pagination.setPaginationData(paginationData);
-    },
-    onChangePage(page) {
-      this.$refs.vuetable.changePage(page);
+    addBiz(){
+      this.modalTitle = "Add New Business";
+      this.currentForm ="add_biz"
+      this.showModal();
     },
 
-    changePageSize(perPage) {
-      this.perPage = perPage;
-      this.$refs.vuetable.refresh();
-    },
-
-    searchChange(val) {
-      this.search = val;
-      this.$refs.vuetable.refresh();
-    },
-
-    selectAll(isToggle) {
-      if (this.selectedItems.length >= this.items.length) {
-        if (isToggle) this.selectedItems = [];
-      } else {
-        this.selectedItems = this.items.map(x => x.id);
-      }
-    },
-    keymap(event) {
-      switch (event.srcKey) {
-        case "select":
-          this.selectAll(false);
-          break;
-        case "undo":
-          this.selectedItems = [];
-          break;
-      }
-    },
-    getIndex(value, arr, prop) {
-      for (var i = 0; i < arr.length; i++) {
-        if (arr[i][prop] === value) {
-          return i;
-        }
-      }
-      return -1;
-    },
-
-    onContextMenuAction(action) {
-      console.log(
-        "context menu item clicked - " + action + ": ",
-        this.selectedItems
-      );
-    }
   },
   computed: {
-    isSelectedAll() {
-      return this.selectedItems.length >= this.items.length;
-    },
-    isAnyItemSelected() {
-      return (
-        this.selectedItems.length > 0 &&
-        this.selectedItems.length < this.items.length
-      );
-    },
-
-    businesses(){
-    return this.$store.getters.businesses;
-  },
-
-    resKey(){
-      return this.$store.getters.resKey;
-    }
+    ...mapGetters(['businesses', 'resKey', 'momentBiz', 'currentBiz']),
   },
   watch: {
      resKey(){
@@ -258,15 +282,28 @@ export default {
         }else{
           this.isFetched = true;
         }
+      }
+    },
+
+    businesses(val){
+      if(val){
+        const cBiz = this.momentZiz || this.currentBiz;
+        this.current = val.find(d=>d.id == cBiz);
+        this.others = val.filter(d=>d.id != cBiz);
+        console.log(this.current);
 
       }
-
     }
   },
+
   created(){
     this.getBusinesses();
     this.$store.commit(SIDE_EMPH, 'business');
-    // console.log( loadash.sortBy([{a:1,b:2,c:{a:1,b:2}},{a:1,b:2,c:{a:5,b:2}},{a:5,b:2,c:{a:2,b:2}},{a:3,b:2,c:{a:1,b:2}}], ['c.a','c.b']));
+    // this.$notify("error", "Login Error", "tets", {
+    //       duration: 3000,
+    //       permanent: false
+    //     });
+
   }
 };
 </script>

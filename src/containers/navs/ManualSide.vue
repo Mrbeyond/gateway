@@ -91,13 +91,19 @@
 
           -->
           <b-toast
-            :variant="resKey.status == 2? 'success':resKey.status == 3? 'warning': 'primary'"
+            variant="success"
             id="profile_switch" auto-hide-delay="2000"
-            :title="resKey.status == 2? 'Profile changed':resKey.status == 3? 'Something went wrong': ''" >
+            title="Profile changed" >
             {{
-              resKey.status == 2? `You are now using ${currentBusiness.name} profile. `:
-              resKey.status == 3? 'There seem to be connection error.': null
+              `You are now using ${currentBusiness.name} profile. `
             }}
+          </b-toast>
+          <b-toast
+            variant="warning"
+            id="switch_error" auto-hide-delay="2000"
+            title="Something went wrong"
+          >
+            There seem to be connection error.
           </b-toast>
 
         </div>
@@ -209,9 +215,16 @@ export default {
 
   watch:{
     resKey(val){
-      if(val && val.status == 2 && val.owner == BUSINESSDETAILS){
-        this.$bvToast.show("profile_switch");
-        this.toggleSide();
+      if(val && val.owner == BUSINESSDETAILS){
+        if(val.status == 2){
+          this.$bvToast.show("profile_switch");
+          this.toggleSide();
+        }
+        else if(val.status == 3){
+          this.$bvToast.show("switch_error");
+          this.toggleSide();
+        }
+
       }
     },
 

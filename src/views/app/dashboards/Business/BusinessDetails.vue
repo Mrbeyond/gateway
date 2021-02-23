@@ -1,134 +1,149 @@
 <template>
-<div v-if="businesses">
-    <b-row>
-        <b-colxx xxs="12">
-            <piaf-breadcrumb :heading="$t('menu.blank-page')" />
-            <div class="separator mb-5"></div>
-        </b-colxx>
-    </b-row>
-      <div class="row d-flex">
-        <h2 class="text-center mb-4">This is just a placeholder</h2>
-
-
-      </div>
+  <div v-if="businesses">
+    <div class=" container d-flex">
+      <h2 class="text-center mb-4">This is just a placeholder</h2>
+    </div>
     <b-row class=" mb-5" >
-        <b-colxx sm="12" md="6" lg="7" class="mr-lg-5">
-                <h2>Business </h2>
-            <b-card class="mb-4">
-                <div class="row d-flex justify-content-between mb-3">
-                 <small class="float-right">{{businesses.state.country_code}}</small>
-                </div>
+      <b-colxx sm="12" md="6" lg="7" class="mr-lg-5">
+        <h2>Business </h2>
+        <b-card class="mb-4">
+          <div class="row d-flex justify-content-between mb-3">
+              <small class="float-right">{{businesses.state.country_code}}</small>
+          </div>
           <div class="row mb-3">
-            <strong class="col-lg-6 col-md-6 col-sm-6 col-12 ">Name</strong>  <span class=" col-sm-6 col-lg-6 col-md-6 col-12 text-sm-right  text-lg-right text-md-right"> {{businesses.name}}</span>
-                </div>
-                <hr>
-             <div class="row mb-3">
-            <strong class="col-lg-6 col-md-6 col-sm-6 col-12 ">City</strong>  <span class="col-sm-6 col-lg-6 col-md-6 col-12 text-sm-right  text-lg-right text-md-right"> {{businesses.city}}</span>
-             </div>
-                <hr>
+            <strong class="col-12 col-sm-6">
+              Name
+            </strong>
+            <span class=" col-12 col-sm-6 text-right"> {{businesses.name}}</span>
+          </div>
+          <hr>
+          <div class="row mb-3">
+            <strong class="col-12 col-sm-6">
+              City
+            </strong>
+            <span class="col-12 col-sm-6 text-right"> {{businesses.city}}</span>
+          </div>
+          <hr>
 
-               <div class="row mb-3">
-            <strong class="col-lg-6 col-md-6 col-sm-6 col-12 ">Address</strong>  <span class="col-sm-6 col-lg-6 col-md-6 col-12 text-sm-right  text-lg-right text-md-right"> {{businesses.address}}</span>
-             </div>
-                <hr>
-                  <div class="row mb-3">
-            <strong class="col-lg-6 col-md-6 col-sm-6 col-12 ">Contact</strong>  <span class="col-sm-6col-lg-6 col-md-6 col-12 text-sm-right  text-lg-right text-md-right"> {{businesses.phone}}</span>
-             </div>
-                <hr>
+          <div class="row mb-3">
+            <strong class="col-12 col-sm-6">
+              Address
+            </strong>
+            <span class=" col-12 col-sm-6 text-right"> {{businesses.address}}</span>
+          </div>
+          <hr>
+          <div class="row mb-3">
+            <strong class="col-12 col-sm-6">
 
-                <div class="row mb-3">
-            <strong class="col-lg-6 col-md-6 col-sm-6 col-12 ">Email</strong>  <span class="col-sm-6 col-lg-6 col-md-6 col-12 text-sm-right  text-lg-right text-md-right"> {{businesses.email}}</span>
-             </div>
-                 <!-- <div class="row mb-3">
-            <strong class="col-lg-6 col-md-6 col-12 ">Status</strong>  <span class="col-lg-6 col-md-6 col-12  text-lg-right text-md-right"> {{
-                callback(businesses.status)
+              Contact
 
-                }}</span>
-             </div> -->
+            </strong>
+            <span class="col-sm-6 col-12 text-right">
+             {{businesses.phone}}
+            </span>
+          </div>
+          <hr>
 
-            </b-card>
-        </b-colxx>
-        <b-colxx sm="12" md="6" lg="4">
-            <h2>Type</h2>
-            <b-card class="mb-4">
-                <div>
-                <strong>Name</strong>
-                <p class="text-muted">{{businesses.business_type.name}}</p>
-                </div>
-                <hr>
-                <div>
-                <strong>description</strong>
-                <p class="text-muted">{{businesses.business_type.description}}</p>
-                </div>
+          <div class="row mb-3">
+            <strong class="col-12 col-sm-6">
+              Email
+            </strong>
+            <span class="col-12 col-sm-6 text-right"> {{businesses.email}}</span>
+          </div>
 
-            </b-card>
-        </b-colxx>
+        </b-card>
+      </b-colxx>
+      <b-colxx sm="12" md="6" lg="4">
+        <h2>Type</h2>
+        <b-card class="mb-4">
+          <div>
+            <strong>Name</strong>
+            <p class="text-muted">{{businesses.business_type.name}}</p>
+          </div>
+          <hr>
+          <div>
+            <strong>description</strong>
+            <p class="text-muted">{{businesses.business_type.description}}</p>
+          </div>
+        </b-card>
+      </b-colxx>
     </b-row>
-      <b-row class=" mb-5" >
-        <b-colxx sm="12" md="6" lg="6">
-                <h2>Industry</h2>
-            <b-card class="mb-4">
-                <div class="row d-flex justify-content-between mb-3">
-                 <small class="float-right">{{businesses.state.country_code}}</small>
-                </div>
+    <b-row class=" mb-5" >
+      <b-colxx sm="12" md="6" lg="6">
+        <h2>Industry</h2>
+        <b-card class="mb-4">
+          <div class="row d-flex justify-content-between mb-3">
+            <small class="float-right">{{businesses.state.country_code}}</small>
+          </div>
           <div class="row mb-3">
-            <strong class="col-lg-6 col-md-6 col-sm-6 col-12 ">category</strong>  <span class=" col-sm-6 col-lg-6 col-md-6 col-12 text-sm-right  text-lg-right text-md-right"> {{businesses.industry_category.name}}</span>
-                </div>
-                <hr>
-             <div class="row mb-3">
-            <strong class="col-lg-6 col-md-6 col-sm-6 col-12 ">Name</strong>  <span class="col-sm-6 col-lg-6 col-md-6 col-12 text-sm-right  text-lg-right text-md-right"> {{businesses.industry_category.industry.name}}</span>
-             </div>
-                <hr>
-
-               <div class="row mb-3">
-            <strong class="col-lg-6 col-md-6 col-sm-6 col-12 ">description</strong>  <span class="col-sm-6 col-lg-6 col-md-6 col-12 text-sm-right  text-lg-right text-md-right"> {{businesses.industry_category.industry.description}}</span>
-             </div>
-                <hr>
-                  <div class="row mb-3">
-            <strong class="col-lg-6 col-md-6 col-sm-6 col-12 ">Status</strong>  <span class="col-sm-6col-lg-6 col-md-6 col-12 text-sm-right  text-lg-right text-md-right"> {{statusT(businesses.industry_category.industry.status)}}</span>
-             </div>
-                <hr>
-
-                <div class="row mb-3">
-            <strong class="col-lg-6 col-md-6 col-sm-6 col-12 ">Staff size</strong>  <span class="col-sm-6 col-lg-6 col-md-6 col-12 text-sm-right  text-lg-right text-md-right"> {{businesses.staff_size.name}}</span>
-             </div>
-                 <!-- <div class="row mb-3">
-            <strong class="col-lg-6 col-md-6 col-12 ">Status</strong>  <span class="col-lg-6 col-md-6 col-12  text-lg-right text-md-right"> {{
-                callback(businesses.status)
-
-                }}</span>
-             </div> -->
-
-            </b-card>
-        </b-colxx>
-        <b-colxx sm="12" md="6" lg="6">
-                <h2>Adress</h2>
-           <b-card class="mb-4">
-                <div class="row d-flex justify-content-between mb-3">
-                </div>
+            <strong class="col-12 col-sm-6">
+              category
+            </strong>
+            <span class=" col-12 col-sm-6 text-right"> {{businesses.industry_category.name}}</span>
+          </div>
+          <hr>
           <div class="row mb-3">
-            <strong class="col-lg-6 col-md-6 col-sm-6 col-12 ">State</strong>  <span class=" col-sm-6 col-lg-6 col-md-6 col-12 text-sm-right  text-lg-right text-md-right"> {{businesses.state.name}}</span>
-                </div>
-                <hr>
-               <div class="row mb-3">
-            <strong class="col-lg-6 col-md-6 col-sm-6 col-12 ">State code</strong>  <span class="col-sm-6 col-lg-6 col-md-6 col-12 text-sm-right  text-lg-right text-md-right"> {{businesses.state.state_code}}</span>
-             </div>
-                <hr>
-                  <div class="row mb-3">
-            <strong class="col-lg-6 col-md-6 col-sm-6 col-12 ">Country</strong>  <span class="col-sm-6col-lg-6 col-md-6 col-12 text-sm-right  text-lg-right text-md-right"> {{businesses.state.country.name}}</span>
-             </div>
-                <hr>
-                 <div class="row mb-3">
-            <strong class="col-lg-6 col-md-6 col-sm-6 col-12 ">Country code</strong>  <span class="col-sm-6 col-lg-6 col-md-6 col-12 text-sm-right  text-lg-right text-md-right"> {{businesses.state.country_code}}</span>
-             </div>
-                <hr>
+            <strong class="col-12 col-sm-6">
+              Name
+            </strong>
+            <span class="col-12 col-sm-6 text-right"> {{businesses.industry_category.industry.name}}</span>
+          </div>
+          <hr>
 
-                <div class="row mb-3">
-            <strong class="col-lg-6 col-md-6 col-sm-6 col-12 ">Currency</strong>  <span class="col-sm-6 col-lg-6 col-md-6 col-12 text-sm-right  text-lg-right text-md-right"> {{businesses.state.country.currency}}</span>
-             </div>
+          <div class="row mb-3">
+            <strong class="col-12 col-sm-6">
+              description
+            </strong>
+            <span class="col-12 col-sm-6 text-right"> {{businesses.industry_category.industry.description}}</span>
+          </div>
+          <hr>
+          <div class="row mb-3">
+            <strong class="col-12 col-sm-6">
+              Status
+            </strong>
+            <span class="col-sm-6col-lg-6 col-md-6 col-12 text-right"> {{statusT(businesses.industry_category.industry.status)}}</span>
+          </div>
+            <hr>
 
-            </b-card>
-        </b-colxx>
+          <div class="row mb-3">
+            <strong class="col-12 col-sm-6">
+              Staff size
+            </strong>
+            <span class="col-12 col-sm-6 text-right">
+             {{businesses.staff_size.name}}
+            </span>
+          </div>
+
+        </b-card>
+      </b-colxx>
+      <b-colxx sm="12" md="6" lg="6">
+        <h2>Adress</h2>
+        <b-card class="mb-4">
+          <div class="row d-flex justify-content-between mb-3">
+          </div>
+          <div class="row mb-3">
+            <strong class="col-12 col-sm-6">
+              State
+            </strong>
+            <span class=" col-12 col-sm-6 text-right"> {{businesses.state.name}}</span>
+          </div>
+          <hr>
+          <div class="row mb-3">
+            <strong class="col-12 col-sm-6">
+              Country
+            </strong>
+            <span class="col-sm-6col-lg-6 col-md-6 col-12 text-right"> {{businesses.state.country.name}}</span>
+          </div>
+          <hr>
+          <div class="row mb-3">
+            <strong class="col-12 col-sm-6">
+              Currency
+            </strong>
+            <span class="col-12 col-sm-6 text-right"> {{businesses.state.country.currency}}</span>
+          </div>
+
+        </b-card>
+      </b-colxx>
     </b-row>
 </div>
 </template>
@@ -195,7 +210,7 @@ export default {
   },
   created() {
       this.GetDetails(this.$router.currentRoute.params.id)
-     
+
   }
 }
 </script>

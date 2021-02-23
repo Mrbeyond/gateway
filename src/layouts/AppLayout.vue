@@ -25,8 +25,13 @@
 
 
     <!-- Main Container -->
-    <div :style="`height:100%; margin-left:  ${show?200:0}px; margin-top:100px`">
+    <div :style="`height:100%; margin-left:  ${show?200:0}px; margin-top:85px`">
       <div class="container-fluid">
+        <b-row >
+            <b-colxx xxs="12">
+                <piaf-breadcrumb />
+            </b-colxx>
+        </b-row>
         <slot></slot>
       </div>
     </div>
@@ -51,7 +56,7 @@ import Footer from "../containers/navs/Footer";
 import ManualSide from '../containers/navs/ManualSide.vue';
 
 import { mapGetters } from "vuex";
-import { MOBILE, SHOW } from '../constants/formKey';
+import { BUSI_PARAM, MOBILE, SHOW } from '../constants/formKey';
 
 export default {
   components: {
@@ -71,7 +76,14 @@ export default {
     processSideBar(){
       let cond = window.innerWidth > 768;
       this.$store.commit(SHOW, cond);
-    }
+    },
+
+    fetchCountries(){
+      if(!this.$store.getters.busiParams){
+        this.$store.dispatch(BUSI_PARAM);
+
+      }
+    },
 
   },
 
@@ -91,6 +103,7 @@ export default {
       document.body.classList.add("default-transition");
     }, 100);
   this.processSideBar();
+  // this.fetchCountries();
   window.addEventListener('resize', this.processSideBar);
 
   },
@@ -99,7 +112,6 @@ export default {
     getMenuType(val){
         console.log(val, 'from app layout menu type');
     },
-
 
     mobile(val){
       this.mobily = val;

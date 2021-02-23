@@ -324,9 +324,9 @@ export default {
       })
     },
 
-    fetchCountries(){
-      this.$store.dispatch(BUSI_PARAM)
-    },
+    // fetchCountries(){
+    //   this.$store.dispatch(BUSI_PARAM)
+    // },
   },
 
   computed:{
@@ -338,7 +338,7 @@ export default {
 
     busiParams(){
       let val = this.$store.getters.busiParams;
-      console.log(val);
+      // console.log(val);
       if(val){
         val = val.countries.map(data=>({value:data.id, text: data.name}))
       }
@@ -353,7 +353,7 @@ export default {
   },
 
   created(){
-      this.fetchCountries();
+      // this.fetchCountries();
   }
 
 }
