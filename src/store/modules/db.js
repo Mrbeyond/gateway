@@ -30,9 +30,9 @@ export default {
 
     getapis: state=> state.getapis,
 
-    payouts: state=> state.walletsdetails,
+    walletsdetails: state=> state.walletsdetails,
 
-    payouts: state=> state.wallets,
+    wallets: state=> state.wallets,
 
     payouts: state=> state.payouts,
 
@@ -233,7 +233,7 @@ export default {
       Axios.get(`${PROXY}business/${id}/payout/wallets`, {headers: hToken()})
       .then(res=>{
         if(!res.data.error){
-          // console.log(res);
+          console.log(res);
           let payload;
           try {
             payload = res.data.data
