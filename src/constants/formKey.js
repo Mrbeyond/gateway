@@ -122,7 +122,6 @@ export const statusV = ["NO","YES"];
 
 export const toMoney = (val)=>{
   return parseInt(val).toLocaleString();
-
 };
 
 export const enroute=(route)=>{
