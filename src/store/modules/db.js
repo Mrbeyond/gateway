@@ -1,7 +1,7 @@
 import Axios from 'axios';
 import { keepBiz, lastBiz, PROXY } from '../../constants/config';
 import {CUSTOMERS,BUSINESSES, RES_KEY,hToken, REFRESHER, BUSINESSDETAILS,
-  REFRESHING, GETPAYOUTS,WALLETS,WALLETSDETAILS,GETAPIS, MOMENT_BIZ,
+  REFRESHING, GETPAYOUTS,WALLETS,WALLETSDETAILS,GETAPIS, MOMENT_BIZ,INVOICES,
    SIDE_EMPH, PROGRESS
 } from '../../constants/formKey';
 
@@ -13,6 +13,7 @@ export default {
     wallets: null,
     walletsdetails: null,
     getapis:null,
+    invoices: null,
     businessDetails: null,
     resKey: {status:0, owner:''},
     refresher: {status:0, owner:''},
@@ -25,6 +26,8 @@ export default {
 
   /** This is manually included */
   getters: {
+    invoice: state=> state.invoices,
+
     getapis: state=> state.getapis,
 
     payouts: state=> state.walletsdetails,
@@ -53,6 +56,9 @@ export default {
   },
 
   mutations: {
+    [INVOICES](state, payload){
+      state.invoices = payload;
+    },
     [GETAPIS](state, payload){
       state.getapis = payload;
     },
@@ -110,6 +116,32 @@ export default {
 
 
   actions: {
+    [INVOICES]({commit},id){
+
+      commit(REFRESHER, INVOICES);
+      Axios.get(`${PROXY}invoice/all/${id}`, {headers: hToken()})
+      .then(res=>{
+        if(!res.data.error){
+          let payload;
+          try {
+            payload = res.data.data
+            commit(INVOICES, payload);
+            commit(RES_KEY, {status:0, owner: INVOICES});
+          } catch (e) {
+            commit(RES_KEY, {status:1, owner: INVOICES});
+          }
+        }else{
+          commit(RES_KEY, {status:1, owner: INVOICES});
+        }
+        commit(REFRESHER, INVOICES);
+      })
+      .catch(err => {
+        if(err.response){
+          commit(RES_KEY, {status:2, owner: INVOICES});
+          commit(REFRESHER, INVOICES);
+        }
+      })
+    },
     
     [GETAPIS]({commit},id){
 
@@ -291,9 +323,9 @@ export default {
       })
     },
 
-    [CUSTOMERS]({commit}){
+    [CUSTOMERS]({commit},id){
       commit(REFRESHER, CUSTOMERS);
-      Axios.get(`${PROXY}admin/agent/details`, {headers: hToken()})
+      Axios.get(`${PROXY}customers/${id}`, {headers: hToken()})
       .then(res=>{
         if(!res.data.error){
           let payload;

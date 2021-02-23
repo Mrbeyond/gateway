@@ -9,7 +9,7 @@
     <b-row>
       <b-colxx xxs="12">
         <b-card class="mb-4" title="BUSINESS">
-                <b-table responsive :items="datas" :fields="fields"/>
+                <b-table responsive :items="allCustomers" :fields="fields"/>
             </b-card>
       </b-colxx>
     </b-row>
@@ -20,7 +20,7 @@
 import Vuetable from "vuetable-2/src/components/Vuetable.vue";
 import VuetablePaginationBootstrap from "../../../../components/Common/VuetablePaginationBootstrap.vue";
 import { apiUrl, PROXY } from "../../../../constants/config";
-import { hToken, loadash, LUX_ZONE, SIDE_EMPH, statusA,toMoney } from "../../../../constants/formKey";
+import { hToken, loadash, LUX_ZONE, SIDE_EMPH, statusA,toMoney,CUSTOMERS } from "../../../../constants/formKey";
 // import {LGS} from '../../../../constants/formKey';
 // import {ADD_CARD,VEHICLE_TYPES } from '../../../../constants/formKey';
 
@@ -58,24 +58,49 @@ export default {
 
       fields: [
         {
-        key: "name",
-        label: "Name",
+        key: "customer_firstname",
+        label: "First name",
+        sortable: true
+        },
+         {
+        key: "customer_lastname",
+        label: "Last name",
+        sortable: true
+        },
+         {
+        key: "customer_email",
+        label: "Email",
+        sortable: true
+        },
+          {
+        key: "customer_phone",
+        label: "Phone",
+        sortable: true
         },
         {
-          key:"amount",
-          label: "Amount",
-           callback(val){
-        let result = toMoney(val);
-        return (result == "0")? "\u20A60.00": "\u20A6"+result;
+          key: "business_invoices",
+           label: "Invoices",
+          formatter(val){
+            return val.length
+          },
+        sortable: true
+
         }
-        },
-            {
-            key: "createdAt",
-            label: "Created On",
-            callback(value){
-            return LUX_ZONE(value);
-            },
-        },
+        // {
+        //   key:"amount",
+        //   label: "Amount",
+        //    callback(val){
+        // let result = toMoney(val);
+        // return (result == "0")? "\u20A60.00": "\u20A6"+result;
+        // }
+        // },
+        //     {
+        //     key: "createdAt",
+        //     label: "Created On",
+        //     callback(value){
+        //     return LUX_ZONE(value);
+        //     },
+        // },
         //   {
         //     name: "account_vehicles",
         //     sortField: "account",
@@ -85,21 +110,21 @@ export default {
         //     width: "10%",
 
         // },
-        {
-          key: "status",
-          label: "Status",
-          callback(val){
-            return statusA[Number(Boolean(!!Boolean(val)))];
-          },
-        },
+        // {
+        //   key: "status",
+        //   label: "Status",
+        //   callback(val){
+        //     return statusA[Number(Boolean(!!Boolean(val)))];
+        //   },
+        // },
       ]
     };
   },
   methods: {
 
-    //  GetEHICLEtYPES(){
-    //   this.$store.dispatch(VEHICLE_TYPES);
-    // },
+     GetCustomers(id){
+      this.$store.dispatch(CUSTOMERS,id);
+    },
 //     modalinfo(garages){
 //     this.RightmodalData = garages
 //    console.log( this.RightmodalData)
@@ -112,163 +137,23 @@ export default {
         this.$refs['modalnested'].show()
       }
     },
-    makeQueryParams(sortOrder, currentPage, perPage) {
-      this.selectedItems = [];
-      return sortOrder[0]
-        ? {
-            sort: sortOrder[0]
-              ? sortOrder[0].field + "|" + sortOrder[0].direction
-              : "",
-            page: currentPage,
-            per_page: this.perPage,
-            search: this.search
-          }
-        : {
-            page: currentPage,
-            per_page: this.perPage,
-            search: this.search
-          };
-    },
-    onRowClass(dataItem, index) {
-      if (this.selectedItems.includes(dataItem.id)) {
-        return "selected";
-      }
-      return "";
-    },
-
-    cellClicked(item, field, event){
-      // // alert()
-      // console.log(item, 'item');
-      // console.log(field, 'feild');
-      // console.log(event,'eve');
-    },
-
-    rowClicked(dataItem, event) {
-      // const itemId = dataItem.id;
-      console.log(dataItem)
-      // alert();
-      return;
-      if (event.shiftKey && this.selectedItems.length > 0) {
-        let itemsForToggle = this.items;
-        var start = this.getIndex(itemId, itemsForToggle, "id");
-        var end = this.getIndex(
-          this.selectedItems[this.selectedItems.length - 1],
-          itemsForToggle,
-          "id"
-        );
-        itemsForToggle = itemsForToggle.slice(
-          Math.min(start, end),
-          Math.max(start, end) + 1
-        );
-        this.selectedItems.push(
-          ...itemsForToggle.map(item => {
-            return item.id;
-          })
-        );
-        this.selectedItems = [...new Set(this.selectedItems)];
-      } else {
-        if (this.selectedItems.includes(itemId)) {
-          this.selectedItems = this.selectedItems.filter(x => x !== itemId);
-        } else this.selectedItems.push(itemId);
-      }
-    },
-    rightClicked(dataItem, field, event) {
-      event.preventDefault();
-      if (!this.selectedItems.includes(dataItem.id)) {
-        this.selectedItems = [dataItem.id];
-      }
-      // this.$refs.contextmenu.show({ top: event.pageY, left: event.pageX });
-    },
-    onPaginationData(paginationData) {
-      console.log(paginationData);
-      this.from = paginationData.from;
-      this.to = paginationData.to;
-      this.total = paginationData.total;
-      this.lastPage = paginationData.last_page;
-      this.items = paginationData.data;
-      this.$refs.pagination.setPaginationData(paginationData);
-    },
-    onChangePage(page) {
-      this.$refs.vuetable.changePage(page);
-    },
-
-    changePageSize(perPage) {
-      this.perPage = perPage;
-      this.$refs.vuetable.refresh();
-    },
-
-    searchChange(val) {
-      this.search = val;
-      this.$refs.vuetable.refresh();
-    },
-
-    selectAll(isToggle) {
-      if (this.selectedItems.length >= this.items.length) {
-        if (isToggle) this.selectedItems = [];
-      } else {
-        this.selectedItems = this.items.map(x => x.id);
-      }
-    },
-    keymap(event) {
-      switch (event.srcKey) {
-        case "select":
-          this.selectAll(false);
-          break;
-        case "undo":
-          this.selectedItems = [];
-          break;
-      }
-    },
-    getIndex(value, arr, prop) {
-      for (var i = 0; i < arr.length; i++) {
-        if (arr[i][prop] === value) {
-          return i;
-        }
-      }
-      return -1;
-    },
-
-    onContextMenuAction(action) {
-      console.log(
-        "context menu item clicked - " + action + ": ",
-        this.selectedItems
-      );
-    }
+    
   },
   computed: {
-    isSelectedAll() {
-      return this.selectedItems.length >= this.items.length;
+     customers(){
+      return this.$store.getters.momentBiz
     },
-    isAnyItemSelected() {
-      return (
-        this.selectedItems.length > 0 &&
-        this.selectedItems.length < this.items.length
-      );
+     allCustomers(){
+      return this.$store.getters.customers;
     },
-
-//     vehicleTypes(){
-//     return this.$store.getters.vehicleTypes;
-//   },
-
-//     resKey(){
-//       return this.$store.getters.resKey;
-//     }
   },
-  watch: {
-    //  resKey(){
-    //   if(this.resKey && this.resKey.owner && this.resKey.owner == VEHICLE_TYPES){
-    //     if(this.resKey.status){
-    //       this.isFetched = false;
-    //       this.isLoading = true;
-    //     }else{
-    //       this.isFetched = true;
-    //     }
-
-    //   }
-
-    // }
+ watch: {
+    customers(val){
+      this.GetCustomers(val)
+    }
   },
   created() {
+     this.GetCustomers(this.customers);
     this.$store.commit(SIDE_EMPH, 'customers');
   },
 };

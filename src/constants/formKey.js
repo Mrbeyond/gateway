@@ -37,6 +37,8 @@ export const GETPAYOUTS = "GETPAYOUTS";
 export const GETAPIS = "GETAPIS";
 export const WALLETS = "WALLETS";
 export const WALLETSDETAILS = "WALLETSDETAILS";
+export const INVOICES = "INVOICES";
+
 
 
 
@@ -121,7 +123,8 @@ export const statusS = ["Unsuccessful", "Successful"];
 export const statusV = ["NO","YES"];
 
 export const toMoney = (val)=>{
-  return parseInt(val).toLocaleString();
+  let result =  parseInt(val).toLocaleString();
+   return (result == "0")? "\u20A60.00": "\u20A6"+result;
 };
 
 export const enroute=(route)=>{
