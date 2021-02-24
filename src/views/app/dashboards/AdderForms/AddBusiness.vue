@@ -5,17 +5,14 @@
             <b-form ref="form" @submit.prevent="onValitadeFormSubmit" class="av-tooltip tooltip-label-right">
                 <b-form-group label="Business name">
                   <b-form-input type="text" v-model="$v.name.$model" :state="!$v.name.$error" />
-                  <b-form-invalid-feedback v-if="!$v.name.required">Please enter your first name</b-form-invalid-feedback>
-                  <b-form-invalid-feedback v-else-if="!$v.name.minLength">Name must at least 3 characters</b-form-invalid-feedback>
-                  <b-form-invalid-feedback v-else-if="!$v.name.alpha">Your name must be composed only with letters</b-form-invalid-feedback>
+                  <b-form-invalid-feedback v-if="!$v.name.required">Please business name</b-form-invalid-feedback>
                 </b-form-group>
 
                 <b-form-group label="Description" class="error-l-100">
                   <b-form-input type="text" v-model="$v.business_description.$model" :state="!$v.business_description.$error" />
-                  <b-form-invalid-feedback v-if="!$v.business_description.required">Please enter your last name</b-form-invalid-feedback>
-                  <b-form-invalid-feedback v-else-if="!$v.business_description.minLength">Name must at least 3 characters</b-form-invalid-feedback>
-                  <b-form-invalid-feedback v-else-if="!$v.business_description.alpha">Your name must be composed only with letters</b-form-invalid-feedback>
-                </b-form-group>
+                  <b-form-invalid-feedback v-if="!$v.business_description.required">Please enter business decription</b-form-invalid-feedback>
+                  <b-form-invalid-feedback v-else-if="!$v.business_description.minLength">Description not long enough</b-form-invalid-feedback>
+                 </b-form-group>
 
                 <b-form-group label="Email">
                   <b-form-input type="text" v-model="$v.email.$model" :state="!$v.email.$error" />
@@ -75,7 +72,7 @@
                         :state="!$v.state_id.$error"
                         :options="stateModel"
                        />
-                      <b-form-invalid-feedback v-if="!$v.state_id.required">Industry category is required</b-form-invalid-feedback>
+                      <b-form-invalid-feedback v-if="!$v.state_id.required">Please choose a state</b-form-invalid-feedback>
                     </b-form-group>
                   </template>
                 </b-input-group>
@@ -109,8 +106,8 @@ import Axios from 'axios';
 import {
     validationMixin
 } from "vuelidate";
-import { PROXY } from '../../../../constants/config';
-import { BUSINESSES, hToken } from '../../../../constants/formKey';
+import { keepBiz, PROXY } from '../../../../constants/config';
+import { BUSINESSDETAILS, BUSINESSES, hToken, MOMENT_BIZ } from '../../../../constants/formKey';
 import { mapGetters } from 'vuex';
 const {
     required,
@@ -203,7 +200,8 @@ export default {
     country(val){
       if(val){
         console.log(this.busiParams.countries.find(data=>data.id == val).states, val);
-        // this.stateModel = this.countryModel.find(data=>data.id == val).states;
+        this.stateModel = this.busiParams.countries.find(data=>data.id == val)
+        .states.map(d=>({value:d.id, text: d.name}))
       }
     }
   },
@@ -222,30 +220,19 @@ export default {
     onValitadeFormSubmit() {
       this.$v.$touch();
       if(this.$v.$invalid) return;
-      let service = this.industry_category_id.toString().trim();
-      if(!this.selectedGarage && !this.business_type_id){
-        if(service == "commercial"){
-          this.resMessage = "Choose a garage";
-        }else{
-          this.resMessage = "Choose a port";
-        }
-        this.variant = "danger";
-        this.$bvToast.show("example-toast");
-        return;
-      }
-
-      let id= service == "import"? this.business_type_id : this.selectedGarage;
 
       if(this.submitting) return;
       let formData = {
-        phone:this.phone,
         name:this.name,
-        business_description:this.business_description,
         email:this.email,
-        industry_category_id: service,
-        garage_id: id,
-        address: this.address,
-        payer_id:this.payer_id,
+        business_description:this.business_description,
+        phone:this.phone,
+        address:this.address,
+        industry_category_id:this.industry_category_id,
+        staff_size_id:this.staff_size_id,
+        state_id:this.state_id,
+        city:this.city,
+        business_type_id:this.business_type_id,
       };
 
 
@@ -259,11 +246,12 @@ export default {
           this.variant = "success";
           this.resMessage = res.data.message;
           this.$refs.form.reset();
-          this.$store.dispatch(BUSINESSES);
+          console.log(res.data.data.id, "new id");
+          keepBiz(res.data.data.id);
+          this.$store.commit(MOMENT_BIZ, res.data.data.id);
         }else{
           this.variant = "danger";
           this.resMessage = "Something went wrong, please retry"
-          // commit('setError', "Something went wrong");
         }
         this.$bvToast.show("example-toast");
         this.submitting = false;
