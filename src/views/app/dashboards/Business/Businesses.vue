@@ -126,7 +126,7 @@
             </div>
           </b-colxx>
           <b-colxx sm="12" md="5" class="d-flex">
-            <div class="flex-fill bg-danger">
+            <div class="flex-fill ">
               <!-- API CARD -->
               <div>
 
@@ -276,7 +276,7 @@ export default {
   watch: {
      resKey(){
       if(this.resKey && this.resKey.owner && this.resKey.owner == BUSINESSES){
-        if(this.resKey.status){
+        if(this.resKey.status == 1){
           this.isFetched = false;
           this.isLoading = true;
         }else{
@@ -297,7 +297,9 @@ export default {
   },
 
   created(){
-    this.getBusinesses();
+    if(!this.businesses){
+      this.getBusinesses();
+    }
     this.$store.commit(SIDE_EMPH, 'business');
     // this.$notify("error", "Login Error", "tets", {
     //       duration: 3000,

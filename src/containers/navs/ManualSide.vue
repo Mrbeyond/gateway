@@ -115,7 +115,7 @@
 <script>
 import Axios from 'axios';
 import { lastBiz, PROXY } from '../../constants/config';
-import { BUSINESSDETAILS, MOBILE } from '../../constants/formKey';
+import { BUSINESSDETAILS, BUSINESSES, MOBILE } from '../../constants/formKey';
 import menuItems from "../../constants/menu";
 import { mapGetters } from 'vuex';
 
@@ -136,7 +136,8 @@ export default {
   }),
 
   computed:{
-    ...mapGetters(["momentBiz", "resKey", "currentBiz", "sideEmph", "mobile", "progress"]),
+    ...mapGetters(["momentBiz", "resKey", "currentBiz", "sideEmph",
+     "mobile", "progress", "businesses"]),
 
   },
 
@@ -195,21 +196,26 @@ export default {
       let user = this.$store.getters.user;
       if(user && user.businesses && user.businesses.length > 0){
         if(val){
-          this.currentBusiness = user.businesses.find(d=> d.id == val)?
-          user.businesses.find(d=> d.id == val):
-          user.businesses[0];
-          this.otherBusinesses = user.businesses.filter(d=>d.id != this.currentBusiness.id);
+          let businesses = this.businesses? this.businesses: user.businesses
+          this.currentBusiness = businesses.find(d=> d.id == val)?
+          businesses.find(d=> d.id == val):
+          businesses[0];
+          this.otherBusinesses = businesses.filter(d=>d.id != this.currentBusiness.id);
           this.othersClone = [...this.otherBusinesses];
 
         }else{
-          this.currentBusiness= user.businesses[0];
-          this.otherBusinesses = user.businesses.filter(d=>d.id != this.currentBusiness.id);
+          this.currentBusiness= businesses[0];
+          this.otherBusinesses = businesses.filter(d=>d.id != this.currentBusiness.id);
           this.othersClone = [...this.otherBusinesses];
         }
       }else{
         this.$router.push('/user/login');
       }
-    }
+    },
+
+    getBusinesses(){
+      this.$store.dispatch(BUSINESSES);
+    },
 
   },
 
@@ -229,12 +235,18 @@ export default {
     },
 
     momentBiz(val){
+      alert(1)
       this.processBusinessList(val);
     },
 
     currentBiz(val){
+      alert(2)
       this.processBusinessList(val);
     },
+
+    businesses(val){
+      this.processBusinessList(this.momentBiz || this.currentBiz);
+    }
 
   },
 

@@ -56,7 +56,7 @@ import Footer from "../containers/navs/Footer";
 import ManualSide from '../containers/navs/ManualSide.vue';
 
 import { mapGetters } from "vuex";
-import { BUSI_PARAM, MOBILE, SHOW } from '../constants/formKey';
+import { BUSINESSES, BUSI_PARAM, MOBILE, SHOW } from '../constants/formKey';
 
 export default {
   components: {
@@ -85,6 +85,10 @@ export default {
       }
     },
 
+    getBusinesses(){
+      this.$store.dispatch(BUSINESSES);
+    },
+
   },
 
   computed: {
@@ -96,6 +100,9 @@ export default {
       return val;
     }
 
+  },
+  created(){
+    this.getBusinesses();
   },
   mounted() {
 
@@ -110,7 +117,7 @@ export default {
 
   watch:{
     getMenuType(val){
-        console.log(val, 'from app layout menu type');
+        // console.log(val, 'from app layout menu type');
     },
 
     mobile(val){

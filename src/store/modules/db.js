@@ -142,7 +142,7 @@ export default {
         }
       })
     },
-    
+
     [GETAPIS]({commit},id){
 
       commit(REFRESHER, GETAPIS);
@@ -298,6 +298,7 @@ export default {
 
     [BUSINESSES]({commit}){
       commit(REFRESHER, BUSINESSES);
+      commit(RES_KEY, {status:1, owner: BUSINESSES});
       Axios.get(`${PROXY}business`, {headers: hToken()})
       .then(res=>{
         // console.log(res.data)
@@ -306,18 +307,18 @@ export default {
           try {
             payload = res.data.data
             commit(BUSINESSES, payload);
-            commit(RES_KEY, {status:0, owner: BUSINESSES});
+            commit(RES_KEY, {status:2, owner: BUSINESSES});
           } catch (e) {
-            commit(RES_KEY, {status:1, owner: BUSINESSES});
+            commit(RES_KEY, {status:3, owner: BUSINESSES});
           }
         }else{
-          commit(RES_KEY, {status:1, owner: BUSINESSES});
+          commit(RES_KEY, {status:3, owner: BUSINESSES});
         }
         commit(REFRESHER, BUSINESSES);
       })
       .catch(err => {
         if(err.response){
-          commit(RES_KEY, {status:2, owner: BUSINESSES});
+          commit(RES_KEY, {status:3, owner: BUSINESSES});
           commit(REFRESHER, BUSINESSES);
         }
       })

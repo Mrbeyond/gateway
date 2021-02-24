@@ -142,6 +142,7 @@ export default {
 
       resMessage: "",
       submitting: false,
+      successId: null,
       variant: "success",
 
     };
@@ -186,11 +187,21 @@ export default {
   },
 
   computed: {
-   ...mapGetters(['busiParams'])
+   ...mapGetters(['busiParams', 'resKey'])
 
   },
 
   watch:{
+    resKey(val){
+      if(val.status == 2 && val.owner == BUSINESSES){
+        if(this.successId){
+          this.$store.commit(MOMENT_BIZ, this.successId);
+          keepBiz(this.successId);
+        }
+      }
+
+    },
+
     busiParams(val){
       if(val){
         this.automateModel(val);
@@ -246,9 +257,8 @@ export default {
           this.variant = "success";
           this.resMessage = res.data.message;
           this.$refs.form.reset();
-          console.log(res.data.data.id, "new id");
-          keepBiz(res.data.data.id);
-          this.$store.commit(MOMENT_BIZ, res.data.data.id);
+          this.successId=  res.data.data.id;
+          this.$store.dispatch(BUSINESSES);
         }else{
           this.variant = "danger";
           this.resMessage = "Something went wrong, please retry"
