@@ -1,6 +1,14 @@
 <template>
   <div>
+     <div v-if="isLoading && !isFetched" class="row justify-content-center">
+        <div> <b-spinner variant="primary" /></div>
+    </div>
+    <div v-else-if="!isLoading && !isFetched">
+        Went wrong slot
+    </div>
+    <b-row v-else>
     <b-table responsive :items="allInvoices" :fields="fields"/>
+    </b-row>
   </div>
 </template>
 
@@ -65,6 +73,16 @@ export default {
     },
   },
   watch: {
+    resKey(){
+      if(this.resKey && this.resKey.owner && this.resKey.owner == INVOICES){
+        if(this.resKey.status){
+          this.isFetched = false;
+          this.isLoading = true;
+        }else{
+          this.isFetched = true;
+        }
+      }
+    },
     biz(val){
       this.GetInvoice(val)
     }
