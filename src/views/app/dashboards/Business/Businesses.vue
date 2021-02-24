@@ -31,13 +31,25 @@
 
                     <div class="mb-3 d-flex">
                       <div class="d-inline-block">
-                        <b-avatar v-if="current.logo"
-                          :src="current.logo"
+                        <b-avatar
+                          :src="SRC"
+                          id="withLogo"
                           size="6rem"
                         >
                         </b-avatar>
-                        <b-avatar v-else size="6rem" :text="current.name.charAt(0)"></b-avatar>
-
+                        <div>
+                        <b-button-group class="mt-2" size="sm">
+                          <b-button class="py-0 " >
+                            <label class="p-0 mt-2 w-100">
+                              <i style="font-size:1.5em" class="simple-icon-camera p-0" />
+                              <b-form-file size="small" class="p-0 d-none" v-model="Logo" plain></b-form-file>
+                            </label>
+                          </b-button>
+                          <b-button class="border-left" >
+                            <i class="fas fa-arrow-up" />
+                          </b-button>
+                        </b-button-group>
+                        </div>
                       </div>
                       <div class="mx-auto align-self-center">
                           <div style="font-size: 1.8em">{{ current.name }}</div>
@@ -223,6 +235,9 @@ export default {
       showForm:false,
       modalTitle: "",
 
+      Logo:null,
+      SRC:"",
+
       fields: [
         {
           key: 'name',
@@ -270,13 +285,27 @@ export default {
       this.showModal();
     },
 
+    logoUploader(val){
+      if(!val) return;
+      let avaters = this.currentBiz.log?
+      document.getElementById("withLogo"):
+      document.getElementById("noLogo");
+      this.SRC = URL.createObjectURL(val);
+        // this.SRC="https://avatars.githubusercontent.com/u/47877329?s=80&v=4"
+        // console.log(val, avaters);
+    },
+
+    updateLogo(){
+      
+
+    },
+
     processBusinesses(val){
       if(!val) return;
-      alert(`moment is ${ this.momentBiz} last is ${this.currentBiz}`)
       const cBiz = this.momentBiz || this.currentBiz;
       this.current = val.find(d=>d.id == cBiz);
       this.others = val.filter(d=>d.id != cBiz);
-      console.log(this.current, "watching buz in biz page");
+      this.SRC = this.current.logo;
     }
 
   },
@@ -284,7 +313,11 @@ export default {
     ...mapGetters(['businesses', 'resKey', 'momentBiz', 'currentBiz']),
   },
   watch: {
-     resKey(){
+    Logo(val){
+      this.logoUploader(val);
+    },
+
+    resKey(val){
       if(this.resKey && this.resKey.owner && this.resKey.owner == BUSINESSES){
         if(this.resKey.status == 1){
           this.isFetched = false;
@@ -295,9 +328,13 @@ export default {
       }
     },
 
+    momentBiz(val){
+      this.processBusinesses( this.businesses);
+    },
+
     businesses(val){
       if(val){
-        alert(" busi changed")
+        // alert(" busi changed")
         this.processBusinesses(val);
 
       }
