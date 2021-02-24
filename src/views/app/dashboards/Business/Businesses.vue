@@ -36,7 +36,8 @@
                           size="6rem"
                         >
                         </b-avatar>
-                        <b-avatar v-else text="NO LOGO"></b-avatar>
+                        <b-avatar v-else size="6rem" :text="current.name.charAt(0)"></b-avatar>
+                        
                       </div>
                       <div class="mx-auto align-self-center">
                           <div style="font-size: 1.8em">{{ current.name }}</div>
