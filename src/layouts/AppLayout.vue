@@ -1,5 +1,11 @@
 <template>
-  <div id="app-container" >
+  <div v-if="!businesses" style="height:95vh"
+    class="d-flex align-items-center justify-content-center"
+  >
+    <b-spinner variant="primary" />
+
+  </div>
+  <div v-else id="app-container" >
       <!-- Top navbar -->
      <topnav />
 
@@ -78,21 +84,10 @@ export default {
       this.$store.commit(SHOW, cond);
     },
 
-    fetchCountries(){
-      if(!this.$store.getters.busiParams){
-        this.$store.dispatch(BUSI_PARAM);
-
-      }
-    },
-
-    getBusinesses(){
-      this.$store.dispatch(BUSINESSES);
-    },
-
   },
 
   computed: {
-    ...mapGetters(["show"]),
+    ...mapGetters(["show", "businesses", "resKey"]),
 
     mobile(){
       let val = this.$store.getters.mobile;
@@ -101,16 +96,13 @@ export default {
     }
 
   },
-  created(){
-    this.getBusinesses();
-  },
+
   mounted() {
 
     setTimeout(() => {
       document.body.classList.add("default-transition");
     }, 100);
   this.processSideBar();
-  // this.fetchCountries();
   window.addEventListener('resize', this.processSideBar);
 
   },

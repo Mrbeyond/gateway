@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div v-if="isLoading && !isFetched" class="row justify-content-center">
+    <div v-if="isLoading && !isFetched && !businesses" class="row justify-content-center">
         <div> <b-spinner variant="primary" /></div>
     </div>
-    <div v-else-if="!isLoading && !isFetched">
+    <div v-else-if="(!isLoading && !isFetched) && !businesses">
         Went wrong slot
     </div>
     <b-row v-else>
@@ -37,7 +37,7 @@
                         >
                         </b-avatar>
                         <b-avatar v-else size="6rem" :text="current.name.charAt(0)"></b-avatar>
-                        
+
                       </div>
                       <div class="mx-auto align-self-center">
                           <div style="font-size: 1.8em">{{ current.name }}</div>
@@ -270,6 +270,15 @@ export default {
       this.showModal();
     },
 
+    processBusinesses(val){
+      if(!val) return;
+      alert(`moment is ${ this.momentBiz} last is ${this.currentBiz}`)
+      const cBiz = this.momentBiz || this.currentBiz;
+      this.current = val.find(d=>d.id == cBiz);
+      this.others = val.filter(d=>d.id != cBiz);
+      console.log(this.current, "watching buz in biz page");
+    }
+
   },
   computed: {
     ...mapGetters(['businesses', 'resKey', 'momentBiz', 'currentBiz']),
@@ -288,10 +297,8 @@ export default {
 
     businesses(val){
       if(val){
-        const cBiz = this.momentZiz || this.currentBiz;
-        this.current = val.find(d=>d.id == cBiz);
-        this.others = val.filter(d=>d.id != cBiz);
-        console.log(this.current);
+        alert(" busi changed")
+        this.processBusinesses(val);
 
       }
     }
@@ -300,6 +307,8 @@ export default {
   created(){
     if(!this.businesses){
       this.getBusinesses();
+    }else{
+      this.processBusinesses( this.businesses);
     }
     this.$store.commit(SIDE_EMPH, 'business');
     // this.$notify("error", "Login Error", "tets", {

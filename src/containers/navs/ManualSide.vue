@@ -197,12 +197,12 @@ export default {
       if(user && user.businesses && user.businesses.length > 0){
         if(val){
           let businesses = this.businesses? this.businesses: user.businesses
+
           this.currentBusiness = businesses.find(d=> d.id == val)?
           businesses.find(d=> d.id == val):
           businesses[0];
           this.otherBusinesses = businesses.filter(d=>d.id != this.currentBusiness.id);
           this.othersClone = [...this.otherBusinesses];
-
         }else{
           this.currentBusiness= businesses[0];
           this.otherBusinesses = businesses.filter(d=>d.id != this.currentBusiness.id);
@@ -235,16 +235,17 @@ export default {
     },
 
     momentBiz(val){
-      alert(1)
+      alert(val+" mo ")
       this.processBusinessList(val);
     },
 
-    currentBiz(val){
-      alert(2)
-      this.processBusinessList(val);
-    },
+    // currentBiz(val){
+    //   alert(val+ " cur")
+    //   this.processBusinessList(val);
+    // },
 
     businesses(val){
+      alert("in buz")
       this.processBusinessList(this.momentBiz || this.currentBiz);
     }
 
@@ -252,6 +253,7 @@ export default {
 
   created(){
     if(lastBiz()){
+      alert("load "+ lastBiz())
       this.processBusinessList(lastBiz());
     }
 

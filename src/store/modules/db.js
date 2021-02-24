@@ -276,9 +276,9 @@ export default {
           let payload;
           try {
             payload = res.data.data
+            keepBiz(id);
             commit(BUSINESSDETAILS, payload);
             commit(MOMENT_BIZ, id);
-            keepBiz(id);
             commit(RES_KEY, {status:2, owner: BUSINESSDETAILS});
           } catch (e) {
             commit(RES_KEY, {status:3, owner: BUSINESSDETAILS});
@@ -296,7 +296,7 @@ export default {
       })
     },
 
-    [BUSINESSES]({commit}){
+    [BUSINESSES]({commit}, id = null){
       commit(REFRESHER, BUSINESSES);
       commit(RES_KEY, {status:1, owner: BUSINESSES});
       Axios.get(`${PROXY}business`, {headers: hToken()})
@@ -306,6 +306,9 @@ export default {
           let payload;
           try {
             payload = res.data.data
+            if(id){
+              commit(MOMENT_BIZ, id);
+            }
             commit(BUSINESSES, payload);
             commit(RES_KEY, {status:2, owner: BUSINESSES});
           } catch (e) {

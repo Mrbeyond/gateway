@@ -29,7 +29,7 @@ export default{
     },
 
     [BUSI_PARAM](state, payload){
-      console.log(payload, "from strore");
+      // console.log(payload, "from strore");
       state.busiParams = payload;
     },
 

@@ -258,7 +258,7 @@ export default {
           this.resMessage = res.data.message;
           this.$refs.form.reset();
           this.successId=  res.data.data.id;
-          this.$store.dispatch(BUSINESSES);
+          this.$store.dispatch(BUSINESSES, this.successId);
         }else{
           this.variant = "danger";
           this.resMessage = "Something went wrong, please retry"

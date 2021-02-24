@@ -7,7 +7,7 @@
 
 <script>// @ts-nocheck
 import { lastBiz } from '../../constants/config';
-import { BUSINESSDETAILS, BUSI_PARAM } from '../../constants/formKey';
+import { BUSINESSES, BUSI_PARAM } from '../../constants/formKey';
 
 // write security logics here, beyond.
 
@@ -19,20 +19,10 @@ export default {
   },
 
   methods:{
-    processBusiness(){
+    fetchBizs(){
       let user = this.$store.getters.user;
       if(user && user.businesses && user.businesses.length > 0){
-        let id;
-        if(lastBiz()){
-          id = user.businesses.find(d=> d.id == lastBiz())?
-          user.businesses.find(d=> d.id == lastBiz()).id:
-          user.businesses[0].id;
-        }else{
-         id = user.businesses[0].id;
-        }
-
-        this.$store.dispatch(BUSINESSDETAILS, id);
-
+        this.$store.dispatch(BUSINESSES);
       }else{
         localStorage.clear();
         this.$router.push('/user/login')
@@ -45,23 +35,10 @@ export default {
 
   },
 
-  watch:{
-    currentBiz(val){
-      if(!val) return;
-      this.$store.dispatch(BUSINESSDETAILS, id);
-    },
-
-  },
-
-  computed: {
-    currentBiz(){
-      return this.$store.getters.currentBiz;
-    },
-  },
 
   created(){
-    this.processBusiness();
     this.fetchCountries();
+    this.fetchBizs();
   },
 
 }
