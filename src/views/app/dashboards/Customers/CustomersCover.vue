@@ -1,12 +1,12 @@
 <template>
   <div>
-    <!-- <div v-if="isLoading && !isFetched" class="row justify-content-center">
+    <div v-if="isLoading && !isFetched" class="row justify-content-center">
         <div> <b-spinner variant="primary" /></div>
-    </div> -->
-    <!-- <div v-else-if="!isLoading && !isFetched">
+    </div>
+    <div v-else-if="!isLoading && !isFetched">
         Went wrong slot
-    </div> -->
-    <b-row>
+    </div>
+    <b-row v-else>
       <b-colxx xxs="12">
         <b-card class="mb-4" title="BUSINESS">
                 <b-table responsive :items="allCustomers" :fields="fields"/>
@@ -148,6 +148,16 @@ export default {
     },
   },
  watch: {
+   resKey(){
+      if(this.resKey && this.resKey.owner && this.resKey.owner == CUSTOMERS){
+        if(this.resKey.status){
+          this.isFetched = false;
+          this.isLoading = true;
+        }else{
+          this.isFetched = true;
+        }
+      }
+    },
     customers(val){
       this.GetCustomers(val)
     }
