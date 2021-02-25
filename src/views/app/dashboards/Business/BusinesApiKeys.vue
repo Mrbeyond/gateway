@@ -6,7 +6,10 @@
           <div  class="d-flex justify-content-between mt-2">
             <h6 class="mb-0">API Keys</h6>
             <div >
-              <b-button  size="sm" class="py-1">Generate New</b-button>
+              <b-button @click="generateNew"  size="sm" class="py-1">
+                <b-spinner v-if="generating"  small />
+                <span v-else>Generate New</span>
+              </b-button>
             </div>
           </div>
         </template>
@@ -132,30 +135,32 @@ export default {
       if(this.generating)return;
       this.generating = true;
       let val = "Something went wrong";
-      Axios.post(`${PROXY}/business/${this.momentBiz}/key/${true}`, {headers: hToken()})
+      Axios.post(`${PROXY}business/${this.momentBiz}/key/true`, {}, {headers: hToken()})
       .then(res=>{
         if(!res.data.error){
           val = res.data.message
           this.$store.dispatch(BUSINESSES);
-          this.$notify("success", "Logo updated", val, {
+          this.$notify("success", "Success message", val, {
             duration: 3000,
             permanent: false
           });
         }else{
-          this.$notify("error", "Logo update error", val, {
+          this.$notify("error", "Error message", val, {
           duration: 3000,
           permanent: false
         });
         }
+        this.generating = false;
       })
       .catch(err=>{
         if(err.response){
           val = err.response.data.message;
         }
-        this.$notify("error", "Logo update error", val, {
+        this.$notify("error", "Error message", val, {
           duration: 3000,
           permanent: false
         });
+        this.generating = false;
       })
     }
   },

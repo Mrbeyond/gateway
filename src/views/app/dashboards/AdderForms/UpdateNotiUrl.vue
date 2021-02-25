@@ -1,107 +1,76 @@
 <template>
-  <b-row class="h-100">
-    <b-colxx xxs="12" md=10  class="mx-auto my-auto">
-      <b-card class="auth-card" no-body>
-          <div class="position-relative image-side ">
-            <p class=" text-white h2">{{ $t('dashboards.magic-is-in-the-details') }}</p>
-              <p class="white mb-0">  Please use this form to register. <br />If you are a member, please
-                <router-link tag="a" to="/user/login" class="white">login</router-link>.
-              </p>
+    <b-form  ref="form" @submit.prevent="onValitadeFormSubmit" class="av-tooltip tooltip-label-right">
+
+        <b-form-group label="Url address" class="error-l-100">
+          <b-form-input v-model="$v.url.$model"
+            :state="!$v.url.$error"
+          />
+          <b-form-invalid-feedback v-if="!$v.url.required">Url <address></address>Url address is required</b-form-invalid-feedback>
+           <b-form-invalid-feedback v-if="!$v.url.url">Url <address></address>Enter valid url address</b-form-invalid-feedback>
+        </b-form-group>
+
+
+
+          <b-form-group label="Secret" class="error-l-100">
+            <b-form-input type="text" v-model="$v.secret.$model"
+              :state="!$v.secret.$error"
+            />
+            <b-form-invalid-feedback v-if="!$v.secret.required">Secret is required</b-form-invalid-feedback>
+          </b-form-group>
+
+          <div class="text-center">
+            <b-spinner v-if="submitting" label="Spinning"></b-spinner>
           </div>
-          <div class="form-side">
-            <router-link tag="a" to="/"><span class="logo-single"/></router-link>
-            <h6 class="mb-4">{{ $t('user.register')}}</h6>
-            <b-form @submit.prevent="formSubmit">
 
-              <b-form-group >
-                <label class="form-group has-float-label mb-4">
-                  <input id="firstName" type="text"
-                    class="form-control" v-model="firstname"
-                    >
-                  <span>{{ $t('user.firstname') }}</span>
-                </label>
-              </b-form-group>
-
-              <b-form-group >
-                <label class="form-group has-float-label mb-4">
-                  <input id="lastName" type="text"
-                    class="form-control" v-model="lastname"
-                  >
-                  <span>{{ $t('user.lastname') }}</span>
-                </label>
-              </b-form-group>
-
-
-              <b-form-group >
-              <label class="form-group has-float-label mb-4">
-                <input id="Email" type="date"
-                  class="form-control" v-model="date_of_birth"
-                  >
-                <span>{{ $t('user.date-of-birth') }}</span>
-              </label>
-              </b-form-group>
-
-              <b-form-group>
-                <label class="has-float-label">
-                  <input id="Phone" type="text"
-                      class="form-control" v-model="phone"
-                      @blur="validatePhone"
-                      @keyup="validateTouch"
-                    >
-                  <span>{{ $t('user.gender') }}</span>
-                </label>
-                <b-form-invalid-feedback :force-show="phoneTouched && isPhoneInvalid" >
-                  A valid phone number is required
-                </b-form-invalid-feedback>
-              </b-form-group>
-
-              <div class="text-center">
-                <b-spinner v-if="submitting" label="Spinning"></b-spinner>
-              </div>
-
-              <div class="d-flex justify-content-end align-items-center">
-                  <b-button type="submit" variant="primary" size="lg" class="btn-shadow"
-                  >
-                    {{ $t('user.update-button')}}
-                  </b-button>
-              </div>
-
-
-              <b-toast variant="danger" id="example-toast" title="Something went wrong" >
-                {{response}}
-              </b-toast>
-          </b-form>
-        </div>
-      </b-card>
-    </b-colxx>
-  </b-row>
+          <div class="text-center">
+            <b-button type="submit" variant="primary" class="mt-4">{{ $t('forms.submit') }}</b-button>
+          </div>
+  </b-form>
 </template>
 <script>
-import axios from 'axios';
-import { adminRoot, PROXY } from '../../constants/config'
-import { setCurrentUser } from '../../utils';
+import Axios from 'axios';
+import { validationMixin} from "vuelidate";
+import { PROXY } from '../../../../constants/config';
+const { url, required } = require("vuelidate/lib/validators");
+
 export default {
+  props: ['noti_url'],
   data () {
     return {
       submitting: false,
+      url: '',
+      secret: '',
 
-      formIsValid: false,
+    }
+  },
+  mixins: [validationMixin],
+  validations: {
+    url: {
+      required,
+      url,
+    },
+    secret: {
+      required,
+    },
+  },
 
-      firstname: '',
-
-      lastname: '',
-
-      date_of_birth:"",
-
-      gender:'',
-      response:""
-
+  watch: {
+    noti_url(val){
+      this.spreadNoti(val);
     }
   },
 
   methods: {
 
-    formSubmit () {
+    spreadNoti(val){
+      if(!val) return;
+      this.url = val.url;
+      this.secret = val.secret;
+    },
+
+    onValitadeFormSubmit () {
+      this.$v.$touch();
+      if(this.$v.$invalid) return;
       if(this.submitting) return;
      let formData = {
       firstname:this.firstname,
@@ -110,26 +79,39 @@ export default {
       gender :this.gender,
       }
 
-        this.submitting = true;
-      axios.post(`${PROXY}user/profile'`, formData)
+      this.submitting = true;
+      Axios.post(`${PROXY}/business/${this.momentBiz}/key/${true}`, {headers: hToken()})
       .then(res=>{
         if(!res.data.error){
-            this.response = res.data.message
-            this.$bvToast.show("example-toast");
+          val = res.data.message
+          this.$store.dispatch(BUSINESSES);
+          this.$notify("success", "Success message", val, {
+            duration: 3000,
+            permanent: false
+          });
         }else{
-            this.response = res.data.message
-            this.$bvToast.show("example-toast");
+          this.$notify("error", "Error message", val, {
+          duration: 3000,
+          permanent: false
+        });
         }
         this.submitting = false;
       })
       .catch(err=>{
-        console.log(err);
-        if(err && err.response){
+        if(err.response){
+          val = err.response.data.message;
         }
-          this.response = err.response.error
-        this.$bvToast.show("example-toast");
+        this.$notify("error", "Error message", val, {
+          duration: 3000,
+          permanent: false
+        });
+        this.submitting = false;
       })
     }
-  }
+  },
+   created(){
+     this.spreadNoti(this.noti_url)
+     console.log(this.noti_url), 'from form';
+   }
 }
 </script>

@@ -6,7 +6,9 @@
           <div  class="d-flex justify-content-between mt-2">
             <h6 class="mb-0">Notification URLs</h6>
             <div>
-              <b-button  size="sm" class="py-1">Add</b-button>
+              <b-button @click="urlEdit"  size="sm" class="py-1">
+                Edit
+              </b-button>
             </div>
           </div>
         </template>
@@ -24,7 +26,7 @@
               </b-button>
             </template>
           </b-table>
-          </div>
+        </div>
       </b-card>
       <b-modal
         id="_url_keys"
@@ -32,22 +34,30 @@
         title="Notification URL"
         modal-class="modal-right"
       >
-        <b-card v-if="selectedKey">
-          <div>
-              <p class="text-small text-muted mb-2"> Url</p>
-              <p class="mb-2">{{ selectedKey.url }}</p>
-              <p class="text-small text-muted mb-2">Type</p>
-              <p class="mb-2">{{ selectedKey.type }}</p>
-              <p class="text-small text-muted mb-2">Domain</p>
-              <p class="mb-2">{{ selectedKey.domain }}</p>
-              <p class="text-small text-muted mb-2">Secret</p>
-              <p class="mb-2">{{ selectedKey.secret }}</p>
-              <p class="text-small text-muted mb-2">Status</p>
-              <p class="mb-2">{{ Boolean(selectedKey.status)? "Active": Inactive }}</p>
-              <p class="text-small text-muted mb-2">Created On</p>
-              <p class="mb-2">{{ timest(selectedKey.createdAt) }}</p>
-          </div>
-        </b-card>
+        <div v-if="modalType == 'View'">
+          <b-card v-if="selectedKey">
+            <div>
+                <p class="text-small text-muted mb-2"> Url</p>
+                <p class="mb-2">{{ selectedKey.url }}</p>
+                <p class="text-small text-muted mb-2">Type</p>
+                <p class="mb-2">{{ selectedKey.type }}</p>
+                <p class="text-small text-muted mb-2">Domain</p>
+                <p class="mb-2">{{ selectedKey.domain }}</p>
+                <p class="text-small text-muted mb-2">Secret</p>
+                <p class="mb-2">{{ selectedKey.secret }}</p>
+                <p class="text-small text-muted mb-2">Status</p>
+                <p class="mb-2">{{ Boolean(selectedKey.status)? "Active": Inactive }}</p>
+                <p class="text-small text-muted mb-2">Created On</p>
+                <p class="mb-2">{{ timest(selectedKey.createdAt) }}</p>
+            </div>
+          </b-card>
+        </div>
+        <div v-if="modalType == '_add' && apiKeys">
+          <update-noti-url  @close="hideModal"
+            :noti_url="apiKeys.notification_urls"
+          />
+
+        </div>
 
         <template slot="modal-footer">
           <b-button
@@ -62,9 +72,13 @@
 <script>
 import { mapGetters } from 'vuex'
 import { LUX_ZONE } from '../../../../constants/formKey';
+import UpdateNotiUrl from '../AdderForms/UpdateNotiUrl.vue';
 export default {
+  components: { UpdateNotiUrl },
   data: ()=>({
     selectedKey: null,
+    modalType: '',
+    adding: false,
 
     fields: [
       {
@@ -110,44 +124,21 @@ export default {
 
     previewKey(val){
       this.selectedKey = val.item;
+      this.modalType = "View";
       this.showModal();
-      console.log(val);
+      // console.log(val);
+    },
+
+    urlEdit(){
+      this.modalType = "_add";
+      this.showModal();
     },
 
     timest(val){
       return LUX_ZONE(val);
     },
 
-    generateNew(){
-      if(this.generating)return;
-      this.generating = true;
-      let val = "Something went wrong";
-      Axios.post(`${PROXY}/business/${this.momentBiz}/key/${true}`, {headers: hToken()})
-      .then(res=>{
-        if(!res.data.error){
-          val = res.data.message
-          this.$store.dispatch(BUSINESSES);
-          this.$notify("success", "Logo updated", val, {
-            duration: 3000,
-            permanent: false
-          });
-        }else{
-          this.$notify("error", "Logo update error", val, {
-          duration: 3000,
-          permanent: false
-        });
-        }
-      })
-      .catch(err=>{
-        if(err.response){
-          val = err.response.data.message;
-        }
-        this.$notify("error", "Logo update error", val, {
-          duration: 3000,
-          permanent: false
-        });
-      })
-    }
+
   },
 }
 </script>
