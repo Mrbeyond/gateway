@@ -295,8 +295,11 @@ export default {
       })
     },
 
-    [BUSINESSES]({commit}, id = null){
+    [BUSINESSES]({commit, dispatch}, id = null){
       commit(REFRESHER, BUSINESSES);
+      if(id){
+        dispatch(API_KEYS, id);
+      }
       commit(RES_KEY, {status:1, owner: BUSINESSES});
       Axios.get(`${PROXY}business`, {headers: hToken()})
       .then(res=>{

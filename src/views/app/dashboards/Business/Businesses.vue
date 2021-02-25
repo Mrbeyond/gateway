@@ -141,25 +141,26 @@
               </b-card>
             </div>
           </b-colxx>
-          <b-colxx sm="12" md="5" class="d-flex ">
-            <div class="flex-fill w-100  ">
-              <!-- API CARD -->
-              <div class=" p-0 m-0">
-
-                  here2
+          <b-colxx sm="12" md="5" class="d-flex flex-column align-items-stretch ">
+              <!--
+              <div class=" w-100  ">
+              API CARD
+              -->
+              <div class="flex-fill p-0 m-0">
                 <busines-api-keys />
 
               </div>
               <!-- API CARD ENDS HERE -->
 
               <!-- URL CARD -->
-              <div>
+              <div class="flex-fill mt-3">
 
                 <business-urls />
               </div>
-              <!-- URL ENDS HERE -->
+              <!-- URL ENDS HERE
+              </div>
+               -->
 
-            </div>
           </b-colxx>
         </b-row>
       </b-colxx>
@@ -231,7 +232,7 @@ export default {
   methods: {
      getBusinesses(){
        if(!this.businesses){
-         this.$store.dispatch(BUSINESSES);
+         this.$store.dispatch(BUSINESSES, this.momentBiz || this.currentBiz);
        }else{
          this.processBusinesses(this.businesses);
        }

@@ -7,7 +7,7 @@
                 <b-table responsive :items="api.api_keys" :fields="fields"/>
 
                 </b-card>
-           
+
         </b-colxx>
         <b-colxx sm="12" md="12" lg="12">
                 <h2>Notification urls</h2>
@@ -15,7 +15,7 @@
                 <b-table responsive :items="api.notification_urls" :fields="fieldss"/>
                 </b-card>
 
-          
+
         </b-colxx>
     </b-row>
 </div>
@@ -23,7 +23,7 @@
 <script>
 import Vuetable from "vuetable-2/src/components/Vuetable.vue";
 // import VuetablePaginationBootstrap from "../../../../components/Common/VuetablePaginationBootstrap.vue";
-import { LUX_ZONE,statusA,GETAPIS } from '../../../../constants/formKey';
+import { LUX_ZONE,statusA,API_KEYS } from '../../../../constants/formKey';
 export default {
      components: {
     vuetable: Vuetable,
@@ -33,7 +33,7 @@ export default {
     data () {
         return{
               // head: {headers: hToken()},
-             
+
       fields: [
             {
                 key: 'domain',
@@ -59,14 +59,14 @@ export default {
                 // Variant applies to the whole column, including the header and footer
                 // variant: 'danger'
             },
-            { 
-                key: 'createdAt', 
+            {
+                key: 'createdAt',
                 label: 'Created on',
-                 sortable: true, 
+                 sortable: true,
           }
     ],
 
-         
+
       fieldss: [
             {
                 key: 'domain',
@@ -92,10 +92,10 @@ export default {
                 // Variant applies to the whole column, including the header and footer
                 // variant: 'danger'
             },
-            { 
-                key: 'createdAt', 
+            {
+                key: 'createdAt',
                 label: 'Created on',
-                 sortable: true, 
+                 sortable: true,
           }
     ],
         }
@@ -103,7 +103,7 @@ export default {
      methods: {
       GetApis(id){
           console.log(id);
-          this.$store.dispatch(GETAPIS,id)
+          this.$store.dispatch(API_KEYS,id)
       },
       statusT(st){
             if (st == 1 || st == true) {
@@ -130,7 +130,7 @@ export default {
 },
 //   created() {
 //       this.GetApis(this.$router.currentRoute.params.id)
-     
+
 //   }
 }
 </script>

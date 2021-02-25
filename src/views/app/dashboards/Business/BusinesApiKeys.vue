@@ -30,7 +30,13 @@
         <b-card v-if="selectedKey">
           <div>
               <p class="text-small text-muted mb-2"> Key</p>
-              <p class="mb-2">{{ selectedKey.key }}</p>
+              <p class="mb-2">
+                <input class="border-0 px-1" id="key_input" readonly :value="selectedKey.key" />
+                  <i style="cursor: pointer"
+                    @click="copyKey"
+                    class="text-right  iconsminds-file-copy text-primary"
+                   />
+                </p>
               <p class="text-small text-muted mb-2">Type</p>
               <p class="mb-2">{{ selectedKey.type }}</p>
               <p class="text-small text-muted mb-2">Domain</p>
@@ -54,12 +60,15 @@
   </b-row>
 </template>
 <script>
+import Axios from 'axios';
 import { mapGetters } from 'vuex'
-import { LUX_ZONE } from '../../../../constants/formKey';
+import { BUSINESSES, hToken, LUX_ZONE } from '../../../../constants/formKey';
+import { PROXY } from '../../../../constants/config';
 export default {
   data: ()=>({
 
     selectedKey: null,
+    generating: false,
 
     fields: [
       {
@@ -79,6 +88,9 @@ export default {
         key: 'status',
         labels:"Status",
         sortable: true,
+        formatter: (val)=>{
+          return Boolean(val)? 'Active': 'Inactive';
+        }
       },
       {
         key: 'actions',
@@ -88,12 +100,18 @@ export default {
   }),
 
   computed:{
-    ...mapGetters(['apiKeys'])
+    ...mapGetters(['apiKeys', 'momentBiz'])
   },
 
   methods: {
     hideModal() {
       this.$refs["_api_keys"].hide();
+    },
+
+    copyKey(){
+      let copyText = document.getElementById('key_input')
+      copyText.select();
+      document.execCommand("copy");
     },
 
     showModal(){
@@ -108,6 +126,37 @@ export default {
 
     timest(val){
       return LUX_ZONE(val);
+    },
+
+    generateNew(){
+      if(this.generating)return;
+      this.generating = true;
+      let val = "Something went wrong";
+      Axios.post(`${PROXY}/business/${this.momentBiz}/key/${true}`, {headers: hToken()})
+      .then(res=>{
+        if(!res.data.error){
+          val = res.data.message
+          this.$store.dispatch(BUSINESSES);
+          this.$notify("success", "Logo updated", val, {
+            duration: 3000,
+            permanent: false
+          });
+        }else{
+          this.$notify("error", "Logo update error", val, {
+          duration: 3000,
+          permanent: false
+        });
+        }
+      })
+      .catch(err=>{
+        if(err.response){
+          val = err.response.data.message;
+        }
+        this.$notify("error", "Logo update error", val, {
+          duration: 3000,
+          permanent: false
+        });
+      })
     }
   },
 
