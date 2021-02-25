@@ -21,7 +21,7 @@
                   <div  class="d-flex justify-content-between">
                     <h6 class="mb-0">Current</h6>
                     <div>
-                      <b-button  size="sm" class="py-1">Edit</b-button>
+                      <b-button @click="editBiz" size="sm" class="py-1">Edit</b-button>
                     </div>
                   </div>
                 </template>
@@ -35,6 +35,7 @@
                           :src="SRC"
                           id="withLogo"
                           size="6rem"
+                          :text="current.name.charAt(0)"
                         >
                         </b-avatar>
                         <div>
@@ -42,10 +43,12 @@
                           <b-button class="py-0 " >
                             <label class="p-0 mt-2 w-100">
                               <i style="font-size:1.5em" class="simple-icon-camera p-0" />
-                              <b-form-file size="small" class="p-0 d-none" v-model="Logo" plain></b-form-file>
+                              <b-form-file size="small" class="p-0 d-none" v-model="Logo" plain />
                             </label>
                           </b-button>
-                          <b-button class="border-left" >
+                          <b-button :disabled="Logo == null" class="border-left"
+                            @click="updateLogo"
+                           >
                             <i class="fas fa-arrow-up" />
                           </b-button>
                         </b-button-group>
@@ -198,12 +201,13 @@
       :title="modalTitle"
       modal-class="modal-right"
     >
-      <add-business v-if="currentForm == 'add_biz'"  />
+      <add-business @close="hideModal" v-if="currentForm == 'add_biz'"  />
+      <update-business :current="current" @close="hideModal" v-if="currentForm == 'edit_biz'" />
 
       <template slot="modal-footer">
         <b-button
           variant="outline-secondary"
-          @click="hideModal('_modalright')"
+          @click="hideModal"
         >{{ $t('pages.cancel') }}</b-button>
       </template>
   </b-modal>
@@ -211,18 +215,22 @@
   </div>
 </template>
 <script>// @ts-nocheck
+import Axios from 'axios';
 import { mapGetters } from 'vuex';
 
 
-import {LUX_ZONE, SIDE_EMPH, statusA } from "../../../../constants/formKey";
+import {hToken, LUX_ZONE, SIDE_EMPH, statusA } from "../../../../constants/formKey";
 import {BUSINESSES } from '../../../../constants/formKey';
 import AddBusiness from './../AdderForms/AddBusiness.vue';
+import { PROXY } from '../../../../constants/config';
+import UpdateBusiness from '../AdderForms/UpdateBusiness.vue';
 
 
 export default {
   props: ["title"],
   components:{
     AddBusiness,
+    UpdateBusiness,
   },
   data() {
     return {
@@ -271,8 +279,8 @@ export default {
       this.$store.dispatch(BUSINESSES);
     },
 
-    hideModal(refname) {
-      this.$refs[refname].hide();
+    hideModal() {
+      this.$refs["_modalright"].hide();
     },
 
     showModal(){
@@ -285,19 +293,50 @@ export default {
       this.showModal();
     },
 
+    editBiz(){
+      this.modalTitle = "Edit Business";
+      this.currentForm = "edit_biz";
+      this.showModal();
+    },
+
     logoUploader(val){
       if(!val) return;
-      let avaters = this.currentBiz.log?
-      document.getElementById("withLogo"):
-      document.getElementById("noLogo");
+      let avaters =  document.getElementById("withLogo");
       this.SRC = URL.createObjectURL(val);
         // this.SRC="https://avatars.githubusercontent.com/u/47877329?s=80&v=4"
         // console.log(val, avaters);
     },
 
     updateLogo(){
-      
+      const formData = new FormData();
+      formData.append("logo", this.Logo);
+      let val = "Something, went wrong";
 
+      Axios.put(`${PROXY}business/${this.momentBiz}/logo`, formData, hToken())
+      .then(res=>{
+        if(!res.data.error){
+          val = res.data.message
+          this.$store.dispatch(BUSINESSES);
+          this.$notify("success", "Logo updated", val, {
+            duration: 3000,
+            permanent: false
+          });
+        }else{
+          this.$notify("error", "Logo update error", val, {
+          duration: 3000,
+          permanent: false
+        });
+        }
+      })
+      .catch(err=>{
+        if(err.response){
+          val = err.response.data.message;
+        }
+        this.$notify("error", "Logo update error", val, {
+          duration: 3000,
+          permanent: false
+        });
+      })
     },
 
     processBusinesses(val){
@@ -334,7 +373,6 @@ export default {
 
     businesses(val){
       if(val){
-        // alert(" busi changed")
         this.processBusinesses(val);
 
       }

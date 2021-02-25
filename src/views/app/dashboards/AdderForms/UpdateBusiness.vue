@@ -5,17 +5,14 @@
             <b-form ref="form" @submit.prevent="onValitadeFormSubmit" class="av-tooltip tooltip-label-right">
                 <b-form-group label="Business name">
                   <b-form-input type="text" v-model="$v.name.$model" :state="!$v.name.$error" />
-                  <b-form-invalid-feedback v-if="!$v.name.required">Please enter your first name</b-form-invalid-feedback>
-                  <b-form-invalid-feedback v-else-if="!$v.name.minLength">Name must at least 3 characters</b-form-invalid-feedback>
-                  <b-form-invalid-feedback v-else-if="!$v.name.alpha">Your name must be composed only with letters</b-form-invalid-feedback>
+                  <b-form-invalid-feedback v-if="!$v.name.required">Please business name</b-form-invalid-feedback>
                 </b-form-group>
 
                 <b-form-group label="Description" class="error-l-100">
                   <b-form-input type="text" v-model="$v.business_description.$model" :state="!$v.business_description.$error" />
-                  <b-form-invalid-feedback v-if="!$v.business_description.required">Please enter your last name</b-form-invalid-feedback>
-                  <b-form-invalid-feedback v-else-if="!$v.business_description.minLength">Name must at least 3 characters</b-form-invalid-feedback>
-                  <b-form-invalid-feedback v-else-if="!$v.business_description.alpha">Your name must be composed only with letters</b-form-invalid-feedback>
-                </b-form-group>
+                  <b-form-invalid-feedback v-if="!$v.business_description.required">Please enter business decription</b-form-invalid-feedback>
+                  <b-form-invalid-feedback v-else-if="!$v.business_description.minLength">Description not long enough</b-form-invalid-feedback>
+                 </b-form-group>
 
                 <b-form-group label="Email">
                   <b-form-input type="text" v-model="$v.email.$model" :state="!$v.email.$error" />
@@ -36,31 +33,46 @@
                 </b-form-group>
 
                 <b-form-group label="Industry category" class="error-l-100">
-                  <b-select type="text" v-model="$v.industry_category_id.$model" :state="!$v.industry_category_id.$error" />
+                  <b-select v-model="$v.industry_category_id.$model"
+                    :state="!$v.industry_category_id.$error"
+                    :options="categoryModel"
+                  />
                   <b-form-invalid-feedback v-if="!$v.industry_category_id.required">Industry category is required</b-form-invalid-feedback>
                 </b-form-group>
 
                 <b-form-group label="Business type" class="error-l-100">
-                  <b-select type="text" v-model="$v.business_type_id.$model" :state="!$v.business_type_id.$error" />
+                  <b-select v-model="$v.business_type_id.$model"
+                    :state="!$v.business_type_id.$error"
+                    :options="typeModel"
+                  />
                   <b-form-invalid-feedback v-if="!$v.business_type_id.required">Business type category is required</b-form-invalid-feedback>
                 </b-form-group>
 
                 <b-form-group label="Staff size" class="error-l-100">
-                  <b-select type="text" v-model="$v.staff_size_id.$model" :state="!$v.staff_size_id.$error" />
+                  <b-select v-model="$v.staff_size_id.$model"
+                    :state="!$v.staff_size_id.$error"
+                    :options="staffModel"
+                  />
                   <b-form-invalid-feedback v-if="!$v.staff_size_id.required">Staff size is required</b-form-invalid-feedback>
                 </b-form-group>
 
                 <b-input-group >
                   <template>
-                    <b-form-group label="State" class="error-l-100">
-                      <b-select type="text" v-model="$v.industry_category_id.$model" :state="!$v.industry_category_id.$error" />
-                      <b-form-invalid-feedback v-if="!$v.industry_category_id.required">Industry category is required</b-form-invalid-feedback>
+                    <b-form-group label="Country" class="error-l-100">
+                      <b-select
+                        v-model="country"
+                        :options="countryModel"
+                      />
                     </b-form-group>
                   </template>
                   <template>
                     <b-form-group label="State" class="error-l-100">
-                      <b-select type="text" v-model="$v.industry_category_id.$model" :state="!$v.industry_category_id.$error" />
-                      <b-form-invalid-feedback v-if="!$v.industry_category_id.required">Industry category is required</b-form-invalid-feedback>
+                      <b-select
+                        v-model="$v.state_id.$model"
+                        :state="!$v.state_id.$error"
+                        :options="stateModel"
+                       />
+                      <b-form-invalid-feedback v-if="!$v.state_id.required">Please choose a state</b-form-invalid-feedback>
                     </b-form-group>
                   </template>
                 </b-input-group>
@@ -107,7 +119,7 @@ const {
 
 
 export default {
-  props:['currentBIz'],
+  props:['current'],
   data() {
     return {
       name: "",
@@ -120,6 +132,13 @@ export default {
       staff_size_id:'',
       state_id: "",
       city:"",
+      country: '',
+
+      categoryModel: null,
+      countryModel: null,
+      staffModel: null,
+      stateModel: null,
+      typeModel: null,
 
       resMessage: "",
       submitting: false,
@@ -167,78 +186,75 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['momentBiz'])
+    ...mapGetters(['momentBiz', 'busiParams'])
 
   },
 
   watch:{
-    currentBiz(val){
+    current(val){
+      this.spreadForm(val)
+    },
 
-      console.log(val);
-      this.name= val.name;
-      this.business_description= "";
-      this.email= val.email;
-      this.phone= val.contact;
-      this.address= val.address;
-      this.industry_category_id= "";
-      this.business_type_id="";
-      this.staff_size_id='';
-      this.state_id= "";
-      this.city=val.state.city;
+    busiParams(val){
+      if(val){
+        this.automateModel(val);
+      }
+    },
+
+    country(val){
+      if(val){
+        // console.log(this.busiParams.countries.find(data=>data.id == val).states, val);
+        this.stateModel = this.busiParams.countries.find(data=>data.id == val)
+        .states.map(d=>({value:d.id, text: d.name}))
+      }
     }
 
   },
 
   methods: {
+    automateModel(val){
+      // console.log("here");
+      this.countryModel = val.countries.map(data=>({value:data.id, text: data.name}))
+      this.staffModel = val.staff_sizes.map(data=>({value:data.id, text: data.name}))
+      this.typeModel = val.business_types.map(data=>({value:data.id, text: data.name}))
+      this.categoryModel = val.industries.map(data=>({value:data.id, text: data.name}))
 
-    regetAgentTypes(){
-      this.$store.dispatch(AGENTTYPES);
     },
-
-    monitorType(){
-      // console.log(this.industry_category_id);
-      this.business_type_id = "";
-      this.selectedGarage = "";
-    },
-
-    processSelectedLG(){
-      this.$store.dispatch(GARAGES,this.selectedLG);
+    spreadForm(val){
+      if(!val) return
+      this.name= val.name;
+      this.business_description= val.business_description;
+      this.email= val.email;
+      this.phone= val.phone;
+      this.address= val.address;
+      this.industry_category_id= val.industry_category_id;
+      this.business_type_id= val.business_type_id;
+      this.staff_size_id= val.staff_size_id;
+      this.state_id=  val.state_id;
+      this.city= val.city;
+      this.country = val.state.country.id
     },
 
     onValitadeFormSubmit() {
       this.$v.$touch();
       if(this.$v.$invalid) return;
-      let service = this.industry_category_id.toString().trim();
-      if(!this.selectedGarage && !this.business_type_id){
-        if(service == "commercial"){
-          this.resMessage = "Choose a garage";
-        }else{
-          this.resMessage = "Choose a port";
-        }
-        this.variant = "danger";
-        this.$bvToast.show("example-toast");
-        return;
-      }
-
-      let id= service == "import"? this.business_type_id : this.selectedGarage;
-
       if(this.submitting) return;
       let formData = {
-        phone:this.phone,
-        name:this.name,
-        business_description:this.business_description,
-        email:this.email,
-        industry_category_id: service,
-        garage_id: id,
+        name: this.name,
+        business_description: this.business_description,
+        support_email: this.email,
+        phone: this.phone,
         address: this.address,
-        payer_id:this.payer_id,
+        industry_category_id: this.industry_category_id,
+        business_type_id: this.business_type_id,
+        staff_size_id: this.staff_size_id,
+        state_id:  this.state_id,
+        city: this.city,
       };
 
-
       // return console.log(formData);
-      // console.log(hToken());
       this.submitting = true;
-      Axios.post(`${PROXY}business`, formData, {headers: hToken()})
+      Axios.put(`${PROXY}business/${this.current.id}`, formData, {headers: hToken()})
       .then(res=>{
         if(!res.data.error){
 
@@ -246,13 +262,15 @@ export default {
           this.resMessage = res.data.message;
           this.$refs.form.reset();
           this.$store.dispatch(BUSINESSES);
+          this.$bvToast.show("example-toast");
+          this.submitting = false;
+          this.$emit("close");
         }else{
           this.variant = "danger";
-          this.resMessage = "Something went wrong, please retry"
-          // commit('setError', "Something went wrong");
+          this.resMessage = "Something went wrong, please retry";
+          this.$bvToast.show("example-toast");
+          this.submitting = false;
         }
-        this.$bvToast.show("example-toast");
-        this.submitting = false;
       })
       .catch(err=>{
        this.variant = "danger";
@@ -271,9 +289,10 @@ export default {
 
 
   },
-  mounted(){
-    // console.log(genRand(),4545);
-    // console.log(this.lgs);
+  created(){
+    // console.log(this.current);
+    this.automateModel(this.busiParams)
+    this.spreadForm(this.current);
   }
 };
 </script>

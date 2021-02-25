@@ -132,6 +132,7 @@ export default {
       state_id: null,
       city:"",
       country:'',
+
       categoryModel: null,
       countryModel: null,
       staffModel: null,
@@ -210,7 +211,7 @@ export default {
 
     country(val){
       if(val){
-        console.log(this.busiParams.countries.find(data=>data.id == val).states, val);
+        // console.log(this.busiParams.countries.find(data=>data.id == val).states, val);
         this.stateModel = this.busiParams.countries.find(data=>data.id == val)
         .states.map(d=>({value:d.id, text: d.name}))
       }
@@ -220,7 +221,7 @@ export default {
   methods: {
 
     automateModel(val){
-      console.log("here");
+      // console.log("here");
       this.countryModel = val.countries.map(data=>({value:data.id, text: data.name}))
       this.staffModel = val.staff_sizes.map(data=>({value:data.id, text: data.name}))
       this.typeModel = val.business_types.map(data=>({value:data.id, text: data.name}))
@@ -259,12 +260,16 @@ export default {
           this.$refs.form.reset();
           this.successId=  res.data.data.id;
           this.$store.dispatch(BUSINESSES, this.successId);
+          this.$bvToast.show("example-toast");
+          this.submitting = false;
+          this.$emit("close");
+
         }else{
           this.variant = "danger";
           this.resMessage = "Something went wrong, please retry"
+          this.$bvToast.show("example-toast");
+          this.submitting = false;
         }
-        this.$bvToast.show("example-toast");
-        this.submitting = false;
       })
       .catch(err=>{
        this.variant = "danger";
