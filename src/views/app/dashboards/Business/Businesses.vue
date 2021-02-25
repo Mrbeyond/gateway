@@ -141,38 +141,21 @@
               </b-card>
             </div>
           </b-colxx>
-          <b-colxx sm="12" md="5" class="d-flex">
-            <div class="flex-fill ">
+          <b-colxx sm="12" md="5" class="d-flex ">
+            <div class="flex-fill w-100  ">
               <!-- API CARD -->
-              <div>
+              <div class=" p-0 m-0">
 
                   here2
-                <b-card header-tag="header">
-                  <template #header>
-                    <div  class="d-flex justify-content-between">
-                      <h6 class="mb-0">API Keys</h6>
-                      <div>
-                        <b-button  size="sm" class="py-1">Generate</b-button>
-                      </div>
-                    </div>
-                  </template>
-                </b-card>
+                <busines-api-keys />
+
               </div>
               <!-- API CARD ENDS HERE -->
 
               <!-- URL CARD -->
               <div>
 
-                <b-card header-tag="header">
-                  <template #header>
-                    <div  class="d-flex justify-content-between">
-                      <h6 class="mb-0">Notification URL</h6>
-                      <div>
-                        <b-button  size="sm" class="py-1">Add</b-button>
-                      </div>
-                    </div>
-                  </template>
-                </b-card>
+                <business-urls />
               </div>
               <!-- URL ENDS HERE -->
 
@@ -181,17 +164,7 @@
         </b-row>
       </b-colxx>
       <b-colxx sm="12" md="8">
-        <b-card class="mb-4" title="BUSINESS">
-          <b-table responsive :items="others" :fields="fields">
-            <template #cell(actions)="row">
-              <router-link :to="`/dashbord/business/${row.item.id}`">
-                <b-button size="sm" class="mr-1 bg-primary">
-                  View
-                </b-button>
-              </router-link>
-            </template>
-          </b-table>
-        </b-card>
+        <others-listing :others="others" />
       </b-colxx>
     </b-row>
 
@@ -219,11 +192,14 @@ import Axios from 'axios';
 import { mapGetters } from 'vuex';
 
 
-import {hToken, LUX_ZONE, SIDE_EMPH, statusA } from "../../../../constants/formKey";
+import {API_KEYS, hToken, LUX_ZONE, SIDE_EMPH, statusA } from "../../../../constants/formKey";
 import {BUSINESSES } from '../../../../constants/formKey';
 import AddBusiness from './../AdderForms/AddBusiness.vue';
 import { PROXY } from '../../../../constants/config';
 import UpdateBusiness from '../AdderForms/UpdateBusiness.vue';
+import BusinesApiKeys from './BusinesApiKeys.vue';
+import OthersListing from './OthersListing.vue';
+import BusinessUrls from './BusinessUrls.vue';
 
 
 export default {
@@ -231,7 +207,11 @@ export default {
   components:{
     AddBusiness,
     UpdateBusiness,
+    BusinesApiKeys,
+    OthersListing,
+    BusinessUrls
   },
+
   data() {
     return {
       isLoading: true,
@@ -246,37 +226,16 @@ export default {
       Logo:null,
       SRC:"",
 
-      fields: [
-        {
-          key: 'name',
-          label:"Name",
-          sortable: true
-        },
-        {
-          key: 'city',
-          labels:"City",
-          sortable: true
-        },
-        {
-          key: 'address',
-          label: 'Adress',
-          sortable: true,
-        },
-        {
-          key: 'phone',
-          label: 'Phone',
-          sortable: true,
-        },
-        {
-          key: 'actions',
-          label: 'Actions'
-        }
-      ],
     };
   },
   methods: {
      getBusinesses(){
-      this.$store.dispatch(BUSINESSES);
+       if(!this.businesses){
+         this.$store.dispatch(BUSINESSES);
+       }else{
+         this.processBusinesses(this.businesses);
+       }
+      this.$store.dispatch(API_KEYS, this.momentBiz || this.currentBiz )
     },
 
     hideModal() {
@@ -349,7 +308,7 @@ export default {
 
   },
   computed: {
-    ...mapGetters(['businesses', 'resKey', 'momentBiz', 'currentBiz']),
+    ...mapGetters(['businesses', 'apiKeys', 'resKey', 'momentBiz', 'currentBiz']),
   },
   watch: {
     Logo(val){
@@ -380,11 +339,7 @@ export default {
   },
 
   created(){
-    if(!this.businesses){
-      this.getBusinesses();
-    }else{
-      this.processBusinesses( this.businesses);
-    }
+    this.getBusinesses();
     this.$store.commit(SIDE_EMPH, 'business');
     // this.$notify("error", "Login Error", "tets", {
     //       duration: 3000,

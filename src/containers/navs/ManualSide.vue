@@ -115,7 +115,7 @@
 <script>
 import Axios from 'axios';
 import { lastBiz, PROXY } from '../../constants/config';
-import { BUSINESSDETAILS, BUSINESSES, MOBILE } from '../../constants/formKey';
+import { API_KEYS, BUSINESSDETAILS, BUSINESSES, MOBILE } from '../../constants/formKey';
 import menuItems from "../../constants/menu";
 import { mapGetters } from 'vuex';
 
@@ -184,6 +184,7 @@ export default {
     changeBusiness(id) {
       if(this.currentBusiness){
         if(this.id == this.currentBusiness.id) return;
+        // this.$store.dispatch(API_KEYS, id);
         this.$store.dispatch(BUSINESSDETAILS,id);
       }
     },
@@ -235,7 +236,6 @@ export default {
     },
 
     momentBiz(val){
-      alert(val+" mo ")
       this.processBusinessList(val);
     },
 
@@ -245,7 +245,6 @@ export default {
     // },
 
     businesses(val){
-      alert("in buz")
       this.processBusinessList(this.momentBiz || this.currentBiz);
     }
 
@@ -253,7 +252,6 @@ export default {
 
   created(){
     if(lastBiz()){
-      alert("load "+ lastBiz())
       this.processBusinessList(lastBiz());
     }
 

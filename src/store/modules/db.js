@@ -1,7 +1,7 @@
 import Axios from 'axios';
 import { keepBiz, lastBiz, PROXY } from '../../constants/config';
 import {CUSTOMERS,BUSINESSES, RES_KEY,hToken, REFRESHER, BUSINESSDETAILS,
-  REFRESHING, GETPAYOUTS,WALLETS,WALLETSDETAILS,GETAPIS, MOMENT_BIZ,INVOICES,
+  REFRESHING, GETPAYOUTS,WALLETS,WALLETSDETAILS,API_KEYS, MOMENT_BIZ,INVOICES,
    SIDE_EMPH, PROGRESS
 } from '../../constants/formKey';
 
@@ -12,7 +12,7 @@ export default {
     payouts: null,
     wallets: null,
     walletsdetails: null,
-    getapis:null,
+    apiKeys:null,
     invoices: null,
     businessDetails: null,
     resKey: {status:0, owner:''},
@@ -28,7 +28,7 @@ export default {
   getters: {
     invoice: state=> state.invoices,
 
-    getapis: state=> state.getapis,
+    apiKeys: state=> state.apiKeys,
 
     walletsdetails: state=> state.walletsdetails,
 
@@ -59,8 +59,9 @@ export default {
     [INVOICES](state, payload){
       state.invoices = payload;
     },
-    [GETAPIS](state, payload){
-      state.getapis = payload;
+    [API_KEYS](state, payload){
+      console.log(payload, "keys muts");
+      state.apiKeys = payload;
     },
     [PROGRESS]( state, payload){
       state.progress = payload;
@@ -143,30 +144,27 @@ export default {
       })
     },
 
-    [GETAPIS]({commit},id){
-
-      commit(REFRESHER, GETAPIS);
+    [API_KEYS]({commit},id){
+      commit(REFRESHER, API_KEYS);
+      commit(RES_KEY, {status:1, owner: API_KEYS});
       Axios.get(`${PROXY}business/${id}/keys`, {headers: hToken()})
       .then(res=>{
         if(!res.data.error){
-          console.log(res);
-          let payload;
           try {
-            payload = res.data.data
-            commit(GETAPIS, payload);
-            commit(RES_KEY, {status:0, owner: GETAPIS});
+            commit(API_KEYS, res.data.data);
+            commit(RES_KEY, {status:2, owner: API_KEYS});
           } catch (e) {
-            commit(RES_KEY, {status:1, owner: GETAPIS});
+            commit(RES_KEY, {status:3, owner: API_KEYS});
           }
         }else{
-          commit(RES_KEY, {status:1, owner: GETAPIS});
+          commit(RES_KEY, {status:3, owner: API_KEYS});
         }
-        commit(REFRESHER, GETAPIS);
+        commit(REFRESHER, API_KEYS);
       })
       .catch(err => {
         if(err.response){
-          commit(RES_KEY, {status:2, owner: GETAPIS});
-          commit(REFRESHER, GETAPIS);
+          commit(RES_KEY, {status:3, owner: API_KEYS});
+          commit(REFRESHER, API_KEYS);
         }
       })
     },
@@ -254,9 +252,10 @@ export default {
         }
       })
     },
-    [BUSINESSDETAILS]({commit},id){
+    [BUSINESSDETAILS]({commit, dispatch},id){
       commit(PROGRESS, 0);
       commit(REFRESHER, BUSINESSDETAILS);
+      dispatch(API_KEYS, id);
       commit(RES_KEY, {status:1, owner: BUSINESSDETAILS});
       Axios.get(`${PROXY}business/${id}`,
       {
@@ -264,7 +263,7 @@ export default {
         onDownloadProgress: ({loaded, total})=>{
           // console.log(loaded, total);
           if(total > 0){
-            alert();
+            // alert();
               commit(PROGRESS, Math.round((loaded*100) /total));
            }
          }
