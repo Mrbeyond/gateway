@@ -1,6 +1,6 @@
 import Axios from "axios";
 import {PROXY } from "../../constants/config";
-import { BUSI_PARAM, ERR_MESS, EXCHANGE_RATES, GENERROR, hToken
+import { BUSI_PARAM, CONNECTION, ERR_MESS, EXCHANGE_RATES, GENERROR, hToken
 } from "../../constants/formKey";
 
 
@@ -9,6 +9,7 @@ export default{
     generror: false,
     exchangeRates: null,
     busiParams: null,
+    connection: navigator.onLine,
 
   },
 
@@ -19,6 +20,8 @@ export default{
     exchangeRates: state=> state.exchangeRates,
 
     busiParams: state => state.busiParams,
+
+    connection:  state => state.connection,
 
   },
 
@@ -41,6 +44,9 @@ export default{
       state.generror = payload;
     },
 
+    [CONNECTION](state, payload){
+      state.connection = payload;
+    },
 
 
   },

@@ -8,7 +8,7 @@
 <script>// @ts-nocheck
 import { mapGetters } from 'vuex';
 import { lastBiz } from '../../constants/config';
-import { BUSINESSES, BUSI_PARAM, EXCHANGE_RATES } from '../../constants/formKey';
+import { BUSINESSES, BUSI_PARAM, CONNECTION, EXCHANGE_RATES } from '../../constants/formKey';
 
 // write security logics here, beyond.
 
@@ -22,15 +22,13 @@ export default {
   computed: {
     ...mapGetters(['momentBiz', 'currentBiz']),
 
-    network(){
-      return navigator.onLine
-    }
+
   },
 
   watch: {
-    network(val){
-      if(!val){
-        this.$notify("error", "Network", "You don't seem to have internet connection", {
+    navigator(val){
+      if(!val.onLine){
+        this.$notify("error", "Network", "You don't seem to have active internet connection", {
           duration: 1500,
           permanent: false
         });
@@ -54,13 +52,31 @@ export default {
       this.$store.dispatch(EXCHANGE_RATES);
     },
 
+    monitorNetwork(){
+      if(!window.navigator.onLine){
+        this.$store.commit(CONNECTION, false);
+         this.$notify("error", "Network", "You don't seem to have internet connection", {
+          duration: 1500,
+          permanent: false
+        });
+      }
+    }
+
   },
 
 
   created(){
     this.fetchCountries();
     this.fetchBizs();
+    this.monitorNetwork();
+    window.addEventListener('online', this.monitorNetwork);
+    window.addEventListener('offline', this.monitorNetwork);
   },
+
+  beforeDestroy(){
+    window.removeEventListener('online', this.monitorNetwork);
+    window.removeEventListener('offline', this.monitorNetwork);
+  }
 
 }
 </script>

@@ -18,6 +18,7 @@ export const ERR_MESS = "err_mess";
 export const BUSI_PARAM = "BUSI_PARAM";
 export const EXCHANGE_RATES = "EXCHANGE_RATES";
 export const GENERROR = "GENERROR";
+export const CONNECTION = "CONNECTION";
 
 export const SHOW = "SHOW";
 export const MOBILE = "MOBILE";

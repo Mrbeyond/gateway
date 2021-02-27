@@ -90,7 +90,7 @@ export default {
     },
 
     [RES_KEY](state, payload){
-      // console.log(payload.owner);
+      // alert(payload.owner + " and " + payload.status);
       state.resKey = payload;
     },
 
@@ -162,7 +162,7 @@ export default {
         commit(REFRESHER, API_KEYS);
       })
       .catch(err => {
-        if(err.response){
+        if(err){
           commit(RES_KEY, {status:3, owner: API_KEYS});
           commit(REFRESHER, API_KEYS);
         }
@@ -322,10 +322,10 @@ export default {
         commit(REFRESHER, BUSINESSES);
       })
       .catch(err => {
-        if(err.response){
+        if(err){
           commit(RES_KEY, {status:3, owner: BUSINESSES});
-          commit(REFRESHER, BUSINESSES);
         }
+        commit(REFRESHER, BUSINESSES);
       })
     },
 

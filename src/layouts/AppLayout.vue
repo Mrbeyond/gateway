@@ -1,9 +1,14 @@
 <template>
-  <div v-if="!businesses" style="height:95vh"
+  <div v-if="!businesses && isLoading" style="height:95vh"
     class="d-flex align-items-center justify-content-center"
   >
     <b-spinner variant="primary" />
 
+  </div>
+  <div v-else-if="!businesses && !isLoading" style="height:95vh"
+    class="d-flex align-items-center justify-content-center"
+  >
+    Went wrong page
   </div>
   <div v-else id="app-container" >
       <!-- Top navbar -->
@@ -74,6 +79,7 @@ export default {
   data() {
     return {
       mobily: true,
+      isLoading: true,
     };
   },
 
@@ -108,6 +114,18 @@ export default {
   },
 
   watch:{
+    resKey(val){
+      if(this.resKey.owner && this.resKey.owner == BUSINESSES){
+        if(val.status == 1){
+          this.isLoading = true;
+        }else if(val.status == 3){
+          this.isLoading = false;
+        }else if(val.status == 2){
+          this.isLoading = false;
+        }
+      }
+    },
+
     getMenuType(val){
         // console.log(val, 'from app layout menu type');
     },
