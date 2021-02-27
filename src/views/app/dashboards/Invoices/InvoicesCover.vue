@@ -8,10 +8,16 @@
     </div>
     <b-row v-else>
       <b-colxx  xxs="12">
-
         <b-row class="mb-3">
-          <b-colxx class="text-right">
-            <b-button>Create Invoice</b-button>
+          <b-colxx class=" d-flex justify-content-between" >
+            <div >
+              {{ bizName }}
+            </div>
+            <div >
+              <b-button class="py-1">
+                Create Invoice
+              </b-button>
+            </div>
           </b-colxx>
         </b-row>
 
@@ -25,7 +31,9 @@
             </div>
 
             <div v-else>
-              <b-table responsive :items="invoices" :fields="fields"/>
+              <b-table  responsive :items="invoices" :fields="fields"
+                @row-clicked="getSelectedRow"
+              />
             </div>
           </b-colxx>
         </b-row>
@@ -37,11 +45,13 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { SIDE_EMPH,INVOICES,toMoney } from '../../../../constants/formKey';
+import { SIDE_EMPH,INVOICES,toMoney, LUX_ZONE } from '../../../../constants/formKey';
+
 export default {
   data() {
     return{
         isLoading: true,
+        selectedInvoice: null,
 
        fields: [
         {
@@ -65,21 +75,27 @@ export default {
           },
         sortable: true
         },
-          {
-        key: "final_amount",
-        label: "Amount",
-         formatter(val){
-            return toMoney(val)
+        {
+          key: "final_amount",
+          label: "Amount",
+          formatter(val){
+              return toMoney(val)
           },
-        sortable: true
+          sortable: true,
         },
         {
           key: "reference",
-           label: "Reference",
-
-        sortable: true
-
-        }
+          label: "Reference",
+          sortable: true,
+        },
+        // {
+        //   key: "createdAt",
+        //   label: "Created On",
+        //   formatter(val){
+        //       return LUX_ZONE(val)
+        //   },
+        //   sortable: true
+        // }
       ]
 
     }
@@ -89,9 +105,21 @@ export default {
       this.$store.dispatch(INVOICES,id);
     },
 
+    getSelectedRow(row){
+      this.selectedInvoice = row;
+      localStorage.SI = window.btoa(JSON.stringify(row))
+      this.$router.push('/dashboard/invoices/selected');
+    },
+
+
   },
   computed: {
-    ...mapGetters(['momentBiz', 'invoices', 'resKey']),
+    ...mapGetters(['momentBiz', 'invoices', 'resKey', 'businesses']),
+
+    bizName(){
+      let active =  this.businesses.find(d=>d.id == this.momentBiz);
+      return active?active.name: '';
+    }
 
   },
   watch: {

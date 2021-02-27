@@ -62,6 +62,11 @@ const routes = [
           path: "invoices",
           component: () => import(/* webpackChunkName: "error" */ "./views/app/dashboards/Invoices/InvoicesCover.vue")
         },
+
+        {
+          path: "invoices/selected",
+          component: () => import(/* webpackChunkName: "error" */ "./views/app/dashboards/Invoices/InvoiceDetails.vue")
+        },
     ]
   },
   {
