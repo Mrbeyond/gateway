@@ -201,6 +201,7 @@ export default {
     [WALLETS]({commit},id){
 
       commit(REFRESHER, WALLETS);
+      commit(RES_KEY, {status:1, owner: WALLETS});
       Axios.get(`${PROXY}business/${id}/payout/wallets`, {headers: hToken()})
       .then(res=>{
         if(!res.data.error){
@@ -209,18 +210,18 @@ export default {
           try {
             payload = res.data.data
             commit(WALLETS, payload);
-            commit(RES_KEY, {status:0, owner: WALLETS});
+            commit(RES_KEY, {status:2, owner: WALLETS});
           } catch (e) {
-            commit(RES_KEY, {status:1, owner: WALLETS});
+            commit(RES_KEY, {status:3, owner: WALLETS});
           }
         }else{
-          commit(RES_KEY, {status:1, owner: WALLETS});
+          commit(RES_KEY, {status:3, owner: WALLETS});
         }
         commit(REFRESHER, WALLETS);
       })
       .catch(err => {
-        if(err.response){
-          commit(RES_KEY, {status:2, owner: WALLETS});
+        if(err){
+          commit(RES_KEY, {status:3, owner: WALLETS});
           commit(REFRESHER, WALLETS);
         }
       })
