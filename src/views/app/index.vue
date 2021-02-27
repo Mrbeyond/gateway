@@ -8,7 +8,7 @@
 <script>// @ts-nocheck
 import { mapGetters } from 'vuex';
 import { lastBiz } from '../../constants/config';
-import { BUSINESSES, BUSI_PARAM } from '../../constants/formKey';
+import { BUSINESSES, BUSI_PARAM, EXCHANGE_RATES } from '../../constants/formKey';
 
 // write security logics here, beyond.
 
@@ -20,8 +20,24 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['momentBiz', 'currentBiz'])
+    ...mapGetters(['momentBiz', 'currentBiz']),
+
+    network(){
+      return navigator.onLine
+    }
   },
+
+  watch: {
+    network(val){
+      if(!val){
+        this.$notify("error", "Network", "You don't seem to have internet connection", {
+          duration: 1500,
+          permanent: false
+        });
+      }
+    }
+  },
+
   methods:{
     fetchBizs(){
       let user = this.$store.getters.user;
@@ -35,6 +51,7 @@ export default {
 
     fetchCountries(){
       this.$store.dispatch(BUSI_PARAM);
+      this.$store.dispatch(EXCHANGE_RATES);
     },
 
   },

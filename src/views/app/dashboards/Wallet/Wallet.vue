@@ -93,31 +93,33 @@ export default {
     // "datatable-heading": DatatableHeading
   },
     data () {
-        return{
-            balance_type:null,
-             row_data:{
-           business_type:[{id: null, name: 'BALANCE IN NGN'},{id:2,name:"BALANCE IN BTC"},{id:3,name:"BALANCE IN ETH"}],
-      },
-              // head: {headers: hToken()},
-              fields: [
-                    {
-                        key: 'name',
-                        label:"Name",
-                        sortable: true
-                    },
-                    {
-                        key: 'city',
-                        labels:"City",
-                        sortable: true
-                    },
-                    {
-                        key: 'address',
-                        label: 'Adress',
-                        sortable: true,
-                        // Variant applies to the whole column, including the header and footer
-                        // variant: 'danger'
-                    }
-            ],
+      return{
+        balance_type:null,
+        row_data:{
+          business_type:[
+            {id: null, name: 'BALANCE IN NGN'},
+            {id:2,name:"BALANCE IN BTC"},
+            {id:3,name:"BALANCE IN ETH"}
+          ],
+        },
+
+      fields: [
+        {
+          key: 'name',
+          label:"Name",
+          sortable: true
+        },
+        {
+          key: 'city',
+          labels:"City",
+          sortable: true
+        },
+        {
+          key: 'address',
+          label: 'Adress',
+          sortable: true,
+        }
+    ],
 
         }
     },

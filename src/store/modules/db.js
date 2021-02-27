@@ -331,6 +331,7 @@ export default {
 
     [CUSTOMERS]({commit},id){
       commit(REFRESHER, CUSTOMERS);
+      commit(RES_KEY, {status:1, owner: CUSTOMERS});
       Axios.get(`${PROXY}customers/${id}`, {headers: hToken()})
       .then(res=>{
         if(!res.data.error){
@@ -338,18 +339,18 @@ export default {
           try {
             payload = res.data.data
             commit(CUSTOMERS, payload);
-            commit(RES_KEY, {status:0, owner: CUSTOMERS});
+            commit(RES_KEY, {status:2, owner: CUSTOMERS});
           } catch (e) {
-            commit(RES_KEY, {status:1, owner: CUSTOMERS});
+            commit(RES_KEY, {status:3, owner: CUSTOMERS});
           }
         }else{
-          commit(RES_KEY, {status:1, owner: CUSTOMERS});
+          commit(RES_KEY, {status:3, owner: CUSTOMERS});
         }
         commit(REFRESHER, CUSTOMERS);
       })
       .catch(err => {
         if(err.response){
-          commit(RES_KEY, {status:2, owner: CUSTOMERS});
+          commit(RES_KEY, {status:3, owner: CUSTOMERS});
           commit(REFRESHER, CUSTOMERS);
         }
       })

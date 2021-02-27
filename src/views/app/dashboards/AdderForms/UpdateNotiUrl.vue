@@ -1,5 +1,8 @@
 <template>
-    <b-form  ref="form" @submit.prevent="onValitadeFormSubmit" class="av-tooltip tooltip-label-right">
+  <div>
+    <b-form  ref="form" @submit.prevent="onValitadeFormSubmit"
+      class="av-tooltip tooltip-label-right mt-4"
+    >
 
         <b-form-group label="Url address" class="error-l-100">
           <b-form-input v-model="$v.url.$model"
@@ -26,11 +29,14 @@
             <b-button type="submit" variant="primary" class="mt-4">{{ $t('forms.submit') }}</b-button>
           </div>
   </b-form>
+  </div>
 </template>
 <script>
 import Axios from 'axios';
 import { validationMixin} from "vuelidate";
 import { PROXY } from '../../../../constants/config';
+import { hToken } from '../../../../constants/formKey';
+import { mapGetters } from 'vuex';
 const { url, required } = require("vuelidate/lib/validators");
 
 export default {
@@ -54,6 +60,10 @@ export default {
     },
   },
 
+  computed: {
+    ...mapGetters(['momentBiz']),
+  },
+
   watch: {
     noti_url(val){
       this.spreadNoti(val);
@@ -72,15 +82,13 @@ export default {
       this.$v.$touch();
       if(this.$v.$invalid) return;
       if(this.submitting) return;
-     let formData = {
-      firstname:this.firstname,
-      lastname:this.lastname,
-      date_of_birth:this.date_of_birth,
-      gender :this.gender,
+      let formData = {
+        url: this.url,
+        secret: this.secret,
       }
-
+      let val = "Something went wrong";
       this.submitting = true;
-      Axios.post(`${PROXY}/business/${this.momentBiz}/key/${true}`, {headers: hToken()})
+      Axios.post(`${PROXY}/business/${this.momentBiz}notification/webhook/live`, formData, {headers: hToken()})
       .then(res=>{
         if(!res.data.error){
           val = res.data.message
@@ -89,6 +97,8 @@ export default {
             duration: 3000,
             permanent: false
           });
+
+          this.$emit('close')
         }else{
           this.$notify("error", "Error message", val, {
           duration: 3000,
@@ -109,9 +119,17 @@ export default {
       })
     }
   },
-   created(){
-     this.spreadNoti(this.noti_url)
-     console.log(this.noti_url), 'from form';
-   }
+
+  created(){
+    this.spreadNoti(this.noti_url)
+  //  console.log(this.noti_url, 'from form');
+  },
+
+  beforeDestroy() {
+    this.url ='';
+    this.secret = '';
+    this.$emit('close')
+    // alert();
+  },
 }
 </script>

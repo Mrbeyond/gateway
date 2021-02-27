@@ -5,9 +5,9 @@
         <template #header>
           <div  class="d-flex justify-content-between mt-2">
             <h6 class="mb-0">Notification URLs</h6>
-            <div>
+            <div v-if="apiKeys.notification_urls && apiKeys.notification_urls.length < 1">
               <b-button @click="urlEdit"  size="sm" class="py-1">
-                Edit
+                Add
               </b-button>
             </div>
           </div>
@@ -37,6 +37,11 @@
         <div v-if="modalType == 'View'">
           <b-card v-if="selectedKey">
             <div>
+                <div class="text-right">
+                  <b-button @click="urlEdit" >
+                    Edit
+                  </b-button>
+                </div>
                 <p class="text-small text-muted mb-2"> Url</p>
                 <p class="mb-2">{{ selectedKey.url }}</p>
                 <p class="text-small text-muted mb-2">Type</p>
@@ -52,9 +57,9 @@
             </div>
           </b-card>
         </div>
-        <div v-if="modalType == '_add' && apiKeys">
+        <div v-if="modalType == '_add'">
           <update-noti-url  @close="hideModal"
-            :noti_url="apiKeys.notification_urls"
+            :noti_url="selectedKey"
           />
 
         </div>
@@ -113,8 +118,10 @@ export default {
   computed:{
     ...mapGetters(['apiKeys'])
   },
+
   methods: {
     hideModal() {
+      this.selectedKey = null;
       this.$refs["_url_keys"].hide();
     },
 
