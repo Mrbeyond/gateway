@@ -1,23 +1,48 @@
 <template>
   <div>
-     <div v-if="isLoading && !isFetched" class="row justify-content-center">
+     <div v-if="isLoading && !invoices" class="row justify-content-center">
         <div> <b-spinner variant="primary" /></div>
     </div>
-    <div v-else-if="!isLoading && !isFetched">
+    <div v-else-if="!isLoading && !invoices">
         Went wrong slot
     </div>
     <b-row v-else>
-    <b-table responsive :items="allInvoices" :fields="fields"/>
+      <b-colxx  xxs="12">
+
+        <b-row class="mb-3">
+          <b-colxx class="text-right">
+            <b-button>Create Invoice</b-button>
+          </b-colxx>
+        </b-row>
+
+        <b-row>
+          <b-colxx>
+            <div v-if="invoices.length < 1"
+              class="text-center"
+            >
+              <i class="iconsminds-folder-delete text-large"  />
+              <p>No Invoice </p>
+            </div>
+
+            <div v-else>
+              <b-table responsive :items="invoices" :fields="fields"/>
+            </div>
+          </b-colxx>
+        </b-row>
+      </b-colxx>
     </b-row>
   </div>
 </template>
 
 
 <script>
+import { mapGetters } from 'vuex';
 import { SIDE_EMPH,INVOICES,toMoney } from '../../../../constants/formKey';
 export default {
   data() {
     return{
+        isLoading: true,
+
        fields: [
         {
         key: "currency",
@@ -51,7 +76,7 @@ export default {
         {
           key: "reference",
            label: "Reference",
-          
+
         sortable: true
 
         }
@@ -60,35 +85,32 @@ export default {
     }
   },
   methods: {
-    GetInvoice(id){
+    getInvoices(id){
       this.$store.dispatch(INVOICES,id);
     },
+
   },
   computed: {
-     biz(){
-      return this.$store.getters.momentBiz
-    },
-     allInvoices(){
-      return this.$store.getters.invoice;
-    },
+    ...mapGetters(['momentBiz', 'invoices', 'resKey']),
+
   },
   watch: {
-    resKey(){
-      if(this.resKey && this.resKey.owner && this.resKey.owner == INVOICES){
-        if(this.resKey.status){
-          this.isFetched = false;
+    resKey(val){
+      if(val.owner == INVOICES){
+        if(val.status == 1){
           this.isLoading = true;
         }else{
-          this.isFetched = true;
+          this.isLoading = false;
         }
       }
     },
-    biz(val){
-      this.GetInvoice(val)
+
+    momentBiz(val){
+      this.getInvoices(val)
     }
   },
   created() {
-     this.GetInvoice(this.biz);
+     this.getInvoices(this.momentBiz);
     this.$store.commit(SIDE_EMPH, 'invoices');
   },
 }

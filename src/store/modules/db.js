@@ -26,7 +26,7 @@ export default {
 
   /** This is manually included */
   getters: {
-    invoice: state=> state.invoices,
+    invoices: state=> state.invoices,
 
     apiKeys: state=> state.apiKeys,
 
@@ -120,6 +120,7 @@ export default {
     [INVOICES]({commit},id){
 
       commit(REFRESHER, INVOICES);
+      commit(RES_KEY, {status:1, owner: INVOICES});
       Axios.get(`${PROXY}invoice/all/${id}`, {headers: hToken()})
       .then(res=>{
         if(!res.data.error){
@@ -127,18 +128,18 @@ export default {
           try {
             payload = res.data.data
             commit(INVOICES, payload);
-            commit(RES_KEY, {status:0, owner: INVOICES});
+            commit(RES_KEY, {status:2, owner: INVOICES});
           } catch (e) {
-            commit(RES_KEY, {status:1, owner: INVOICES});
+            commit(RES_KEY, {status:3, owner: INVOICES});
           }
         }else{
-          commit(RES_KEY, {status:1, owner: INVOICES});
+          commit(RES_KEY, {status:3, owner: INVOICES});
         }
         commit(REFRESHER, INVOICES);
       })
       .catch(err => {
-        if(err.response){
-          commit(RES_KEY, {status:2, owner: INVOICES});
+        if(err){
+          commit(RES_KEY, {status:3, owner: INVOICES});
           commit(REFRESHER, INVOICES);
         }
       })

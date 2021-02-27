@@ -1,16 +1,36 @@
 <template>
   <div>
-    <div v-if="isLoading && !isFetched" class="row justify-content-center">
+    <div v-if="isLoading && !customers" class="row justify-content-center">
         <div> <b-spinner variant="primary" /></div>
     </div>
-    <div v-else-if="!isLoading && !isFetched">
+    <div v-else-if="!isLoading && !customers">
         Went wrong slot
     </div>
     <b-row v-else>
       <b-colxx xxs="12">
-        <b-card class="mb-4" title="BUSINESS">
-                <b-table responsive :items="customers" :fields="fields"/>
+
+        <b-row class="mb-3">
+          <b-colxx class="text-right">
+            <b-button>Add Customer</b-button>
+          </b-colxx>
+        </b-row>
+
+        <b-row class="mb-3">
+          <b-colxx class="text-right">
+            <div v-if=" customers.length < 1"
+              class=" mt-5 text-center"
+            >
+              <div>
+                <i class="iconsminds-folder-delete text-large"  />
+                <p>No Customer </p>
+              </div>
+            </div>
+
+            <b-card v-else class="mb-4" title="Customers">
+              <b-table responsive :items="customers" :fields="fields"/>
             </b-card>
+          </b-colxx>
+        </b-row>
       </b-colxx>
     </b-row>
   </div>
@@ -92,13 +112,8 @@ export default {
    resKey(val){
       if(val && val.owner && val.owner == CUSTOMERS){
         if(val.status == 1){
-          this.isFetched = false;
           this.isLoading = true;
-        }else if(val.status == 3){
-          this.isFetched = false;
-          this.isLoading = false;
-        }else if(val.status == 2){
-          this.isFetched = true;
+        }else {
           this.isLoading = false;
         }
       }

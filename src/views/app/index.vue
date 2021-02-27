@@ -20,7 +20,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['momentBiz', 'currentBiz']),
+    ...mapGetters(['momentBiz', 'currentBiz', 'connection', 'resKey', 'businesses']),
 
 
   },
@@ -33,19 +33,27 @@ export default {
           permanent: false
         });
       }
+    },
+
+    connection(val){
+      if(val){
+        if(this.resKey.status == 3 && this.resKey.owner == BUSINESSES){
+          this.fetchBizs();
+        }
+      }
     }
   },
 
   methods:{
-    fetchBizs(){
-      let user = this.$store.getters.user;
-      if(user && user.businesses && user.businesses.length > 0){
-        this.$store.dispatch(BUSINESSES, this.momentBiz || this.currentBiz);
-      }else{
-        localStorage.clear();
-        this.$router.push('/user/login')
-      }
-    },
+  fetchBizs(){
+    let user =  this.$store.getters.user;
+    if(user && user.businesses && user.businesses.length > 0){
+      this.$store.dispatch(BUSINESSES, this.momentBiz || this.currentBiz);
+    }else{
+      localStorage.clear();
+      this.$router.push('/user/login');
+    }
+  },
 
     fetchCountries(){
       this.$store.dispatch(BUSI_PARAM);
@@ -59,6 +67,8 @@ export default {
           duration: 1500,
           permanent: false
         });
+      }else{
+        this.$store.commit(CONNECTION, true);
       }
     }
 
