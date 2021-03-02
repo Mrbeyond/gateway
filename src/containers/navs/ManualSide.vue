@@ -222,7 +222,7 @@ export default {
 
   watch:{
     resKey(val){
-      if(val && val.owner == BUSINESSDETAILS){
+      if(val.owner == BUSINESSDETAILS){
         if(val.status == 2){
           this.$bvToast.show("profile_switch");
           this.toggleSide();

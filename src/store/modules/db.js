@@ -191,7 +191,7 @@ export default {
         commit(REFRESHER, WALLETSDETAILS);
       })
       .catch(err => {
-        if(err.response){
+        if(err){
           commit(RES_KEY, {status:2, owner: WALLETSDETAILS});
           commit(REFRESHER, WALLETSDETAILS);
         }
@@ -248,7 +248,7 @@ export default {
         commit(REFRESHER, GETPAYOUTS);
       })
       .catch(err => {
-        if(err.response){
+        if(err){
           commit(RES_KEY, {status:2, owner: GETPAYOUTS});
           commit(REFRESHER, GETPAYOUTS);
         }
@@ -290,7 +290,7 @@ export default {
         commit(REFRESHER, BUSINESSDETAILS);
       })
       .catch(err => {
-        if(err.response){
+        if(err){
           commit(RES_KEY, {status:3, owner: BUSINESSDETAILS});
           commit(REFRESHER, BUSINESSDETAILS);
         }
@@ -351,7 +351,7 @@ export default {
         commit(REFRESHER, CUSTOMERS);
       })
       .catch(err => {
-        if(err.response){
+        if(err){
           commit(RES_KEY, {status:3, owner: CUSTOMERS});
           commit(REFRESHER, CUSTOMERS);
         }
