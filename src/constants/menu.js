@@ -1,61 +1,60 @@
-import { adminRoot } from "./config";
-import { UserRole } from "../utils/auth.roles";
+import { adminRoot } from './config';
 
 const data = [{
-  id: "dashboard",
-  icon: "iconsminds-shop-4",
-  label: "Dashboard",
+  id: 'dashboard',
+  icon: 'iconsminds-shop-4',
+  label: 'Dashboard',
   to: `${adminRoot}`,
 },
 {
-  id: "transactions",
-  icon: "fas fa-stream",
-  label: "Transactions",
+  id: 'transactions',
+  icon: 'fas fa-stream',
+  label: 'Transactions',
   to: `${adminRoot}/transactions`,
 
 },
 {
-  id: "customers",
-  icon: "simple-icon-people",
-  label: "Customers",
+  id: 'customers',
+  icon: 'simple-icon-people',
+  label: 'Customers',
   to: `${adminRoot}/customers`
 },
 
 {
-  id: "payouts",
-  icon: "fas fa-money-bill-alt",
-  label: "Payouts",
+  id: 'payouts',
+  icon: 'fas fa-money-bill-alt',
+  label: 'Payouts',
   to: `${adminRoot}/payouts`
 },
 {
-  id: "business",
-  icon: "fas fa-business-time",
-  label: "Business",
+  id: 'business',
+  icon: 'fas fa-business-time',
+  label: 'Business',
   to: `${adminRoot}/business`,
 },
 {
-  id: "invoices",
-  icon: "fas fa-file-invoice-dollar",
-  label: "Invoices",
+  id: 'invoices',
+  icon: 'fas fa-file-invoice-dollar',
+  label: 'Invoices',
   to: `${adminRoot}/invoices`
 },
 {
-  id: "wallets",
-  icon: "iconsminds-wallet",
-  label: "Wallets",
+  id: 'wallets',
+  icon: 'iconsminds-wallet',
+  label: 'Wallets',
   to: `${adminRoot}/wallets`
 },
 {
-  id: "settings",
-  icon: "simple-icon-settings",
-  label: "Settings",
+  id: 'settings',
+  icon: 'simple-icon-settings',
+  label: 'Settings',
   to: `${adminRoot}/settings`
 },
 // {
-//   id: "docs",
-//   icon: "iconsminds-library",
-//   label: "menu.docs",
-//   to: "https://piaf-vue-docs.coloredstrategies.com/",
+//   id: 'docs',
+//   icon: 'iconsminds-library',
+//   label: 'menu.docs',
+//   to: 'https://piaf-vue-docs.coloredstrategies.com/',
 //   newWindow: true
 // }
 ];
